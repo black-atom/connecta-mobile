@@ -1,0 +1,40 @@
+<!--
+  Generated template for the ChamadosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color='primary'>
+    <ion-title>Chamados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-list >
+  <ion-item-sliding *ngFor='let chamado of chamados'>
+    <ion-item>
+      <h2>{{chamado.client}}</h2>
+    </ion-item>
+    <ion-item-options side="left">
+      <button ion-button color="primary">
+        <ion-icon name="ios-clipboard"></ion-icon>
+        Detalhes
+      </button>
+    </ion-item-options>
+    <ion-item-options side="right">
+      <button ion-button (click)="finalizarChamado(chamado._id)" color="danger">
+        <ion-icon name="close-circle"></ion-icon>
+        Finalizar
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+
+
+
+</ion-content>

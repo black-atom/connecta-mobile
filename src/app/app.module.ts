@@ -7,9 +7,13 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { PesquisaPage } from '../pages/pesquisa/pesquisa';
+import { ChamadosPage } from './../pages/chamados/chamados';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { SocketIoProvider } from '../providers/socket-io/socket-io';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ChamadosPage,
+    PesquisaPage
   ],
   imports: [
     BrowserModule,
@@ -29,12 +35,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ChamadosPage,
+    PesquisaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SocketIoProvider
   ]
 })
 export class AppModule {}

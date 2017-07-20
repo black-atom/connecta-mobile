@@ -1,0 +1,19 @@
+<ion-content no-bounce>
+
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+
+    <ion-slide style="background-color:#34495e">
+      <h2>Pergunta 1</h2>
+    </ion-slide>
+
+    <ion-slide style="background-color: #34495e">
+      <h2>Pergunta 2</h2>
+    </ion-slide>
+
+    <ion-slide style="background-color: #34495e">
+      <h2>Pergunta 3</h2>
+      <button ion-button color="danger" (click)='finalizar()'>Finalizar</button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>
