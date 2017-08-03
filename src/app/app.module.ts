@@ -1,6 +1,9 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Camera } from '@ionic-native/camera';
+
+
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -43,7 +46,8 @@ import { SocketIoProvider } from '../providers/socket-io/socket-io';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SocketIoProvider
+    SocketIoProvider,
+    Camera
   ]
 })
 export class AppModule {}

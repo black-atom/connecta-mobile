@@ -1,7 +1,8 @@
+import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
 import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { App, IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the ChamadosPage page.
@@ -19,9 +20,17 @@ export class ChamadosPage {
     {_id:1, client: 'Microsoft'},
     {_id:2, client: 'Red Hat'},
     {_id:3, client: 'Google'}
-  ]
+  ];
 
-  constructor(public app: App ,public navCtrl: NavController, private socketIoProvider:SocketIoProvider) {
+  public myPhoto: any;
+  public myPhotoURL: any;
+  public error: string;
+  private loading: Loading;
+
+  constructor(public app: App ,
+    public navCtrl: NavController,
+    private readonly camera: Camera,
+    private socketIoProvider:SocketIoProvider) {
     this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
   }
 
@@ -39,5 +48,23 @@ export class ChamadosPage {
     //this.navCtrl.parent.setRoot(PesquisaPage);
     //this.navCtrl.goToRoot()
   }
+
+  takePhoto() {
+    this.camera.getPicture({
+      quality: 40,
+      //destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      encodingType: this.camera.EncodingType.PNG,
+      saveToPhotoAlbum: true
+    }).then((imageData:string) => {
+      this.myPhoto = imageData.length;
+      //this.uploadPhoto(imageData);
+      console.log(imageData);
+    }, error => {
+      this.error = JSON.stringify(error);
+    });
+  }
+
 
 }

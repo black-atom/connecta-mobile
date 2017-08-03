@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar color='primary'>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Chamados</ion-title>
   </ion-navbar>
 
@@ -17,9 +20,12 @@
 
 <ion-list >
   <ion-item-sliding *ngFor='let chamado of chamados'>
-    <ion-item>
-      <h2>{{chamado.client}}</h2>
-    </ion-item>
+    <ion-card ion-item>
+        <ion-card-header>
+           <h2>{{chamado.client}}</h2>
+        </ion-card-header>
+
+      </ion-card>
     <ion-item-options side="left">
       <button ion-button color="primary">
         <ion-icon name="ios-clipboard"></ion-icon>
@@ -35,6 +41,26 @@
   </ion-item-sliding>
 </ion-list>
 
-
+<ion-item>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item *ngIf="error">
+    <strong>{{error}}</strong>
+  </ion-item>
+  <ion-item>
+    <!-- <img *ngIf="myPhoto" class="img-responsive" [src]="myPhoto"/> -->
+    {{myPhoto}}
+  </ion-item>
 
 </ion-content>
