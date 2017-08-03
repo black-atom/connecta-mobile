@@ -1,22 +1,30 @@
 <ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
+  <ion-header padding>
+    <div class="side-menu">
+      <div class="first-section">
+        <img class="img-avatar" src="assets/img/avatar.jpg">
+      </div>
+      <div class="second-section">
+        <ion-title>I'm Groot</ion-title>
+      </div>
+    </div>
+    <!-- <ion-toolbar color="primary">
       <ion-title>Menu</ion-title>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
   <ion-content>
-    <ion-list>
-      <button ion-item (click)="openPage(homePage)">
-        Home
+    <ion-list no-lines>
+      <button ion-item>
+        <ion-icon name="md-person" item-start></ion-icon>
+        Perfil
       </button>
-      <button ion-item (click)="openPage(friendsPage)">
-        Friends
+      <button ion-item>
+        <ion-icon name="pulse" item-start></ion-icon>
+        Graficos
       </button>
-      <button ion-item (click)="openPage(eventsPage)">
-        Events
-      </button>
-      <button ion-item (click)="closeMenu()">
-        Close Menu
+      <button ion-item>
+        <ion-icon name="chatbubbles" item-start></ion-icon>
+        Chat
       </button>
     </ion-list>
   </ion-content>

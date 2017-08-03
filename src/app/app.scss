@@ -14,3 +14,19 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.side-menu{
+  .first-section{
+    width: 100%;
+    .img-avatar {
+      border-radius: 50%;
+      width: 80px;
+    }
+  }
+
+  .second-section{
+    width: 100%;
+    padding-top: 16px;
+    font-size: 15px;
+  }
+
+}

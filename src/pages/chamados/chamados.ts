@@ -15,7 +15,7 @@ import { App, IonicPage, Loading, LoadingController, NavController, NavParams, T
   templateUrl: 'chamados.html',
 })
 export class ChamadosPage {
-
+  selectedSegment = "1";
   chamados = [
     {_id:1, client: 'Microsoft'},
     {_id:2, client: 'Red Hat'},

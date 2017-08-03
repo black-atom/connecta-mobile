@@ -3,4 +3,21 @@ page-chamados {
   .input-wrapper{
     text-align: center;
   }
+
+  .chamados-card{
+    padding: 0px;
+  }
+
+  .chamado-segment{
+    color: white !important;
+    border-color: white !important;
+    .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+
+    }
+  }
+
+  .btn-options{
+    margin: 0px !important;
+    height: 100% !important;
+  }
 }
