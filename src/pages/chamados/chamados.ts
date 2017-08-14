@@ -19,7 +19,8 @@ export class ChamadosPage {
   chamados = [
     {_id:1, client: 'Microsoft'},
     {_id:2, client: 'Red Hat'},
-    {_id:3, client: 'Google'}
+    {_id:3, client: 'Google'},
+    {_id:3, client: 'Bradesco'}
   ];
 
   public myPhoto: any;
