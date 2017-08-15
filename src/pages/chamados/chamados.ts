@@ -1,9 +1,16 @@
+import { INCREMENT, DECREMENT, RESET } from './../../app/redux/reducers/counter';
+import { Observable } from 'rxjs/Rx';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
 import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { Component } from '@angular/core';
 import { App, IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Store } from "@ngrx/store";
 
+
+interface AppState {
+  counter: number;
+}
 /**
  * Generated class for the ChamadosPage page.
  *
@@ -28,11 +35,28 @@ export class ChamadosPage {
   public error: string;
   private loading: Loading;
 
+  counter: Observable<number>;
+
   constructor(public app: App ,
     public navCtrl: NavController,
     private readonly camera: Camera,
+    private store: Store<AppState>,
     private socketIoProvider:SocketIoProvider) {
+      this.counter = store.select('counter');
     this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
+  }
+
+
+  increment(){
+		this.store.dispatch({ type: INCREMENT });
+	}
+
+	decrement(){
+		this.store.dispatch({ type: DECREMENT });
+	}
+
+	reset(){
+		this.store.dispatch({ type: RESET });
   }
 
   ionViewDidLoad() {

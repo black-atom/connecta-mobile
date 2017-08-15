@@ -15,13 +15,22 @@ export class SocketIoProvider {
   private url = 'http://192.168.43.158:3000';
   private socket;
   private chamadoSubj = new Subject<Chamado[]>();
-
+  private tecnico = {
+    _id: 321321321,
+    nome: "vitor silva lima"
+  }
   constructor() {
     console.log('Hello SocketIoProvider Provider');
 
     this.socket = io(this.url);
     this.socket.on('connect', () => {
       console.log(this.socket.id); // 'G5p5...'
+      this.socket.emit("registra-tecnico", this.tecnico);
+
+      this.socket.on('hello', (data) => {
+        console.dir(data);
+      })
+
       //this.socket.emit("connectUser",{username:"vlima"});
     });
 

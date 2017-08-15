@@ -1,3 +1,6 @@
+import { reducer } from './redux/reducers';
+import { AtendimentoEffects } from './redux/effects/atendimentos';
+import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -14,6 +17,13 @@ import { ChamadosPage } from './../pages/chamados/chamados';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocketIoProvider } from '../providers/socket-io/socket-io';
+import { StoreModule } from '@ngrx/store';
+
+import { offline } from 'redux-offline';
+import offlineConfig from 'redux-offline/lib/defaults';
+import { EffectsModule } from '@ngrx/effects';
+import { compose } from 'redux';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +34,10 @@ import { SocketIoProvider } from '../providers/socket-io/socket-io';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule,
+    EffectsModule.run(AtendimentoEffects),
+    StoreModule.provideStore( reducer ),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
