@@ -1,3 +1,4 @@
+import { RETRIEVE_ATENDIMENTOS } from '../../app/redux/actions/atendimentos';
 import { INCREMENT, DECREMENT, RESET } from './../../app/redux/reducers/counter';
 import { Observable } from 'rxjs/Rx';
 import { Camera } from '@ionic-native/camera';
@@ -36,6 +37,7 @@ export class ChamadosPage {
   private loading: Loading;
 
   counter: Observable<number>;
+  atendimentos$: Observable<any[]>;
 
   constructor(public app: App ,
     public navCtrl: NavController,
@@ -43,7 +45,9 @@ export class ChamadosPage {
     private store: Store<AppState>,
     private socketIoProvider:SocketIoProvider) {
       this.counter = store.select('counter');
-    this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
+      this.atendimentos$ = store.select("atendimentos");
+      this.store.dispatch({type: RETRIEVE_ATENDIMENTOS});
+      this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
   }
 
 

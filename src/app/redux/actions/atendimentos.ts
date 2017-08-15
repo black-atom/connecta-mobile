@@ -9,3 +9,5 @@ export class RetriveAtendimentoSuccess implements Action{
     readonly type: string = RETRIEVE_ATENDIMENTOS_SUCCESS;
     constructor(public payload) { }
 }
+
+export type Actions  = RetriveAtendimentoSuccess;

@@ -29,11 +29,11 @@
 <ion-content>
 
   <ion-list >
-    <ion-item-sliding *ngFor='let chamado of chamados'>
+    <ion-item-sliding *ngFor='let atendimento of atendimentos$ | async'>
 
       <ion-item class="chamados-card">
           <ion-card-header>
-            <h2>{{chamado.client}}</h2>
+            <h2>{{atendimento.cliente.nome}}</h2>
           </ion-card-header>
 
       </ion-item>
@@ -48,7 +48,7 @@
       </ion-item-options>
 
       <ion-item-options side="right">
-        <button class="btn-options" ion-button (click)="finalizarChamado(chamado._id)" color="danger">
+        <button class="btn-options" ion-button (click)="finalizarChamado(atendimento._id)" color="danger">
           <ion-icon name="close-circle"></ion-icon>
           Finalizar
         </button>
@@ -75,5 +75,9 @@
 		<div>Current Count: {{ counter | async }}</div>
 		<button (click)="decrement()">Decrement</button>
 
-		<button (click)="reset()">Reset Counter</button>
+    <button (click)="reset()">Reset Counter</button>
+
+    <pre>
+      {{atendimentos$ | async | json}}
+    </pre>
 </ion-content>

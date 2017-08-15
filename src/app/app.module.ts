@@ -23,6 +23,8 @@ import { offline } from 'redux-offline';
 import offlineConfig from 'redux-offline/lib/defaults';
 import { EffectsModule } from '@ngrx/effects';
 import { compose } from 'redux';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 
 
 @NgModule({
@@ -37,7 +39,12 @@ import { compose } from 'redux';
     IonicModule.forRoot(MyApp),
     HttpModule,
     EffectsModule.run(AtendimentoEffects),
-    StoreModule.provideStore( reducer ),
+    StoreModule.forRoot(reducer, {
+
+    }),
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+      maxAge: 5
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

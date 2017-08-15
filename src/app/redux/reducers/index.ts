@@ -11,6 +11,7 @@ export const reducers = {
 const productionReducer: ActionReducer<any> = combineReducers(reducers);
 
 export function reducer(state: any, action: any) {
+    console.log(action.type);
     return productionReducer(state, action);
 }
 

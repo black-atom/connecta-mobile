@@ -1,8 +1,13 @@
-import { RETRIEVE_ATENDIMENTOS, RETRIEVE_ATENDIMENTOS_SUCCESS, RETRIEVE_ATENDIMENTOS_FAILED } from '../actions/atendimentos';
+import {
+    Actions,
+    RETRIEVE_ATENDIMENTOS,
+    RETRIEVE_ATENDIMENTOS_FAILED,
+    RETRIEVE_ATENDIMENTOS_SUCCESS,
+} from '../actions/atendimentos';
 import { ActionReducer, Action } from '@ngrx/store';
 
 
-export function atendimentosReducer(state = [], action: Action) {
+export function atendimentosReducer(state = [], action: Actions) {
 	switch (action.type) {
 		case RETRIEVE_ATENDIMENTOS:
 			return state;
