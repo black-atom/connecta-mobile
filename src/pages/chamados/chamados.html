@@ -32,10 +32,24 @@
     <ion-item-sliding *ngFor='let atendimento of atendimentos$ | async'>
 
       <ion-item class="chamados-card">
-          <ion-card-header>
+        <ion-grid>
+          <ion-row>
             <h2>{{atendimento.cliente.nome}}</h2>
-          </ion-card-header>
+          </ion-row>
+          <ion-row>
 
+            <ion-col col-4>
+                  <ion-icon name="pin" item-start></ion-icon>
+                  {{atendimento.endereco.cidade}}
+            </ion-col>
+
+            <ion-col  offset-4 col-4>
+                  <ion-icon name="construct" item-start></ion-icon>
+                  Tipo
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
 

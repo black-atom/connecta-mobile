@@ -41,7 +41,8 @@ export class MyApp implements OnInit {
   }
 
   ngOnInit(): void {
-    this.networdk.onConnect().subscribe(conected => this.store.dispatch({type: NETWORK_CONNECTED}));
+    this.networdk.onConnect()
+    .subscribe(conected => this.store.dispatch({type: NETWORK_CONNECTED}));
     this.networdk.onDisconnect()
     .do(() => this.store.dispatch({type: NETWORK_DISCONNETED}))
     .switchMap(()=> this.store.take(1))

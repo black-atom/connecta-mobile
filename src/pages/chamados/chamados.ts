@@ -45,11 +45,11 @@ export class ChamadosPage {
     private socketIoProvider:SocketIoProvider) {
       this.counter = store.select('counter');
       this.atendimentos$ = store.select("atendimentos");
-      this.store.dispatch({type: RETRIEVE_ATENDIMENTOS});
       this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
   }
 
   ionViewDidLoad() {
+    setTimeout(() => this.store.dispatch({type: RETRIEVE_ATENDIMENTOS}), 500);
     console.log('ionViewDidLoad ChamadosPage');
   }
 
