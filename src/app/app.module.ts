@@ -1,4 +1,5 @@
-import { ChamadosModule } from './../pages/chamados/chamados.module';
+import { PagesModule } from './../pages/pages';
+import { LoginPage } from '../pages/login/login';
 import { persistDBEffects } from './redux/effects/persistState';
 import { Network } from '@ionic-native/network';
 import { reducer } from './redux/reducers';
@@ -64,7 +65,7 @@ export const metaReducers = [debug];
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     }),
-    ChamadosModule
+    PagesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

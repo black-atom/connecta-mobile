@@ -17,6 +17,10 @@ import { Store } from "@ngrx/store";
  * on Ionic pages and navigation.
  */
 @IonicPage()
+@Component({
+  selector: 'page-chamados',
+  templateUrl: 'chamados.html',
+})
 export class ChamadosPage {
   selectedSegment = "1";
 

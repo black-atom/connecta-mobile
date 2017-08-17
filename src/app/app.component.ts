@@ -18,7 +18,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class MyApp implements OnInit {
 
-  rootPage: any = TabsPage;
+  rootPage: any = 'LoginPage';
 
   constructor(
     platform: Platform,
