@@ -14,11 +14,8 @@ export const reducers = {
 const productionReducer: ActionReducer<any> = combineReducers(reducers);
 
 export function reducer(state: any, action: Action) {
-    console.log(state);
     switch(action.type){
       case 'LOAD_STATE_DB_SUCCESS':
-        console.log(action.type);
-        console.dir(state);
         return state;
       //default SAVE_STATE_DB:
 
