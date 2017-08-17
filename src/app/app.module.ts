@@ -1,3 +1,4 @@
+import { ChamadosModule } from './../pages/chamados/chamados.module';
 import { persistDBEffects } from './redux/effects/persistState';
 import { Network } from '@ionic-native/network';
 import { reducer } from './redux/reducers';
@@ -16,7 +17,6 @@ import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { PesquisaPage } from '../pages/pesquisa/pesquisa';
-import { ChamadosPage } from './../pages/chamados/chamados';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -51,7 +51,6 @@ export const metaReducers = [debug];
   declarations: [
     MyApp,
     TabsPage,
-    ChamadosPage,
     PesquisaPage
   ],
   imports: [
@@ -64,12 +63,12 @@ export const metaReducers = [debug];
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
-    })
+    }),
+    ChamadosModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     TabsPage,
-    ChamadosPage,
     PesquisaPage
   ],
   providers: [

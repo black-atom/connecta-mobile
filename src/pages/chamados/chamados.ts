@@ -16,18 +16,9 @@ import { Store } from "@ngrx/store";
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@Component({
-  selector: 'page-chamados',
-  templateUrl: 'chamados.html',
-})
+@IonicPage()
 export class ChamadosPage {
   selectedSegment = "1";
-  chamados = [
-    {_id:1, client: 'Microsoft'},
-    {_id:2, client: 'Red Hat'},
-    {_id:3, client: 'Google'},
-    {_id:3, client: 'Bradesco'}
-  ];
 
   public myPhoto: any;
   public myPhotoURL: any;
