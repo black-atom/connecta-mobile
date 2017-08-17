@@ -1,5 +1,6 @@
+import { AppState } from './../../app/redux/reducers/index';
+import { NetwordStatusProvider } from './../../providers/netword-status/netword-status';
 import { RETRIEVE_ATENDIMENTOS } from '../../app/redux/actions/atendimentos';
-import { INCREMENT, DECREMENT, RESET } from './../../app/redux/reducers/counter';
 import { Observable } from 'rxjs/Rx';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
@@ -9,9 +10,6 @@ import { App, IonicPage, Loading, LoadingController, NavController, NavParams, T
 import { Store } from "@ngrx/store";
 
 
-interface AppState {
-  counter: number;
-}
 /**
  * Generated class for the ChamadosPage page.
  *
@@ -43,6 +41,7 @@ export class ChamadosPage {
     public navCtrl: NavController,
     private readonly camera: Camera,
     private store: Store<AppState>,
+    private networdStatusProvider: NetwordStatusProvider,
     private socketIoProvider:SocketIoProvider) {
       this.counter = store.select('counter');
       this.atendimentos$ = store.select("atendimentos");
@@ -50,25 +49,11 @@ export class ChamadosPage {
       this.socketIoProvider.getChamados().subscribe(data=>console.log("oi"));
   }
 
-
-  increment(){
-		this.store.dispatch({ type: INCREMENT });
-	}
-
-	decrement(){
-		this.store.dispatch({ type: DECREMENT });
-	}
-
-	reset(){
-		this.store.dispatch({ type: RESET });
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChamadosPage');
   }
 
   finalizarChamado(_id: number){
-    console.log(_id);
     //this.navCtrl.push(PesquisaPage);
     //this.navCtrl.setRoot(PesquisaPage);
     //this.app.getRootNav().setRoot(PesquisaPage);
