@@ -32,6 +32,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import persistState from 'redux-localstorage'
 import { SyncDataProvider } from '../providers/sync-data/sync-data';
 import { NetwordStatusProvider } from '../providers/netword-status/netword-status';
+import { LoginProvider } from '../providers/login/login';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -74,7 +75,8 @@ export const metaReducers = [debug];
     Camera,
     SyncDataProvider,
     NetwordStatusProvider,
-    Network
+    Network,
+    LoginProvider
   ]
 })
 export class AppModule {}

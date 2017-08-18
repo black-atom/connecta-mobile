@@ -1,3 +1,4 @@
+import { Login } from '../models/login';
 import { Action } from '@ngrx/store';
 
 export class LoginActions {
@@ -7,19 +8,19 @@ export class LoginActions {
   static LOGOUT = 'LOGOUT';
   static LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-  login(payload): Action {
+  static login(payload: Login): Action {
     return { type: LoginActions.LOGIN, payload  };
   }
 
-  loginSuccess(payload): Action {
+  static loginSuccess(payload): Action {
     return { type: LoginActions.LOGIN_SUCCESS, payload};
   }
 
-  logout(): Action {
+  static logout(): Action {
     return { type: LoginActions.LOGOUT };
   }
 
-  logoutSuccess(): Action {
+  static logoutSuccess(): Action {
     return { type: LoginActions.LOGOUT_SUCCESS };
   }
 }

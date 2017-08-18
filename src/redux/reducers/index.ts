@@ -19,9 +19,6 @@ export function reducer(state: any, action: Action) {
     switch(action.type){
       case 'LOAD_STATE_DB_SUCCESS':
         return state;
-      //default SAVE_STATE_DB:
-
-
     }
     return productionReducer(state, action);
 }

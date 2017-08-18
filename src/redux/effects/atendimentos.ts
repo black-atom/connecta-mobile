@@ -22,9 +22,10 @@ export class AtendimentoEffects {
   @Effect() login$ = this.actions$
       .ofType(RETRIEVE_ATENDIMENTOS)
       .map(action => action.payload)
-      .switchMap(payload => this.http.get('http://localhost:3000/api/atendimentos')
-      .retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
-      .map(res => new RetriveAtendimentoSuccess(res.json()))
-      .catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED }))
+      .switchMap(payload =>
+        this.http.get('http://localhost:3000/api/atendimentos')
+        .retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
+        .map(res => new RetriveAtendimentoSuccess(res.json()))
+        .catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED }))
       );
 }
