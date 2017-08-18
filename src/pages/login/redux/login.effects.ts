@@ -18,7 +18,9 @@ export class LoginEffects {
   .switchMap((payload) => {
     return this.loginService.login(payload)
     .map(response => LoginActions.loginSuccess(response))
-    .catch(() => Observable.of({ type: LoginActions.LOGIN_FAILED }))
+    .catch(() => {
+      return Observable.of({ type: LoginActions.LOGIN_FAILED })
+    })
   })
 
 }

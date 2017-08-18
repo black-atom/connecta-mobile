@@ -1,3 +1,4 @@
+import { Actions } from '@ngrx/effects';
 import { LoginState } from './redux/login.reducer';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from './../../redux/reducers/index';
@@ -6,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { Login } from './models/login';
 import { TabsPage } from '../tabs/tabs';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -24,8 +25,12 @@ export class LoginPage {
   password: string = "";
   logged$: Observable<LoginState>;
 
-  constructor(public navCtrl: NavController, private store: Store<AppState>) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    private store: Store<AppState>,
+    private toastCtrl: ToastController,
+    private actions: Actions
+  ) {}
 
   ionViewDidLoad() {
     this.logged$ = this.store.select("login");
@@ -33,6 +38,14 @@ export class LoginPage {
       if(data.logged){
         this.navCtrl.push(TabsPage);
       }
+    })
+
+    this.actions.ofType(LoginActions.LOGIN_FAILED).subscribe(() =>{
+      const toast = this.toastCtrl.create({
+        message: 'Usuario ou Senha incorretos',
+        duration: 2000
+      });
+      toast.present();
     })
   }
 
