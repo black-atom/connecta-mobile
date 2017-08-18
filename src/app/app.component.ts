@@ -1,6 +1,7 @@
-import { SAVE_STATE_DB, SaveStateDB } from './redux/actions/persistStateActions';
-import { NETWORK_CONNECTED, NETWORK_DISCONNETED } from './redux/actions/networkActions';
-import { AppState } from './redux/reducers';
+import { SaveStateDB } from '../redux/actions/persistStateActions';
+import { NETWORK_DISCONNETED } from './../redux/actions/networkActions';
+import { NETWORK_CONNECTED } from '../redux/actions/networkActions';
+import { AppState } from './../redux/reducers/index';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { MenuController, Platform } from 'ionic-angular';

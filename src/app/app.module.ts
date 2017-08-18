@@ -1,9 +1,8 @@
+import { ReduxModule } from './../redux/redux.module';
 import { PagesModule } from './../pages/pages';
 import { LoginPage } from '../pages/login/login';
-import { persistDBEffects } from './redux/effects/persistState';
 import { Network } from '@ionic-native/network';
-import { reducer } from './redux/reducers';
-import { AtendimentoEffects } from './redux/effects/atendimentos';
+
 import { HttpModule } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -59,12 +58,7 @@ export const metaReducers = [debug];
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpModule,
-    EffectsModule.run(AtendimentoEffects),
-    EffectsModule.run(persistDBEffects),
-    StoreModule.provideStore(reducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    }),
+    ReduxModule,
     PagesModule
   ],
   bootstrap: [IonicApp],

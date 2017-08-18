@@ -1,3 +1,4 @@
+import { loginReducer } from './../../pages/login/redux/login.reducer';
 import { LOAD_STATE_DB_SUCCESS } from './../actions/persistStateActions';
 import { SAVE_STATE_DB } from '../actions/persistStateActions';
 import { Action } from '@ngrx/store';
@@ -8,6 +9,7 @@ import { ActionReducer, combineReducers } from '@ngrx/store';
 export const reducers = {
     atendimentos: atendimentosReducer,
     networkStatus: networkReducer,
+    login: loginReducer
 }
 
 

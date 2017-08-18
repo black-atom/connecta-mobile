@@ -1,6 +1,5 @@
-import { AppState } from './../../app/redux/reducers/index';
-import { NetwordStatusProvider } from './../../providers/netword-status/netword-status';
-import { RETRIEVE_ATENDIMENTOS } from '../../app/redux/actions/atendimentos';
+import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
+import { AppState } from './../../redux/reducers/index';
 import { Observable } from 'rxjs/Rx';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
@@ -36,7 +35,6 @@ export class ChamadosPage {
     public navCtrl: NavController,
     private readonly camera: Camera,
     private store: Store<AppState>,
-    private networdStatusProvider: NetwordStatusProvider,
     private socketIoProvider:SocketIoProvider) {
       this.counter = store.select('counter');
       this.atendimentos$ = store.select("atendimentos");
