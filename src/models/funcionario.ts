@@ -1,37 +1,46 @@
 export interface Funcionario {
-  createdAt: string;
-  updatedAt: string;
+  _id?: string;
+  criado_em: string;
+  atualizado_em: string;
   nome: string;
-  endereco: Endereco;
+  endereco: EnderecoFuncionario;
   cpf: string;
   rg: string;
-  tel1: string;
+  data_nasc: string;
   habilitacao: Habilitacao;
-  _id: string;
-  tipo: string[];
-  email: string;
-  tel2: string;
+  foto_url: string;
+  contato: ContatoFuncionario;
   login: Login;
-  photo_url: string;
 }
 
 interface Login {
+  tipo: string[];
   username: string;
   password: string;
 }
 
 interface Habilitacao {
+  numero: string;
   validade: string;
-  nunmero: string;
 }
 
-interface Endereco {
+export interface ContatoFuncionario {
+  _id: string;
+  nome: string;
+  email: string;
+  telefone: string;
+  celular: string;
+  observacao: string;
+}
+
+interface EnderecoFuncionario {
+  _id: string;
   rua: string;
+  numero: string;
   bairro: string;
-  estado: string;
+  uf: string;
   cidade: string;
   cep: string;
-  _id: string;
   ponto_referencia: string;
   complemento: string;
 }

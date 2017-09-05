@@ -1,4 +1,4 @@
-interface Atendimento {
+export interface Atendimento {
   createdAt: string;
   updatedAt: string;
   endereco: Endereco;
@@ -6,8 +6,9 @@ interface Atendimento {
   createdBy: string;
   updatedBy: string;
   _id: string;
+  inativo: Inativo;
   encaixe: boolean;
-  estado: string[];
+  estado: string;
   fim: Fim;
   inicio: Fim;
   observacao: string;
@@ -45,6 +46,11 @@ interface Avaliacao {
 interface Fim {
   data?: any;
   km?: any;
+}
+
+interface Inativo {
+  motivo: string;
+  statos: boolean;
 }
 
 interface Contato {

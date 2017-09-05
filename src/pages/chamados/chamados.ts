@@ -3,7 +3,7 @@ import { AppState } from './../../redux/reducers/index';
 import { Observable } from 'rxjs/Rx';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
-import { SocketIoProvider } from './../../providers/socket-io/socket-io';
+// import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { Component } from '@angular/core';
 import { App, IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Store } from "@ngrx/store";
@@ -41,13 +41,13 @@ export class ChamadosPage {
     public navCtrl: NavController,
     private readonly camera: Camera,
     private store: Store<AppState>,
-    private socketIoProvider: SocketIoProvider,
+    // private socketIoProvider: SocketIoProvider,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
   ) {
     this.counter = store.select("counter");
     this.atendimentos$ = store.select("atendimentos");
-    this.socketIoProvider.getChamados().subscribe(data => console.log("oi"));
+    //this.socketIoProvider.getChamados().subscribe(data => console.log("oi"));
   }
 
   ionViewDidLoad() {

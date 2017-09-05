@@ -1,4 +1,5 @@
-import { loginReducer } from './../../pages/login/redux/login.reducer';
+import { Atendimento } from '../../models/atendimento';
+import { loginReducer, LoginState } from './../../pages/login/redux/login.reducer';
 import { LOAD_STATE_DB_SUCCESS } from './../actions/persistStateActions';
 import { SAVE_STATE_DB } from '../actions/persistStateActions';
 import { Action } from '@ngrx/store';
@@ -27,5 +28,6 @@ export function reducer(state: any, action: Action) {
 export interface AppState {
   counter: number;
   networkStatus: boolean;
-  atendimentos: [any];
+  atendimentos: Atendimento[];
+  login: LoginState
 }

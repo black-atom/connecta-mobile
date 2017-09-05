@@ -10,7 +10,7 @@ export interface LoginState {
 }
 
 const initialState : LoginState = {
-  logged: true,
+  logged: false,
   token: "",
   funcionario: null
 };
@@ -20,7 +20,7 @@ export const loginReducer: ActionReducer<any> =
     switch (type) {
       case LoginActions.LOGIN_SUCCESS:
         return Object.assign({}, state, payload, {logged: true});
-      case LoginActions.LOGOUT_SUCCESS:
+      case LoginActions.LOGOUT:
         return Object.assign({}, state, {token: "", logged: false});
       default:
         return state;

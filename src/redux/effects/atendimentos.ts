@@ -1,3 +1,4 @@
+import { AtendimentoProvider } from '../../providers/atendimento/atendimento';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/retry';
@@ -15,7 +16,7 @@ import { Actions, Effect } from '@ngrx/effects';
 @Injectable()
 export class AtendimentoEffects {
   constructor(
-    private http: Http,
+    private atendimentoProvider: AtendimentoProvider,
     private actions$: Actions
   ) { }
 
@@ -23,9 +24,9 @@ export class AtendimentoEffects {
       .ofType(RETRIEVE_ATENDIMENTOS)
       .map(action => action.payload)
       .switchMap(payload =>
-        this.http.get('http://localhost:3000/api/atendimentos')
-        .retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
-        .map(res => new RetriveAtendimentoSuccess(res.json()))
-        .catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED }))
+        this.atendimentoProvider.getAllAtendimentos()
+        //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
+        .map(res => new RetriveAtendimentoSuccess(res))
+        .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       );
 }

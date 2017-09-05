@@ -1,9 +1,10 @@
+import { AuthHttp, AuthConfig } from "angular2-jwt";
 import { ReduxModule } from './../redux/redux.module';
 import { PagesModule } from './../pages/pages';
 import { LoginPage } from '../pages/login/login';
 import { Network } from '@ionic-native/network';
 
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -33,6 +34,10 @@ import persistState from 'redux-localstorage'
 import { SyncDataProvider } from '../providers/sync-data/sync-data';
 import { NetwordStatusProvider } from '../providers/netword-status/netword-status';
 import { LoginProvider } from '../providers/login/login';
+import { AtendimentoProvider } from '../providers/atendimento/atendimento';
+import {Storage} from '@ionic/storage';
+
+
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -45,6 +50,16 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
 }
 
 export const metaReducers = [debug];
+
+let storage = new Storage({});
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('token')),
+  }), http);
+}
 
 
 
@@ -76,7 +91,13 @@ export const metaReducers = [debug];
     SyncDataProvider,
     NetwordStatusProvider,
     Network,
-    LoginProvider
+    LoginProvider,
+    AtendimentoProvider,
+    {
+      provide: AuthHttp,
+      useFactory: getAuthHttp,
+      deps: [Http]
+    },
   ]
 })
 export class AppModule {}
