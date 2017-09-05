@@ -7,7 +7,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LoginProvider {
-  private url = 'http://localhost:3000/login';
+  // private url = 'http://localhost:3000/login';
+  private url = 'http://165.227.78.113:3000/login';
 
   constructor(private http: Http) {  }
 

@@ -12,7 +12,7 @@ export interface Chamado{
 
 @Injectable()
 export class SocketIoProvider {
-  private url = 'http://192.168.43.158:3000';
+  private url = 'http://165.227.78.113:3000';
   private socket;
   private chamadoSubj = new Subject<Chamado[]>();
   private tecnico = {

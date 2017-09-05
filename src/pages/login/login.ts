@@ -43,7 +43,7 @@ export class LoginPage {
     this.actions.ofType(LoginActions.LOGIN_FAILED).subscribe(() =>{
       const toast = this.toastCtrl.create({
         message: 'Usuario ou Senha incorretos',
-        duration: 2000
+        duration: 2500
       });
       toast.present();
     })

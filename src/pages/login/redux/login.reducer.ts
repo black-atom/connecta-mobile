@@ -10,7 +10,7 @@ export interface LoginState {
 }
 
 const initialState : LoginState = {
-  logged: false,
+  logged: true,
   token: "",
   funcionario: null
 };

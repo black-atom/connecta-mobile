@@ -1,35 +1,50 @@
-export interface Atendimento {
-  _id: string;
+interface Atendimento {
   createdAt: string;
   updatedAt: string;
-  contato: Contato;
   endereco: Endereco;
+  contato: Contato;
+  createdBy: string;
+  updatedBy: string;
+  _id: string;
+  encaixe: boolean;
+  estado: string[];
+  fim: Fim;
+  inicio: Fim;
+  observacao: string;
+  avaliacao: Avaliacao[];
+  valor: number;
+  tipo: string;
   tecnico: Tecnico;
+  estacionamento: string;
+  numero_equipamento: string;
+  modelo_equipamento: string;
+  testes_efetuados: string;
   descricao: string;
-  data: string;
+  data_atendimento: string;
+  imagens: any[];
   cliente: Cliente;
 }
 
 interface Cliente {
   cnpj_cpf: string;
-  nome: string;
-  _id: string;
+  nome_razao_social: string;
+  inscricao_estadual: string;
+  nome_fantasia: string;
 }
 
 interface Tecnico {
   nome: string;
-  _id: string;
 }
 
-interface Endereco {
-  rua: string;
-  bairro: string;
-  estado: string;
-  cidade: string;
-  cep: string;
+interface Avaliacao {
+  pergunta: string;
   _id: string;
-  ponto_referencia: string;
-  complemento: string;
+  valor: number;
+}
+
+interface Fim {
+  data?: any;
+  km?: any;
 }
 
 interface Contato {
@@ -37,5 +52,18 @@ interface Contato {
   nome: string;
   _id: string;
   observacao: string;
+  celular: string;
   email: string;
+}
+
+interface Endereco {
+  rua: string;
+  numero: string;
+  bairro: string;
+  uf: string;
+  cidade: string;
+  cep: string;
+  _id: string;
+  ponto_referencia: string;
+  complemento: string;
 }
