@@ -5,7 +5,7 @@
         <img class="img-avatar" src="assets/img/avatar.jpg">
       </div>
       <div class="second-section">
-        <ion-title>I'm Groot</ion-title>
+        <ion-title>{{funcionario?.nome}}</ion-title>
       </div>
     </div>
     <!-- <ion-toolbar color="primary">
@@ -18,14 +18,14 @@
         <ion-icon name="md-person" item-start></ion-icon>
         Perfil
       </button>
-      <button ion-item>
+      <!-- <button ion-item>
         <ion-icon name="pulse" item-start></ion-icon>
         Graficos
-      </button>
-      <button ion-item>
+      </button> -->
+      <!-- <button ion-item>
         <ion-icon name="chatbubbles" item-start></ion-icon>
         Chat
-      </button>
+      </button> -->
       <button ion-item (click)="logout()">
         <ion-icon name="share-alt" item-start></ion-icon>
         Logout

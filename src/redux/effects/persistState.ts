@@ -30,5 +30,5 @@ export class persistDBEffects {
       .ofType(SAVE_STATE_DB)
       .map(action => action.payload)
       .switchMap(payload => Observable.fromPromise(this.storage.set("state", payload)))
-      .map(state => ({type: SAVE_STATE_DB_SUCCESS}))
+      .map(state => ({type: SAVE_STATE_DB_SUCCESS, payload: state}))
 }

@@ -19,7 +19,7 @@ const productionReducer: ActionReducer<any> = combineReducers(reducers);
 export function reducer(state: any, action: Action) {
     switch(action.type){
       case 'LOAD_STATE_DB_SUCCESS':
-        return state;
+        return action.payload;
     }
     return productionReducer(state, action);
 }

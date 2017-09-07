@@ -114,7 +114,7 @@ export class ChamadosPage {
   }
 
   private enviarFoto(formData: FormData) {
-    this.http.post("http://192.168.43.158:5000/upload", formData)
+    this.http.post("http://192.168.43.158:3000/api/atendimentos/59aedf8ff2297f3194241f3d/imagens", formData)
       .catch((e) => this.handleError(e))
       .map(response => response.text())
       .finally(() => this.loading.dismiss())
