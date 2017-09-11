@@ -2,7 +2,7 @@
   <ion-header padding>
     <div class="side-menu">
       <div class="first-section">
-        <img class="img-avatar" src="assets/img/avatar.jpg">
+        <img class="img-avatar" [src]="funcionario?.foto_url || 'assets/img/avatar.jpg'">
       </div>
       <div class="second-section">
         <ion-title>{{funcionario?.nome}}</ion-title>
