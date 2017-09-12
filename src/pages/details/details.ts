@@ -1,3 +1,5 @@
+import { Atendimento } from './../../models/atendimento';
+import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
@@ -10,6 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DetailsPage {
   private selectedId = null;
+  public atendimento$: Observable<Atendimento>;
 
   constructor(
     private navCtrl: NavController,
@@ -20,7 +23,11 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    console.log("Usuario selecionou atendimento "+ this.selectedId)
+    this.atendimento$ = this.store.select(appState =>
+      appState.atendimentos
+        .find(atendimento => atendimento._id == this.selectedId)
+    );
+
   }
 
 }
