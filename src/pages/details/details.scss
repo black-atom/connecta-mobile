@@ -1,9 +1,20 @@
-page-details {
+@import './../../theme/variables.scss';
 
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
+page-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  ion-content {
+    .line {
+      border-bottom: 1px dashed #e5e5e5 !important;
+    }
+
+    ion-icon {
+      font-size: 1.7rem;
+    }
+  }
 }
