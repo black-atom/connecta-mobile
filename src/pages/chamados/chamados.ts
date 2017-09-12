@@ -1,3 +1,4 @@
+import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
 import { AppState } from './../../redux/reducers/index';
 import { Observable } from 'rxjs/Rx';
@@ -5,7 +6,16 @@ import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from '../pesquisa/pesquisa';
 // import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { Component } from '@angular/core';
-import { App, IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import {
+    App,
+    IonicPage,
+    Loading,
+    LoadingController,
+    ModalController,
+    NavController,
+    NavParams,
+    ToastController,
+} from 'ionic-angular';
 import { Store } from "@ngrx/store";
 import {Http, Response} from "@angular/http";
 import {File, FileEntry} from "@ionic-native/file";
@@ -41,6 +51,7 @@ export class ChamadosPage {
     public navCtrl: NavController,
     private readonly camera: Camera,
     private store: Store<AppState>,
+    private modalCtrl: ModalController,
     // private socketIoProvider: SocketIoProvider,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
@@ -114,7 +125,7 @@ export class ChamadosPage {
   }
 
   private enviarFoto(formData: FormData) {
-    this.http.post("http://192.168.43.158:3000/api/atendimentos/59aedf8ff2297f3194241f3d/imagens", formData)
+    this.http.post("http://192.168.0.143:3000/api/atendimentos/59aedf8ff2297f3194241f3d/imagens", formData)
       .catch((e) => this.handleError(e))
       .map(response => response.text())
       .finally(() => this.loading.dismiss())
@@ -151,5 +162,17 @@ export class ChamadosPage {
     }
     this.error = errMsg;
     return Observable.throw(errMsg);
+  }
+
+  iniciarAtendimento(id){
+    const modal = this.modalCtrl.create(KmInicialComponent, { id });
+    modal.present();
+    modal.onDidDismiss((data) =>{
+      console.log(data);
+    })
+  }
+
+  openDetailsPage( id ){
+    this.navCtrl.push("DetailsPage", { id });
   }
 }
