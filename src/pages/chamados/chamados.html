@@ -28,11 +28,11 @@
 
 <ion-content class="page-chamados">
 
-  <ion-card *ngFor='let atendimento of atendimentos$ | async' (click)="openDetailsPage(atendimento._id)">
+  <ion-card *ngFor='let atendimento of atendimentos$ | async; let i = index' (click)="openDetailsPage(atendimento._id)">
     <ion-card-header>
       <ion-row>
-        <ion-col col-6 class="nome-cliente"><h2><strong>{{atendimento.cliente.nome_razao_social}}</strong></h2></ion-col>
-        <ion-col col-6 class="data-atendimento"><p>{{atendimento.data_atendimento | date: 'dd/MM/yy'}}</p></ion-col>
+        <ion-col col-6 class="nome-cliente"><h2><strong>{{ i + 1 + '. ' + atendimento.cliente.nome_razao_social | uppercase}}</strong></h2></ion-col>
+        <ion-col col-6 push-3 class="data-atendimento"><p>{{atendimento.data_atendimento | date: 'dd/MM/yy'}}</p></ion-col>
       </ion-row>
 
 
@@ -46,15 +46,8 @@
 
         <ion-col col-12>
             <p>
-              <ion-icon name="pin" item-start></ion-icon>
+              <ion-icon color="primary" name="pin" item-start></ion-icon>
                {{ atendimento.endereco.cidade +' - '+ atendimento.endereco.uf +', '+ atendimento.endereco.cep   }}
-            </p>
-        </ion-col>
-
-        <ion-col col-12>
-            <p>
-                <ion-icon name="list" item-start></ion-icon>
-               {{ atendimento.descricao   }}
             </p>
         </ion-col>
 
