@@ -171,4 +171,8 @@ export class ChamadosPage {
       console.log(data);
     })
   }
+
+  openDetailsPage( id ){
+    this.navCtrl.push("DetailsPage", { id });
+  }
 }

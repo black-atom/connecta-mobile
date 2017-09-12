@@ -29,7 +29,7 @@
 <ion-content>
 
   <ion-list >
-    <ion-item-sliding *ngFor='let atendimento of atendimentos$ | async'>
+    <ion-item-sliding *ngFor='let atendimento of atendimentos$ | async' (click)="openDetailsPage(atendimento._id)">
 
       <ion-item class="chamados-card">
         <ion-grid>
