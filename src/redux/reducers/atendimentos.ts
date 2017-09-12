@@ -1,5 +1,5 @@
 import { Atendimento } from './../../models/atendimento';
-import { SYNC_ATENDIMENTOS_SUCCESS } from './../actions/atendimentos';
+import { EDITAR_ATENDIMENTO, SYNC_ATENDIMENTOS_SUCCESS } from './../actions/atendimentos';
 import {
     Actions,
     RETRIEVE_ATENDIMENTOS,
@@ -12,10 +12,26 @@ import { ActionReducer, Action } from '@ngrx/store';
 export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 	switch (action.type) {
 		case RETRIEVE_ATENDIMENTOS:
-			return state;
+      return state;
 
-		case RETRIEVE_ATENDIMENTOS_SUCCESS:
-			return action.payload;
+    case EDITAR_ATENDIMENTO: {
+      const atendimento = state.find(at => at._id === action.payload._id);
+      if(atendimento){
+        return Object.assign({}, atendimento, action.payload, { synced: false});
+      }
+    }
+
+		case RETRIEVE_ATENDIMENTOS_SUCCESS:{
+      const atendimentos = action.payload.map((atendimento: Atendimento) => {
+        const atendimentoFound: Atendimento = state.find(at => at._id === atendimento._id);
+        if( atendimentoFound && atendimentoFound.synced === false ){
+          return atendimentoFound;
+        }else{
+          return atendimento;
+        }
+      });
+      return atendimentos;
+    }
 
 		case RETRIEVE_ATENDIMENTOS_FAILED:
       return state;
