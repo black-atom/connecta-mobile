@@ -24,6 +24,7 @@ export interface Atendimento {
   data_atendimento: string;
   imagens: any[];
   cliente: Cliente;
+  synced?: boolean;
 }
 
 interface Cliente {

@@ -30,6 +30,11 @@ export class AtendimentoProvider {
     .catch(this.lidaComErro);
   }
 
+  updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
+    return this.http.patch(this.url, atendimentos).map( response => response.json() as Atendimento[])
+    .catch(this.lidaComErro);
+  }
+
   lidaComErro(erro: Response | any) {
 
       let mensagemErro: string;

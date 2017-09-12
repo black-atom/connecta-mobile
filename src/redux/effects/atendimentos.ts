@@ -1,3 +1,4 @@
+import { Action } from 'rxjs/scheduler/Action';
 import { AtendimentoProvider } from '../../providers/atendimento/atendimento';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/retryWhen';
@@ -7,10 +8,17 @@ import 'rxjs/add/operator/take';
 
 
 
-import { RETRIEVE_ATENDIMENTOS, RETRIEVE_ATENDIMENTOS_SUCCESS, RETRIEVE_ATENDIMENTOS_FAILED, RetriveAtendimentoSuccess } from './../actions/atendimentos';
+import {
+    RETRIEVE_ATENDIMENTOS,
+    RETRIEVE_ATENDIMENTOS_FAILED,
+    RETRIEVE_ATENDIMENTOS_SUCCESS,
+    RetriveAtendimentoSuccess,
+    SYNC_ATENDIMENTOS,
+    SyncAtendimentosSuccess,
+} from './../actions/atendimentos';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, toPayload } from '@ngrx/effects';
 
 
 @Injectable()
@@ -29,4 +37,12 @@ export class AtendimentoEffects {
         .map(res => new RetriveAtendimentoSuccess(res))
         .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       );
+
+  @Effect() syncAtendimentos = this.actions$
+      .ofType(SYNC_ATENDIMENTOS)
+      .map(action => action.payload)
+      .switchMap(payload => this.atendimentoProvider.updateMany(payload)
+        .map(res => new SyncAtendimentosSuccess(res))
+      )
+      // .switchMap( payload => this.)
 }
