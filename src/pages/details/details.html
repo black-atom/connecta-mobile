@@ -19,6 +19,7 @@
           <ion-icon color="primary" name="person" item-start></ion-icon>
            <h2>Contato</h2>
            <p>{{ atendimento.contato.nome }}</p>
+           <p>{{ atendimento.contato.telefone }}</p>
        </ion-item>
 
        <ion-item class="line" text-wrap>
@@ -29,7 +30,10 @@
               + atendimento.endereco.bairro + ' ' + ',' + ' '
               + atendimento.endereco.cidade + ' ' + ',' + ' '
               + atendimento.endereco.uf + ' ' + ',' + ' '
-              + atendimento.endereco.cep }}</p>
+              + atendimento.endereco.cep + ' ' + ',' + ' '
+              + atendimento.endereco.ponto_referencia
+            }}
+            </p>
        </ion-item>
 
        <ion-item>
@@ -52,19 +56,26 @@
 
        <ion-item>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
+          <h2>Estacionamento</h2>
+          <p>{{atendimento.estacionamento}}</p>
+       </ion-item>
+
+       <ion-item>
+          <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Testes efetuados</h2>
           <p>{{atendimento.testes_efetuados}}</p>
        </ion-item>
 
-       <!-- <ion-fab left bottom>
-          <button ion-fab color="primary"><ion-icon name="arrow-dropright"></ion-icon></button>
-          <ion-fab-list side="right">
-            <button ion-fab><ion-icon name="camera"></ion-icon></button>
-            <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
-            <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
-            <button ion-fab><ion-icon name="star"></ion-icon></button>
+
+       <ion-fab top right bottom>
+          <button ion-fab mini color="primary"><ion-icon name="arrow-dropright"></ion-icon></button>
+          <ion-fab-list side="bottom">
+            <button ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+            <button ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
+            <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
+            <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
           </ion-fab-list>
-        </ion-fab> -->
+        </ion-fab>
 
       </ion-list>
     </ion-card-content>
