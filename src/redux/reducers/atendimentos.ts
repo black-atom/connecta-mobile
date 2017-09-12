@@ -17,7 +17,14 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
     case EDITAR_ATENDIMENTO: {
       const atendimento = state.find(at => at._id === action.payload._id);
       if(atendimento){
-        return Object.assign({}, atendimento, action.payload, { synced: false});
+        const novoAt: Atendimento = Object.assign({}, atendimento, action.payload, { synced: false});
+        return state.map(at => {
+          if(novoAt._id === at._id){
+            return novoAt;
+          }else{
+            return at;
+          }
+        })
       }
     }
 
