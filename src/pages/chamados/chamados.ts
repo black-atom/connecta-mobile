@@ -173,6 +173,7 @@ export class ChamadosPage {
   }
 
   openDetailsPage( id ){
+    //this.app.getRootNavs()[0].setRoot("DetailsPage", { id })
     this.navCtrl.push("DetailsPage", { id });
   }
 }
