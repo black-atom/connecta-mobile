@@ -16,73 +16,53 @@
   <ion-toolbar no-border-top color='primary'>
     <ion-segment [(ngModel)]="selectedSegment">
       <ion-segment-button class='chamado-segment' value="1">
-        Disponíveis
+          Disponíveis
       </ion-segment-button>
       <ion-segment-button class='chamado-segment' value="2">
-        Concluidos
+          Concluidos
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content>
+<ion-content class="page-chamados">
 
-  <ion-list >
-    <ion-item-sliding *ngFor='let atendimento of atendimentos$ | async' (click)="openDetailsPage(atendimento._id)">
-
-      <ion-item class="chamados-card">
-        <ion-grid>
-          <ion-row>
-            <h2>{{atendimento.cliente.nome}}</h2>
-          </ion-row>
-          <ion-row>
-
-            <ion-col col-4>
-                  <ion-icon name="pin" item-start></ion-icon>
-                  {{atendimento.endereco.cidade}}
-            </ion-col>
-
-            <ion-col  offset-4 col-4>
-                  <ion-icon name="construct" item-start></ion-icon>
-                  Tipo
-            </ion-col>
-
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+  <ion-card *ngFor='let atendimento of atendimentos$ | async' (click)="openDetailsPage(atendimento._id)">
+    <ion-card-header>
+      <ion-row>
+        <ion-col col-6 class="nome-cliente"><h2><strong>{{atendimento.cliente.nome_razao_social}}</strong></h2></ion-col>
+        <ion-col col-6 class="data-atendimento"><p>{{atendimento.data_atendimento | date: 'dd/MM/yy'}}</p></ion-col>
+      </ion-row>
 
 
-
-      <ion-item-options side="left">
-        <button class="btn-options" ion-button color="primary" (click)="iniciarAtendimento(atendimento._id)">
-          <ion-icon name="ios-clipboard"></ion-icon>
-          Inciar
-        </button>
-      </ion-item-options>
-
-      <ion-item-options side="right">
-        <button class="btn-options" ion-button (click)="finalizarChamado(atendimento._id)" color="danger">
-          <ion-icon name="close-circle"></ion-icon>
-          Finalizar
-        </button>
-      </ion-item-options>
-
-    </ion-item-sliding>
-  </ion-list>
+    </ion-card-header>
 
 
+  <ion-card-content>
+    <ion-list >
 
+      <ion-row>
 
-    <ion-item *ngIf="error">
-      <strong>{{error}}</strong>
-    </ion-item>
-    <ion-item>
-       <img *ngIf="myPhoto" class="img-responsive" [src]="myPhoto"/>
-      <!-- {{myPhoto}} -->
-    </ion-item>
-    <ion-fab bottom right>
-        <button (click)="takePhoto()" ion-fab><ion-icon name="camera"></ion-icon></button>
-    </ion-fab>
+        <ion-col col-12>
+            <p>
+              <ion-icon name="pin" item-start></ion-icon>
+               {{ atendimento.endereco.cidade +' - '+ atendimento.endereco.uf +', '+ atendimento.endereco.cep   }}
+            </p>
+        </ion-col>
+
+        <ion-col col-12>
+            <p>
+                <ion-icon name="list" item-start></ion-icon>
+               {{ atendimento.descricao   }}
+            </p>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-list>
+  </ion-card-content>
+
+</ion-card>
 
 </ion-content>

@@ -3,7 +3,7 @@ import { App, NavController } from 'ionic-angular';
 import { LoginActions } from '../login/redux/login.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../redux/reducers';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, style } from '@angular/core';
 
 @Component({
   templateUrl: 'tabs.html'
