@@ -1,12 +1,29 @@
+@import './../../theme/variables.scss';
+
 page-chamados {
-  background: #3F5EFB;
+
+
+
+  ion-content {
+    background-color:   rgb(248, 246, 246) !important;
+
+    ion-card {
+      ion-card-header{
+        .data-atendimento {
+          p {
+            float: right;
+            color: grey;
+          }
+        }
+      }
+    }
+  }
+
+
   .input-wrapper{
     text-align: center;
   }
 
-  .chamados-card{
-    padding: 0px;
-  }
 
   .chamado-segment{
     color: white !important;
