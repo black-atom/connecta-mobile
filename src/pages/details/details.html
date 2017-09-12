@@ -11,7 +11,23 @@
 
     <ion-card-content>
       <ion-card-title class="line">
-        <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
+        <ion-row>
+          <ion-col col-10>
+              <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
+          </ion-col>
+          <ion-col col-2>
+            <ion-fab top right bottom>
+                <button ion-fab mini color="primary"><ion-icon name="arrow-dropright"></ion-icon></button>
+                <ion-fab-list side="bottom">
+                  <button ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+                  <button ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
+                  <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
+                  <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
+                </ion-fab-list>
+              </ion-fab>
+          </ion-col>
+        </ion-row>
+
       </ion-card-title>
 
       <ion-list no-lines>
@@ -22,7 +38,7 @@
            <p>{{ atendimento.contato.telefone }}</p>
        </ion-item>
 
-       <ion-item class="line" text-wrap>
+       <ion-item text-wrap>
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
           <p>{{ atendimento.endereco.rua + ' ' + ',' + ' '
@@ -35,6 +51,13 @@
             }}
             </p>
        </ion-item>
+
+       <ion-item class="line" >
+          <ion-icon color="primary" name="car" item-start></ion-icon>
+          <h2>Estacionamento</h2>
+          <p>{{atendimento.estacionamento}}</p>
+       </ion-item>
+
 
        <ion-item>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
@@ -56,26 +79,9 @@
 
        <ion-item>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
-          <h2>Estacionamento</h2>
-          <p>{{atendimento.estacionamento}}</p>
-       </ion-item>
-
-       <ion-item>
-          <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Testes efetuados</h2>
           <p>{{atendimento.testes_efetuados}}</p>
        </ion-item>
-
-
-       <ion-fab top right bottom>
-          <button ion-fab mini color="primary"><ion-icon name="arrow-dropright"></ion-icon></button>
-          <ion-fab-list side="bottom">
-            <button ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-            <button ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
-            <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
-            <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
-          </ion-fab-list>
-        </ion-fab>
 
       </ion-list>
     </ion-card-content>
