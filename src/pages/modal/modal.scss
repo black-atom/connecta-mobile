@@ -1,0 +1,26 @@
+page-modal {
+  ion-content {
+    ion-item {
+      button {
+        background-color:#448AFF !important;
+        height: 40px !important;
+        width: 40px !important;
+        border-radius: 100px !important;
+        i{
+          color: white !important;
+          font-size: 2.5rem !important;
+        }
+      }
+
+      ion-input {
+        margin-top: 04% !important;
+      }
+    }
+
+    .salvar {
+      margin-top: -1.5rem !important;
+    }
+
+  }
+
+}

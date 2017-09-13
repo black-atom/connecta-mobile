@@ -18,6 +18,7 @@ import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { PesquisaPage } from '../pages/pesquisa/pesquisa';
+import { ModalPage } from './../pages/modal/modal';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -67,7 +68,8 @@ export function getAuthHttp(http) {
   declarations: [
     MyApp,
     TabsPage,
-    PesquisaPage
+    PesquisaPage,
+    ModalPage
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,8 @@ export function getAuthHttp(http) {
   bootstrap: [IonicApp],
   entryComponents: [
     TabsPage,
-    PesquisaPage
+    PesquisaPage,
+    ModalPage
   ],
   providers: [
     StatusBar,

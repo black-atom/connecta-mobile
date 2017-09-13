@@ -7,7 +7,7 @@
 
 <ion-content>
   <ion-card *ngIf="atendimento$  | async; let atendimento">
-    <img src="assets/img/services.jpg" />
+    <img src="assets/img/Fundo_Chamados.svg" />
 
     <ion-card-content>
       <ion-card-title class="line">
@@ -17,10 +17,10 @@
           </ion-col>
           <ion-col col-2>
             <ion-fab top right bottom>
-                <button ion-fab mini color="primary"><ion-icon name="arrow-dropright"></ion-icon></button>
+                <button ion-fab mini color="accent"><ion-icon name="arrow-dropright"></ion-icon></button>
                 <ion-fab-list side="bottom">
-                  <button ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-                  <button ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
+                  <button (click)="openModal({opcao: 0})" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+                  <button (click)="openModal({opcao: 1})" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
                   <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
                   <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
                 </ion-fab-list>
@@ -41,12 +41,12 @@
        <ion-item text-wrap>
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
-          <p>{{ atendimento.endereco.rua + ' ' + ',' + ' '
-              + atendimento.endereco.numero + ' ' + ',' + ' '
-              + atendimento.endereco.bairro + ' ' + ',' + ' '
-              + atendimento.endereco.cidade + ' ' + ',' + ' '
-              + atendimento.endereco.uf + ' ' + ',' + ' '
-              + atendimento.endereco.cep + ' ' + ',' + ' '
+          <p>{{ atendimento.endereco.rua + ',' + ' '
+              + atendimento.endereco.numero + ',' + ' '
+              + atendimento.endereco.bairro + ',' + ' '
+              + atendimento.endereco.cidade + ',' + ' '
+              + atendimento.endereco.uf + ',' + ' '
+              + atendimento.endereco.cep + ',' + ' '
               + atendimento.endereco.ponto_referencia
             }}
             </p>
@@ -65,19 +65,19 @@
           <p>{{atendimento.tipo}}</p>
        </ion-item>
 
-       <ion-item>
+       <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Modelo do equipamento</h2>
           <p>{{atendimento.modelo_equipamento}}</p>
        </ion-item>
 
-       <ion-item>
+       <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Descrição do atendimento</h2>
           <p>{{atendimento.descricao}}</p>
        </ion-item>
 
-       <ion-item>
+       <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Testes efetuados</h2>
           <p>{{atendimento.testes_efetuados}}</p>

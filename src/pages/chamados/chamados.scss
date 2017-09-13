@@ -1,43 +1,44 @@
-@import './../../theme/variables.scss';
+@import "./../../theme/variables.scss";
 
 page-chamados {
-
-
-
-  ion-content {
-    background-color:   rgb(248, 246, 246) !important;
-
-    ion-card {
-      ion-card-header{
-        .data-atendimento {
-          p {
-            color: grey;
-          }
-        }
+  ion-header {
+    ion-navbar {
+      ion-title {
+        text-align: center !important;
       }
     }
   }
 
-
-  .input-wrapper{
-    text-align: center;
-  }
-
-
-  .chamado-segment{
-    color: white !important;
-    border-color: white !important;
-    .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
-
+  ion-content {
+    ion-card {
+      border-radius: 05px !important;
+      h2 {
+        color: #3f51b5 !important;
+      }
+      p {
+        color: #212121 !important;
+      }
     }
   }
 
-  .btn-options{
+  .input-wrapper {
+    text-align: center;
+  }
+
+  .chamado-segment {
+    color: white !important;
+    border-color: white !important;
+    .segment-md .segment-button.activated,
+    .segment-md .segment-button.segment-activated {
+    }
+  }
+
+  .btn-options {
     margin: 0px !important;
     height: 100% !important;
   }
 
-  .item-inner{
+  .item-inner {
     padding: 0px !important;
     margin: 0px !important;
   }

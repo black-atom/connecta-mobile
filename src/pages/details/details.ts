@@ -4,6 +4,8 @@ import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
+import { ModalPage } from './../modal/modal';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,8 @@ export class DetailsPage {
   constructor(
     private navCtrl: NavController,
     public navParams: NavParams,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private modal: ModalController
   ) {
   }
 
@@ -28,6 +31,13 @@ export class DetailsPage {
         .find(atendimento => atendimento._id == this.selectedId)
     );
 
+  }
+
+  openModal(opcao) {
+
+
+    const modal = this.modal.create(ModalPage, opcao);
+    modal.present();
   }
 
 }
