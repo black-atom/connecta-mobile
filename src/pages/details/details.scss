@@ -9,6 +9,12 @@ page-details {
   height: 100%;
 
   ion-content {
+    h2 {
+      color: #3F51B5 !important;
+    }
+    p {
+      color: #212121 !important;
+    }
     .line {
       border-bottom: 1px dashed #e5e5e5 !important;
     }
@@ -24,8 +30,8 @@ page-details {
     box-shadow: none !important;
 
     i {
-      color: #3F5EFB;
-      font-size: 1.8rem !important;
+      color: #448AFF !important;
+      font-size: 2.3rem !important;
     }
   }
 }
