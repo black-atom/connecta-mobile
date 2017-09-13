@@ -1,3 +1,4 @@
+import { Endereco } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
 import { AppState } from './../../redux/reducers/index';
@@ -19,6 +20,8 @@ import {
 import { Store } from "@ngrx/store";
 import {Http, Response} from "@angular/http";
 import {File, FileEntry} from "@ionic-native/file";
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+
 
 
 
@@ -52,6 +55,7 @@ export class ChamadosPage {
     private readonly camera: Camera,
     private store: Store<AppState>,
     private modalCtrl: ModalController,
+    private launchNavigator: LaunchNavigator,
     // private socketIoProvider: SocketIoProvider,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
@@ -175,5 +179,12 @@ export class ChamadosPage {
   openDetailsPage( id ){
     //this.app.getRootNavs()[0].setRoot("DetailsPage", { id })
     this.navCtrl.push("DetailsPage", { id });
+  }
+
+  openGPS(endereco: Endereco){
+
+    this.launchNavigator.navigate(`${endereco.numero} ${endereco.rua},${endereco.bairro},${endereco.cidade}`, {
+    });
+
   }
 }

@@ -63,7 +63,7 @@ interface Contato {
   email: string;
 }
 
-interface Endereco {
+export interface Endereco {
   rua: string;
   numero: string;
   bairro: string;

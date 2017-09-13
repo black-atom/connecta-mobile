@@ -37,7 +37,7 @@ import { NetwordStatusProvider } from '../providers/netword-status/netword-statu
 import { LoginProvider } from '../providers/login/login';
 import { AtendimentoProvider } from '../providers/atendimento/atendimento';
 import {Storage} from '@ionic/storage';
-
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 
 // console.log all actions
@@ -95,6 +95,7 @@ export function getAuthHttp(http) {
     NetwordStatusProvider,
     Network,
     LoginProvider,
+    LaunchNavigator,
     AtendimentoProvider,
     {
       provide: AuthHttp,
