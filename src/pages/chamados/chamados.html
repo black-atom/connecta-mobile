@@ -1,25 +1,23 @@
 <!--
-  Generated template for the ChamadosPage page.
+Generated template for the ChamadosPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+See http://ionicframework.com/docs/components/#navigation for more info on
+Ionic pages and navigation.
 -->
 <ion-header>
 
   <ion-navbar color='primary'>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>Chamados</ion-title>
   </ion-navbar>
 
   <ion-toolbar no-border-top color='primary'>
     <ion-segment [(ngModel)]="selectedSegment">
       <ion-segment-button class='chamado-segment' value="1">
-          Disponíveis
+        Disponíveis
       </ion-segment-button>
       <ion-segment-button class='chamado-segment' value="2">
-          Concluidos
+        Concluidos
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -31,31 +29,51 @@
   <ion-card *ngFor='let atendimento of atendimentos$ | async; let i = index' (click)="openDetailsPage(atendimento._id)">
     <ion-card-header>
       <ion-row>
-        <ion-col col-6 class="nome-cliente"><h2><strong>{{ i + 1 + '. ' + atendimento.cliente.nome_razao_social | uppercase}}</strong></h2></ion-col>
-        <ion-col col-6 push-3 class="data-atendimento"><p>{{atendimento.data_atendimento | date: 'dd/MM/yy'}}</p></ion-col>
+
+        <ion-col col-12 class="nome-cliente">
+          <h2>
+            <strong>
+              {{ i + 1 + '. ' + atendimento.cliente.nome_razao_social | uppercase}}
+           </strong>
+          </h2>
+        </ion-col>
       </ion-row>
 
 
     </ion-card-header>
 
 
-  <ion-card-content>
-    <ion-list >
-
-      <ion-row>
-
-        <ion-col col-12>
+    <ion-card-content>
+      <ion-list>
+        <ion-row>
+          <ion-col col-12>
             <p>
-              <ion-icon color="primary" name="pin" item-start></ion-icon>
-               {{ atendimento.endereco.cidade +' - '+ atendimento.endereco.uf +', '+ atendimento.endereco.cep   }}
+              <ion-icon name="calendar-outline" color="primary"></ion-icon>
+              {{atendimento.data_atendimento | date: 'dd/MM/yy'}}
             </p>
-        </ion-col>
+          </ion-col>
 
-      </ion-row>
+          <ion-col col-12>
+            <p>
+              <ion-icon name="pin-outline" color="primary"></ion-icon>
+              {{ atendimento.endereco.cidade +' - '
+              + atendimento.endereco.uf +', '
+              + atendimento.endereco.cep }}
+            </p>
+          </ion-col>
 
-    </ion-list>
-  </ion-card-content>
+          <ion-col text-right>
+            <button ion-button clear small color="danger" icon-start>
+            <ion-icon name='navigate'></ion-icon>
+            GPS
+            </button>
+          </ion-col>
 
-</ion-card>
+        </ion-row>
+
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>
