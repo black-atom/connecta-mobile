@@ -38,11 +38,12 @@ export class AtendimentoEffects {
         .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       );
 
-  @Effect() syncAtendimentos = this.actions$
+  @Effect() syncAtendimentos$ = this.actions$
       .ofType(SYNC_ATENDIMENTOS)
       .map(action => action.payload)
       .switchMap(payload => this.atendimentoProvider.updateMany(payload)
         .map(res => new SyncAtendimentosSuccess(res))
       )
       // .switchMap( payload => this.)
+
 }
