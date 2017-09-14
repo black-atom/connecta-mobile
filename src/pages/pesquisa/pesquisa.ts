@@ -1,3 +1,6 @@
+import { AppState } from './../../redux/reducers/index';
+import { Store } from '@ngrx/store';
+import { FIM_ATENDIMENTO } from './../../redux/actions/atendimentos';
 import { TabsPage } from '../tabs/tabs';
 
 import { Component, ViewChild } from '@angular/core';
@@ -15,12 +18,16 @@ import { NavController, NavParams, Slides } from 'ionic-angular';
 })
 export class PesquisaPage {
   @ViewChild('slides') slides: Slides;
+  private selectedId = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private store: Store<AppState>,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PesquisaPage');
+    this.selectedId = this.navParams.get("_id");
   }
 
   onSlideChangeStart(slider: Slides) {
@@ -29,7 +36,13 @@ export class PesquisaPage {
   }
 
   finalizar(){
-    this.navCtrl.setRoot(TabsPage);
+    this.store.dispatch({
+      type: FIM_ATENDIMENTO,
+      payload: {
+        _id: this.selectedId
+      }
+    })
+    this.navCtrl.pop();
   }
 
 }

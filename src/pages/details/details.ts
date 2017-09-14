@@ -1,3 +1,4 @@
+import { PesquisaPage } from './../pesquisa/pesquisa';
 import { FIM_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
@@ -40,12 +41,7 @@ export class DetailsPage {
   }
 
   finalizarAtendimento(){
-    this.store.dispatch({
-      type: FIM_ATENDIMENTO,
-      payload: {
-        _id: this.selectedId
-      }
-    })
+    this.navCtrl.push(PesquisaPage,{_id: this.selectedId});
   }
 
 }
