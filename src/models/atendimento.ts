@@ -9,8 +9,10 @@ export interface Atendimento {
   inativo: Inativo;
   encaixe: boolean;
   estado: string;
-  fim: Fim;
-  inicio: Fim;
+  km_inicial: KM;
+  km_final: KM;
+  inicio: Date;
+  fim: Date;
   observacao: string;
   avaliacao: Avaliacao[];
   valor: number;
@@ -44,7 +46,7 @@ interface Avaliacao {
   valor: number;
 }
 
-interface Fim {
+export interface KM {
   data?: any;
   km?: any;
 }
