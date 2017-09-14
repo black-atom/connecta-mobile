@@ -21,8 +21,9 @@
                 <ion-fab-list side="bottom">
                   <button (click)="openModal({opcao: 0})" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
                   <button (click)="openModal({opcao: 1})" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
-                  <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
+                  <button ion-fab><ion-icon color="accent" name="play"></ion-icon></button>
                   <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
+                  <button ion-fab><i class="fa fa-star" aria-hidden="true"></i></button>
                 </ion-fab-list>
               </ion-fab>
           </ion-col>
@@ -38,18 +39,19 @@
            <p>{{ atendimento.contato.telefone }}</p>
        </ion-item>
 
-       <ion-item text-wrap>
+       <ion-item text-wrap class="address">
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
-          <p>{{ atendimento.endereco.rua + ',' + ' '
-              + atendimento.endereco.numero + ',' + ' '
-              + atendimento.endereco.bairro + ',' + ' '
-              + atendimento.endereco.cidade + ',' + ' '
-              + atendimento.endereco.uf + ',' + ' '
-              + atendimento.endereco.cep + ',' + ' '
-              + atendimento.endereco.ponto_referencia
-            }}
-            </p>
+          <p>
+            {{ atendimento.endereco.rua + ',' + ' '
+              + atendimento.endereco.numero }} </p>
+
+          <p>{{atendimento.endereco.bairro + ',' + ' '
+              + atendimento.endereco.cidade}}</p>
+
+          <p>{{atendimento.endereco.uf + ',' + ' ' + atendimento.endereco.cep}}</p>
+
+          <p><i>{{ atendimento.endereco.ponto_referencia }}</i></p>
        </ion-item>
 
        <ion-item class="line" >

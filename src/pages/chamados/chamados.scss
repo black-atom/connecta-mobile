@@ -1,15 +1,7 @@
 @import "./../../theme/variables.scss";
 
 page-chamados {
-  ion-header {
-    ion-navbar {
-      ion-title {
-        text-align: center !important;
-      }
-    }
-  }
-
-  ion-content {
+   ion-content {
     ion-card {
       border-radius: 05px !important;
       h2 {
@@ -19,11 +11,15 @@ page-chamados {
         color: #212121 !important;
       }
     }
+
+    .gps {
+      button {
+        font-size: 1.4rem !important;
+       }
+    }
   }
 
-  .input-wrapper {
-    text-align: center;
-  }
+  .input-wrapper { text-align: center; }
 
   .chamado-segment {
     color: white !important;

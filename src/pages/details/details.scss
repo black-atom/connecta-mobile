@@ -26,12 +26,17 @@ page-details {
 
   ion-fab {
     top: -1.7rem !important;
-    font-size: 5px !important;
-    box-shadow: none !important;
 
     i {
       color: #448AFF !important;
       font-size: 2.3rem !important;
+    }
+  }
+
+
+  .address {
+    p {
+      line-height: 2.3rem !important;
     }
   }
 }

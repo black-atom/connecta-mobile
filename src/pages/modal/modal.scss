@@ -1,13 +1,16 @@
 page-modal {
   ion-content {
     ion-item {
+
       button {
-        background-color:#448AFF !important;
+        background-color: transparent !important;
+        border: 1px solid #303F9F !important;
         height: 40px !important;
         width: 40px !important;
         border-radius: 100px !important;
+
         i{
-          color: white !important;
+          color: #303F9F  !important;
           font-size: 2.5rem !important;
         }
       }
@@ -19,6 +22,7 @@ page-modal {
 
     .salvar {
       margin-top: -1.5rem !important;
+      width: 100% !important;
     }
 
   }
