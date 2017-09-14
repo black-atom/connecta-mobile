@@ -1,3 +1,4 @@
+import { FIM_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
@@ -34,10 +35,17 @@ export class DetailsPage {
   }
 
   openModal(opcao) {
-
-
     const modal = this.modal.create(ModalPage, opcao);
     modal.present();
+  }
+
+  finalizarAtendimento(){
+    this.store.dispatch({
+      type: FIM_ATENDIMENTO,
+      payload: {
+        _id: this.selectedId
+      }
+    })
   }
 
 }
