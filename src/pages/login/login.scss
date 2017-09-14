@@ -1,4 +1,8 @@
+@import './../../theme/variables.scss';
+
 .login-page {
+  background: url('./../../assets/img/Backgroud_Connecta_1920x1080_Portrait_Blur_12.jpg') no-repeat  center !important;
+  background-size: 100% !important;
 
   .list-md .item-block {
     border-bottom: 1px solid #D1D0D0;
@@ -9,8 +13,25 @@
 
   .login-form {
     flex: 1;
-    margin-top: 150px;
     text-align: center;
+    margin-top: 35% !important;
+
+
+    ion-item {
+      background-color: transparent !important;
+      color: #fff !important;
+
+      ion-icon {
+        color: #fff !important;
+      }
+
+      ion-input{
+        ::-webkit-input-placeholder{
+          color: #fff !important;
+        }
+        font-size: 1.9rem !important;
+      }
+    }
 }
 
   .logo img {
@@ -25,11 +46,20 @@
 
     .login-button {
         margin-top: 30px;
-        font-size: 1.2em;
-        background: linear-gradient(to right, #3F5EFB, #FC466B) !important;
-        width: 85%;
-        margin-left: 05%;
-        border-radius: 20px;
+        font-size: 1.3em;
+        background: linear-gradient(to right, #0097A7,#00BCD4) !important;
+        border-radius: 12px;
+        height: 20% !important;
+        text-transform: capitalize !important;
+        i {
+          padding-right: 03% !important;
+        }
+    }
+
+    @media screen and(orientation: landscape) {
+      .login-form {
+        margin-top: 3% !important;
+      }
     }
 
 }
