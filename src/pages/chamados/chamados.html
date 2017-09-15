@@ -33,7 +33,7 @@ Ionic pages and navigation.
         <ion-col col-12 class="nome-cliente">
           <h2>
             <strong>
-              {{ i + 1 + '. ' + atendimento.cliente.nome_razao_social | uppercase}}
+              {{ atendimento.cliente.nome_razao_social | uppercase}}
            </strong>
           </h2>
         </ion-col>
@@ -46,27 +46,13 @@ Ionic pages and navigation.
     <ion-card-content>
       <ion-list>
         <ion-row>
-          <ion-col col-12>
-            <p>
-              <ion-icon name="calendar" color="primary"></ion-icon>
-              {{atendimento.data_atendimento | date: 'dd/MM/yy'}}
-            </p>
-          </ion-col>
-
-          <ion-col col-12>
+           <ion-col col-12>
             <p>
               <ion-icon name="pin" color="primary"></ion-icon>
               {{ atendimento.endereco.cidade +' - '
               + atendimento.endereco.uf +', '
               + atendimento.endereco.cep }}
             </p>
-          </ion-col>
-
-          <ion-col text-right class="gps">
-            <button ion-button color="light" outline icon-start (click)='openGPS(atendimento.endereco)'>
-              <ion-icon name='navigate'></ion-icon>
-              GPS
-            </button>
           </ion-col>
 
         </ion-row>

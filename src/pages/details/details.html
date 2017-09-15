@@ -14,16 +14,17 @@
         <ion-row>
           <ion-col col-10>
               <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
+              <p>{{atendimento.cliente.cnpj_cpf}}</p>
           </ion-col>
           <ion-col col-2>
             <ion-fab top right bottom>
-                <button ion-fab mini color="accent"><ion-icon name="arrow-dropright"></ion-icon></button>
+                <button ion-fab mini color="accent"><ion-icon name="arrow-dropdown"></ion-icon></button>
                 <ion-fab-list side="bottom">
-                  <button (click)="openModal({opcao: 0})" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-                  <button (click)="openModal({opcao: 1})" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
-                  <button ion-fab (click)="iniciarAtendimento()" ><ion-icon color="accent" name="play"></ion-icon></button>
+                  <button (click)="mostrarPromptKmInicial()" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+                  <button (click)="mostrarPromptKmFinal()" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
+                  <button ion-fab (click)="mostrarConfirmacaoInicioAtendimento()" ><ion-icon color="accent" name="play"></ion-icon></button>
                   <button ion-fab (click)="takePhoto()"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                  <button ion-fab (click)='finalizarAtendimento()'><i class="fa fa-star" aria-hidden="true"></i></button>
+                  <button ion-fab (click)='mostrarConfirmacaoFimAtendimento()'><i class="fa fa-star" aria-hidden="true"></i></button>
                 </ion-fab-list>
               </ion-fab>
           </ion-col>
@@ -32,6 +33,15 @@
       </ion-card-title>
 
       <ion-list no-lines>
+
+          <ion-item *ngIf="atendimento.inicio !== null || undefined" >
+              <ion-icon color="primary" name="checkmark" item-start></ion-icon>
+               <h2>Situação do atendimento</h2>
+               <p> Iniciado às {{atendimento.inicio | date: 'hh:mm'}}</p>
+               <p *ngIf="atendimento.fim !== null || undefined" > Finalizado às {{atendimento.fim | date: 'hh:mm'}}</p>
+           </ion-item>
+
+
         <ion-item>
           <ion-icon color="primary" name="person" item-start></ion-icon>
            <h2>Contato</h2>
@@ -39,7 +49,7 @@
            <p>{{ atendimento.contato.telefone }}</p>
        </ion-item>
 
-       <ion-item text-wrap class="address">
+       <ion-item text-wrap class="address" (click)="openGPS(atendimento.endereco)">
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
           <p>

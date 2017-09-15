@@ -2,17 +2,18 @@ import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimen
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
 import { FIM_ATENDIMENTO, INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
-import { Atendimento } from './../../models/atendimento';
+import { Atendimento, Endereco } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
 import { Action, Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, Loading, LoadingController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { ModalPage } from './../modal/modal';
-import {File, FileEntry} from "@ionic-native/file";
-import {Http, Response} from "@angular/http";
+import { File, FileEntry} from "@ionic-native/file";
+import { Http, Response} from "@angular/http";
 import { AuthHttp } from 'angular2-jwt';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 
 
@@ -33,6 +34,7 @@ export class DetailsPage {
   constructor(
     private navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     private store: Store<AppState>,
     private modal: ModalController,
     private readonly camera: Camera,
@@ -42,6 +44,7 @@ export class DetailsPage {
     private modalCtrl: ModalController,
     private readonly http: Http,
     private readonly authHttp: AuthHttp,
+    private launchNavigator: LaunchNavigator,
   ) {
   }
 
@@ -61,6 +64,86 @@ export class DetailsPage {
         _id: this.selectedId
       }
     })
+  }
+
+  mostrarConfirmacaoInicioAtendimento(){
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmação',
+      message: `Deseja iniciar o atendimento?`,
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.iniciarAtendimento();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  mostrarPromptKmInicial() {
+    let alert = this.alertCtrl.create({
+      title: 'Quilometragem inicial',
+      inputs: [
+        {
+          name: 'Quilometragem inicial',
+          placeholder: 'KM',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: ()=> {
+            console.log('Canceled!')
+          }
+        },
+        {
+          text: 'Salvar',
+          handler: () => {
+            console.log('Salvar Prompt Km Inicial')
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
+  mostrarPromptKmFinal() {
+    let alert = this.alertCtrl.create({
+      title: 'Quilometragem final',
+      inputs: [
+        {
+          name: 'Quilometragem final',
+          placeholder: 'KM',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: ()=> {
+            console.log('Canceled!')
+          }
+        },
+        {
+          text: 'Salvar',
+          handler: () => {
+            console.log('Salvar Prompt Km Inicial')
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   takePhoto() {
@@ -88,7 +171,7 @@ export class DetailsPage {
   private uploadPhoto(imageFileUri: any): void {
     this.error = null;
     this.loading = this.loadingCtrl.create({
-      content: 'Uploading...'
+      content: 'Enviando...'
     });
 
     this.loading.present();
@@ -178,4 +261,30 @@ export class DetailsPage {
     this.navCtrl.push(PesquisaPage,{_id: this.selectedId});
   }
 
+  mostrarConfirmacaoFimAtendimento(){
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmação',
+      message: `Deseja iniciar a avaliação?`,
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.finalizarAtendimento();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  openGPS(endereco: Endereco){
+
+     this.launchNavigator.navigate(`${endereco.numero} ${endereco.rua},${endereco.bairro},${endereco.cidade}`, {
+    });
+  }
 }

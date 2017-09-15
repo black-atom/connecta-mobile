@@ -41,9 +41,8 @@ export class ChamadosPage {
     public app: App,
     public navCtrl: NavController,
     private store: Store<AppState>,
-    private modalCtrl: ModalController,
-    private launchNavigator: LaunchNavigator,
-  ) {
+    private modalCtrl: ModalController
+   ) {
   }
 
   ionViewDidLoad() {
@@ -84,12 +83,5 @@ export class ChamadosPage {
   openDetailsPage( id ){
     //this.app.getRootNavs()[0].setRoot("DetailsPage", { id })
     this.navCtrl.push("DetailsPage", { id });
-  }
-
-  openGPS(endereco: Endereco){
-
-    this.launchNavigator.navigate(`${endereco.numero} ${endereco.rua},${endereco.bairro},${endereco.cidade}`, {
-    });
-
   }
 }
