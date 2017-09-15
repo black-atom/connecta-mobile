@@ -59,6 +59,13 @@ export class MyApp implements OnInit, OnDestroy {
       .subscribe((state: AppState) =>
         this.store.dispatch(new SaveStateDB(state))
       );
+
+      window.onunload = () => {
+        this.store.take(1)
+        .subscribe((state: AppState) =>
+          this.store.dispatch(new SaveStateDB(state))
+        );
+      }
   }
 
   ngOnDestroy(): void {

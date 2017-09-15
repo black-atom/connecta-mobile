@@ -22,7 +22,7 @@
                   <button (click)="openModal({opcao: 0})" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
                   <button (click)="openModal({opcao: 1})" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
                   <button ion-fab><ion-icon color="accent" name="play"></ion-icon></button>
-                  <button ion-fab><i class="fa fa-camera" aria-hidden="true"></i></button>
+                  <button ion-fab><i class="fa fa-camera" (click)="takePhoto()" aria-hidden="true"></i></button>
                   <button ion-fab (click)='finalizarAtendimento()'><i class="fa fa-star" aria-hidden="true"></i></button>
                 </ion-fab-list>
               </ion-fab>
