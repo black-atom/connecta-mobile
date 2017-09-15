@@ -127,7 +127,8 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimentos = state.map(atendimento =>{
         const achou = action.payload.find((atendimentoSynced:Atendimento)=> atendimentoSynced._id === atendimento._id);
         if(achou){
-          return achou;
+          delete atendimento.synced;
+          return atendimento;
         }else{
           return atendimento;
         }
