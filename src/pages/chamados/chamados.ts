@@ -1,8 +1,8 @@
-import { Endereco } from '../../models/atendimento';
+import { Atendimento, Endereco } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
 import { AppState } from './../../redux/reducers/index';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { PesquisaPage } from '../pesquisa/pesquisa';
 import { Component } from '@angular/core';
 import {
@@ -32,12 +32,10 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 export class ChamadosPage {
   selectedSegment = "1";
 
-  public myPhoto: any;
-  public myPhotoURL: any;
-  public error: string;
+  public changeAtendimentos$: Subject<string> = new Subject<string>();
 
   counter: Observable<number>;
-  atendimentos$: Observable<any[]>;
+  atendimentos$: Observable<Atendimento[]>;
 
   constructor(
     public app: App,
@@ -46,14 +44,33 @@ export class ChamadosPage {
     private modalCtrl: ModalController,
     private launchNavigator: LaunchNavigator,
   ) {
-    this.counter = store.select("counter");
-    this.atendimentos$ = store.select("atendimentos");
-    //this.socketIoProvider.getChamados().subscribe(data => console.log("oi"));
   }
 
   ionViewDidLoad() {
-    setTimeout(() => this.store.dispatch({ type: RETRIEVE_ATENDIMENTOS }), 500);
-    console.log("ionViewDidLoad ChamadosPage");
+    this.atendimentos$ = this.changeAtendimentos$
+    .switchMap( option =>
+      this.store.select(appstate => appstate.atendimentos)
+      .map(atendimentos => {
+        return atendimentos.filter(atendimento => {
+          if(option==='2' && atendimento.estado.indexOf('fim_do_atendimento')>-1){
+            return true;
+          }else if(option==='1' && atendimento.estado.indexOf('fim_do_atendimento')==-1){
+            return true;
+          }else{
+            return false;
+          }
+        })
+      })
+    )
+    setTimeout(() =>{
+      this.store.dispatch({ type: RETRIEVE_ATENDIMENTOS });
+      this.changeAtendimentos$.next('1');
+    }, 500
+    );
+  }
+
+  changeSegment(){
+    this.changeAtendimentos$.next(this.selectedSegment);
   }
 
   finalizarChamado(_id: number) {
