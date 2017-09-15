@@ -38,6 +38,7 @@ import { LoginProvider } from '../providers/login/login';
 import { AtendimentoProvider } from '../providers/atendimento/atendimento';
 import {Storage} from '@ionic/storage';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 
 // console.log all actions
@@ -77,7 +78,8 @@ export function getAuthHttp(http) {
     IonicStorageModule.forRoot(),
     HttpModule,
     ReduxModule,
-    PagesModule
+    PagesModule,
+    Ionic2RatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
