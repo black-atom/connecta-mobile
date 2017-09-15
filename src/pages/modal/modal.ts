@@ -15,6 +15,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class ModalPage {
 
   opcao: any;
+  public km:number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -40,6 +41,10 @@ export class ModalPage {
 
   closeModal() {
     this.view.dismiss();
+  }
+
+  salvar(km: number){
+    this.view.dismiss(km || 0)
   }
 
 }

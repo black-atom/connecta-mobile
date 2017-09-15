@@ -60,6 +60,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 
     case INICIAR_ATENDIMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
+
       const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
         inicio: atendimento.inicio || new Date(),
         estado: 'inicio_atendimento'

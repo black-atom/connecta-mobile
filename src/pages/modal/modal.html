@@ -31,7 +31,7 @@ Ionic pages and navigation.
 
       <ion-col col-8>
         <ion-item>
-          <ion-input type="number" placeholder="{{opcao.titulo}}"></ion-input>
+          <ion-input type="number" [(ngModel)]="km" placeholder="{{opcao.titulo}}"></ion-input>
         </ion-item>
       </ion-col>
 
@@ -39,6 +39,6 @@ Ionic pages and navigation.
     </ion-row>
   </ion-list>
 
-  <button outline class="salvar" ion-button color="primary">Salvar</button>
+  <button outline class="salvar" (click)="salvar(km)" ion-button color="primary">Salvar</button>
 
 </ion-content>

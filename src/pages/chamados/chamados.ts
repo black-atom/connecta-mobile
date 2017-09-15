@@ -73,17 +73,6 @@ export class ChamadosPage {
     this.changeAtendimentos$.next(this.selectedSegment);
   }
 
-  finalizarChamado(_id: number) {
-    //this.navCtrl.push(PesquisaPage);
-    //this.navCtrl.setRoot(PesquisaPage);
-    //this.app.getRootNav().setRoot(PesquisaPage);
-    this.app.getRootNavs()[0].setRoot(PesquisaPage);
-    //this.app.getRootNavById()
-    //this.navCtrl.parent.setRoot(PesquisaPage);
-    //this.navCtrl.goToRoot()
-  }
-
-
   iniciarAtendimento(id){
     const modal = this.modalCtrl.create(KmInicialComponent, { id });
     modal.present();

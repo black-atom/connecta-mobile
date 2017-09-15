@@ -1,10 +1,11 @@
+import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
-import { FIM_ATENDIMENTO } from '../../redux/actions/atendimentos';
+import { FIM_ATENDIMENTO, INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { IonicPage, Loading, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
@@ -51,6 +52,15 @@ export class DetailsPage {
         .find(atendimento => atendimento._id == this.selectedId)
     );
 
+  }
+
+  iniciarAtendimento(){
+    this.store.dispatch({
+      type: INICIAR_ATENDIMENTO,
+      payload: {
+        _id: this.selectedId
+      }
+    })
   }
 
   takePhoto() {
@@ -143,6 +153,25 @@ export class DetailsPage {
   openModal(opcao) {
     const modal = this.modal.create(ModalPage, opcao);
     modal.present();
+    modal.onWillDismiss((km) => {
+      if(opcao===0){
+        this.store.dispatch(new EmDeslocamento({
+          _id: this.selectedId,
+          km_inicial: {
+            km: km,
+            data: new Date()
+          }
+        }))
+      }else{
+        this.store.dispatch(new ChegouAoDestino({
+          _id: this.selectedId,
+          km_final: {
+            km: km,
+            data: new Date()
+          }
+        }))
+      }
+    })
   }
 
   finalizarAtendimento(){
