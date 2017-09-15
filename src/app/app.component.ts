@@ -45,8 +45,17 @@ export class MyApp implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.platform.pause.subscribe(() => {
-      // this.store.take(1).
-      // this.store.dispatch(new SaveStateDB(state))
+        this.store.take(1)
+        .subscribe((state: AppState) =>
+          this.store.dispatch(new SaveStateDB(state))
+        );
+    })
+
+    this.platform.registerBackButtonAction(()=> {
+        this.store.take(1)
+        .subscribe((state: AppState) =>
+          this.store.dispatch(new SaveStateDB(state))
+        );
     })
 
     this.networdk
