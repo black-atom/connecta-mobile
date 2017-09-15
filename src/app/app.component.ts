@@ -1,3 +1,4 @@
+import { SyncAtendimentos } from './../redux/actions/atendimentos';
 import { Funcionario } from './../models/funcionario';
 import { SaveStateDB } from '../redux/actions/persistStateActions';
 import { NETWORK_DISCONNETED } from './../redux/actions/networkActions';
@@ -69,12 +70,14 @@ export class MyApp implements OnInit, OnDestroy {
         this.store.dispatch(new SaveStateDB(state))
       );
 
-      window.onunload = () => {
-        this.store.take(1)
-        .subscribe((state: AppState) =>
-          this.store.dispatch(new SaveStateDB(state))
-        );
-      }
+
+    this.store.select(appstate => appstate.atendimentos)
+      .map(atendimentos => atendimentos.filter(at => at.synced === false))
+      .subscribe(atendimentosNotSynced => {
+        if(atendimentosNotSynced.length > 0){
+          this.store.dispatch(new SyncAtendimentos(atendimentosNotSynced));
+        }
+      } );
   }
 
   ngOnDestroy(): void {

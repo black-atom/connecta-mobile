@@ -24,6 +24,11 @@ export class SyncAtendimentosSuccess  implements Action{
     constructor(public payload) { }
 }
 
+export class SyncAtendimentos implements Action{
+    readonly type: string = SYNC_ATENDIMENTOS;
+    constructor(public payload) { }
+}
+
 export class EditarAtendimento implements Action{
     readonly type: string = EDITAR_ATENDIMENTO;
     constructor(public payload) { }
