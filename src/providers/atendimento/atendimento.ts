@@ -21,13 +21,21 @@ export class AtendimentoProvider {
 
   private url = "http://165.227.78.113:3000/api/atendimentos";
 
-  constructor(public http: AuthHttp) {
+  constructor(public http: AuthHttp, private store: Store<AppState>) {
 
   }
 
   getAllAtendimentos(): Observable<Atendimento[]>{
-    return this.http.get(this.url).map( response => response.json() as Atendimento[])
-    .catch(this.lidaComErro);
+    return this.store.select(appState => appState.login.funcionario)
+    .take(1)
+    .switchMap(funcionario =>
+        this.http.get(this.url,{
+          params: {
+            'tecnico._id': funcionario._id
+          }
+        }).map( response => response.json() as Atendimento[])
+        .catch(this.lidaComErro)
+    )
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
