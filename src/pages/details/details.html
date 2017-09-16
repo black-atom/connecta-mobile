@@ -36,7 +36,7 @@
 
           <ion-item *ngIf="atendimento.inicio !== null || undefined" >
               <ion-icon color="primary" name="checkmark" item-start></ion-icon>
-               <h2>Situação do atendimento</h2>
+               <h2>Status do chamado</h2>
                <p> Iniciado às {{atendimento.inicio | date: 'hh:mm'}}</p>
                <p *ngIf="atendimento.fim !== null || undefined" > Finalizado às {{atendimento.fim | date: 'hh:mm'}}</p>
            </ion-item>
@@ -85,7 +85,7 @@
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
-          <h2>Descrição do atendimento</h2>
+          <h2>Descrição do chamado</h2>
           <p>{{atendimento.descricao}}</p>
        </ion-item>
 
