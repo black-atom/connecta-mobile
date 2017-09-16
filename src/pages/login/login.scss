@@ -47,12 +47,13 @@
     .login-button {
         margin-top: 30px;
         font-size: 1.3em;
+        width: 85%;
         background: linear-gradient(to right, #0097A7,#00BCD4) !important;
-        border-radius: 12px;
+        margin-left: 5%;
         height: 4rem !important;
         text-transform: capitalize !important;
         i {
-          padding-right: 03% !important;
+          padding-right: 04% !important;
         }
     }
 
