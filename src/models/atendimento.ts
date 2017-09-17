@@ -9,7 +9,7 @@ export interface Atendimento {
   inativo: Inativo;
   encaixe: boolean;
   estado: string;
-  km_inicial: KM;
+  km_inicio: KM;
   km_final: KM;
   inicio: Date;
   fim: Date;

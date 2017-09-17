@@ -24,7 +24,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 })
 export class DetailsPage {
   private selectedId = null;
-  public atendimento$: Observable<Atendimento>;
+  public atendimento: Atendimento;
 
   public myPhoto: any;
   public myPhotoURL: any;
@@ -50,10 +50,11 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    this.atendimento$ = this.store.select(appState =>
+    this.store.select(appState =>
       appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId)
-    );
+    )
+    .subscribe(atendimento => this.atendimento = atendimento);
 
   }
 
@@ -66,7 +67,7 @@ export class DetailsPage {
     })
   }
 
-  mostrarConfirmacaoInicioAtendimento(){
+  mostrarConfirmacaoInicioAtendimento(km: number){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
       message: `Deseja iniciar o atendimento?`,
@@ -87,14 +88,15 @@ export class DetailsPage {
     confirm.present();
   }
 
-  mostrarPromptKmInicial() {
+  mostrarPromptKmInicial(km: number) {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem inicial',
       inputs: [
         {
           name: 'km',
           placeholder: 'KM',
-          type: 'number'
+          type: 'number',
+          value: "" + km
         }
       ],
       buttons: [
@@ -125,14 +127,15 @@ export class DetailsPage {
   }
 
 
-  mostrarPromptKmFinal() {
+  mostrarPromptKmFinal(km: number) {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem final',
       inputs: [
         {
           name: 'km',
           placeholder: 'KM',
-          type: 'number'
+          type: 'number',
+          value: "" + km
         }
       ],
       buttons: [

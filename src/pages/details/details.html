@@ -6,7 +6,7 @@
 
 
 <ion-content>
-  <ion-card *ngIf="atendimento$  | async; let atendimento">
+  <ion-card *ngIf="atendimento">
     <img src="assets/img/Fundo_Chamados.svg" />
 
     <ion-card-content>
@@ -20,8 +20,8 @@
             <ion-fab top right bottom>
                 <button ion-fab mini color="accent"><ion-icon name="arrow-dropdown"></ion-icon></button>
                 <ion-fab-list side="bottom">
-                  <button (click)="mostrarPromptKmInicial()" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-                  <button (click)="mostrarPromptKmFinal()" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
+                  <button (click)="mostrarPromptKmInicial(atendimento.km_inicio.km)" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+                  <button (click)="mostrarPromptKmFinal(atendimento.km_final.km)" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
                   <button ion-fab (click)="mostrarConfirmacaoInicioAtendimento()" ><ion-icon color="accent" name="play"></ion-icon></button>
                   <button ion-fab (click)="takePhoto()"><i class="fa fa-camera" aria-hidden="true"></i></button>
                   <button ion-fab (click)='mostrarConfirmacaoFimAtendimento()'><i class="fa fa-star" aria-hidden="true"></i></button>

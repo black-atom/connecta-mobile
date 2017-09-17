@@ -74,11 +74,11 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const km: KM = action.payload.km_inicial;
-      const data = (atendimento.km_inicial && atendimento.km_inicial.data) ? atendimento.km_inicial.data : km.data;
+      const data = (atendimento.km_inicio && atendimento.km_inicio.data) ? atendimento.km_inicio.data : km.data;
 
       const atendimentoComKM =  Object.assign({}, atendimento, {synced: false}, {
-        km_inicial: {
-          km: km.km || atendimento.km_inicial.km || 0,
+        km_inicio: {
+          km: km.km || atendimento.km_inicio.km || 0,
           data
         },
         estado: 'em_deslocamento'
@@ -118,6 +118,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
+        fim: atendimento.fim || new Date(),
         estado: 'fim_do_atendimento'
       });
 
