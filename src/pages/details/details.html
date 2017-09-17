@@ -6,7 +6,7 @@
 
 
 <ion-content>
-  <ion-card *ngIf="atendimento">
+  <ion-card *ngIf="atendimento$ | async; let atendimento">
     <img src="assets/img/Fundo_Chamados.svg" />
 
     <ion-card-content>

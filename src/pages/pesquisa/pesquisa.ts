@@ -1,6 +1,7 @@
+import { Avaliacao } from '../../models/atendimento';
 import { AppState } from './../../redux/reducers/index';
 import { Store } from '@ngrx/store';
-import { FIM_ATENDIMENTO } from './../../redux/actions/atendimentos';
+import { AdicionarPerguntas, FIM_ATENDIMENTO } from './../../redux/actions/atendimentos';
 import { TabsPage } from '../tabs/tabs';
 
 import { Component, ViewChild } from '@angular/core';
@@ -19,6 +20,7 @@ import { NavController, NavParams, Slides } from 'ionic-angular';
 export class PesquisaPage {
   @ViewChild('slides') slides: Slides;
   private selectedId = null;
+  private avaliacao: Avaliacao[] = [];
 
   constructor(
     public navCtrl: NavController,
@@ -28,21 +30,40 @@ export class PesquisaPage {
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get("_id");
+    this.slides.lockSwipes(true)
   }
 
+  nextSlide(){
+
+    this.slides.lockSwipes(false)
+    this.slides.slideNext();
+    this.slides.lockSwipes(true)
+
+  }
   onSlideChangeStart(slider: Slides) {
-    //this.showSkip = !slider.isEnd();
     console.log('acabaou '+slider.isEnd());
   }
 
+  iniciarAvalicao(){
+   this.nextSlide();
+  }
+
   finalizar(){
-    this.store.dispatch({
-      type: FIM_ATENDIMENTO,
-      payload: {
-        _id: this.selectedId
-      }
-    })
+
+    this.store.dispatch(new AdicionarPerguntas({
+      _id : this.selectedId,
+      avaliacao: this.avaliacao
+    }));
     this.navCtrl.pop();
+  }
+
+  pergunta(pergunta, resposta){
+    console.log(pergunta + ' ' +resposta);
+    this.avaliacao.push({
+      pergunta,
+      valor: resposta
+    });
+    this.nextSlide();
   }
 
 }

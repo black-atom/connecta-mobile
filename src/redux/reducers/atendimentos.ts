@@ -107,7 +107,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
-        avaliacao: action.payload,
+        avaliacao: action.payload.avaliacao,
         estado: 'fim_do_atendimento'
       });
 

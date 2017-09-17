@@ -24,7 +24,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 })
 export class DetailsPage {
   private selectedId = null;
-  public atendimento: Atendimento;
+  public atendimento$: Observable<Atendimento>;
 
   public myPhoto: any;
   public myPhotoURL: any;
@@ -50,12 +50,10 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    this.store.select(appState =>
+    this.atendimento$ =this.store.select(appState =>
       appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId)
-    )
-    .subscribe(atendimento => this.atendimento = atendimento);
-
+    );
   }
 
   iniciarAtendimento(){

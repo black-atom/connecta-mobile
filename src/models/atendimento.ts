@@ -40,9 +40,9 @@ interface Tecnico {
   nome: string;
 }
 
-interface Avaliacao {
+export interface Avaliacao {
   pergunta: string;
-  _id: string;
+  _id?: string;
   valor: number;
 }
 

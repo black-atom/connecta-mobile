@@ -1,23 +1,30 @@
 <ion-content no-bounce>
 
-  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" [pager]="false">
 
     <ion-slide class="teste">
 
       <h2 color="primary">A sua opinião importa!</h2>
       <p> Através da sua opinião podemos aperfeiçoar nossos serviços</p>
-      <button ion-button color="accent" round>Iniciar avaliação</button>
+      <button ion-button color="accent" round (click)="iniciarAvalicao()">Iniciar avaliação</button>
     </ion-slide>
 
     <ion-slide>
       <h3 class="pergunta">Como você avalia o atendimento do técnico?</h3>
-      <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false">
+      <rating max="5" emptyStarIconName="star-outline"
+        [(ngModel)]="rate"
+        halfStarIconName="star-half" starIconName="star"
+        nullable="false" (ngModelChange)="pergunta('Como você avalia o atendimento do técnico?',$event)">
       </rating>
     </ion-slide>
 
     <ion-slide>
       <h3 class="pergunta">Você indicaria a RealPonto?</h3>
-      <rating max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false">
+      <rating max="5" emptyStarIconName="star-outline"
+        [(ngModel)]="rate2"
+        halfStarIconName="star-half" starIconName="star"
+        (ngModelChange)="pergunta('Você indicaria a RealPonto?',$event)"
+        nullable="false">
       </rating>
     </ion-slide>
 
