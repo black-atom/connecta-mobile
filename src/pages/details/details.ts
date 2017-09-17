@@ -92,7 +92,7 @@ export class DetailsPage {
       title: 'Quilometragem inicial',
       inputs: [
         {
-          name: 'Quilometragem inicial',
+          name: 'km',
           placeholder: 'KM',
           type: 'number'
         }
@@ -107,8 +107,16 @@ export class DetailsPage {
         },
         {
           text: 'Salvar',
-          handler: () => {
-            console.log('Salvar Prompt Km Inicial')
+          handler: (input) => {
+            if(input.km){
+              this.store.dispatch(new EmDeslocamento({
+                _id: this.selectedId,
+                km_inicial: {
+                  km: input.km,
+                  data: new Date()
+                }
+              }))
+            }
           }
         }
       ]
@@ -122,7 +130,7 @@ export class DetailsPage {
       title: 'Quilometragem final',
       inputs: [
         {
-          name: 'Quilometragem final',
+          name: 'km',
           placeholder: 'KM',
           type: 'number'
         }
@@ -137,8 +145,16 @@ export class DetailsPage {
         },
         {
           text: 'Salvar',
-          handler: () => {
-            console.log('Salvar Prompt Km Inicial')
+          handler: (input) => {
+            if(input.km){
+              this.store.dispatch(new ChegouAoDestino({
+                _id: this.selectedId,
+                km_final: {
+                  km: input.km,
+                  data: new Date()
+                }
+              }))
+            }
           }
         }
       ]
@@ -231,30 +247,6 @@ export class DetailsPage {
     }
     this.error = errMsg;
     return Observable.throw(errMsg);
-  }
-
-  openModal(opcao) {
-    const modal = this.modal.create(ModalPage, opcao);
-    modal.present();
-    modal.onWillDismiss((km) => {
-      if(opcao===0){
-        this.store.dispatch(new EmDeslocamento({
-          _id: this.selectedId,
-          km_inicial: {
-            km: km,
-            data: new Date()
-          }
-        }))
-      }else{
-        this.store.dispatch(new ChegouAoDestino({
-          _id: this.selectedId,
-          km_final: {
-            km: km,
-            data: new Date()
-          }
-        }))
-      }
-    })
   }
 
   finalizarAtendimento(){

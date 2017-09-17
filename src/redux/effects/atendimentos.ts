@@ -14,6 +14,7 @@ import {
     RETRIEVE_ATENDIMENTOS_SUCCESS,
     RetriveAtendimentoSuccess,
     SYNC_ATENDIMENTOS,
+    SYNC_ATENDIMENTOS_FAILED,
     SyncAtendimentosSuccess,
 } from './../actions/atendimentos';
 import { Injectable } from '@angular/core';
@@ -44,6 +45,7 @@ export class AtendimentoEffects {
       .switchMap(payload => this.atendimentoProvider.updateMany(payload)
         .map(res => new SyncAtendimentosSuccess(res))
       )
+      .catch((error) => Observable.of({ type: SYNC_ATENDIMENTOS_FAILED, payload: error }))
       // .switchMap( payload => this.)
 
 }
