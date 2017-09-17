@@ -61,7 +61,15 @@ export class MyApp implements OnInit, OnDestroy {
 
     this.networdk
       .onConnect()
-      .subscribe(conected => this.store.dispatch({ type: NETWORK_CONNECTED }));
+      .do(()=> this.store.dispatch({ type: NETWORK_CONNECTED }))
+      .switchMap(() => this.store.take(1))
+      .map(state => state.atendimentos.filter(at => at.synced === false))
+      .subscribe(atendimentosNotSynced => {
+        if(atendimentosNotSynced.length > 0){
+          this.store.dispatch(new SyncAtendimentos(atendimentosNotSynced));
+        }
+      });
+
     this.networdk
       .onDisconnect()
       .do(() => this.store.dispatch({ type: NETWORK_DISCONNETED }))
