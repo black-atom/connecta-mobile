@@ -57,6 +57,24 @@
         }
     }
 
+    .social-icons {
+      button {
+        margin-top: 8% !important;
+        width: 5rem !important;
+        height: 5rem !important;
+        border-radius: 100%;
+        margin: 1%;
+        background-color: transparent;
+        border: 1px solid white;
+        ion-icon {
+          font-size: 2em !important;
+        }
+      }
+      p {
+        color: #fff;
+      }
+    }
+
     @media screen and(orientation: landscape) {
       .login-form {
         margin-top: 3% !important;
