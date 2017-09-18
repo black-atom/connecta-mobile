@@ -44,7 +44,7 @@ export class PesquisaPage {
     console.log('acabaou '+slider.isEnd());
   }
 
-  iniciarAvalicao(){
+  iniciarAvaliacao(){
    this.nextSlide();
   }
 

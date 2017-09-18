@@ -6,7 +6,17 @@
 
       <h2 color="primary">A sua opinião importa!</h2>
       <p> Através da sua opinião podemos aperfeiçoar nossos serviços</p>
-      <button ion-button color="accent" round (click)="iniciarAvalicao()">Iniciar avaliação</button>
+
+      <button ion-button color="dark" round icon-start (click)="finalizar()">
+        <ion-icon name='close'></ion-icon>
+        Não avaliar
+      </button>
+
+      <button ion-button color="accent" round icon-start (click)="iniciarAvaliacao()">
+        <ion-icon name='star'></ion-icon>
+        Avaliar
+      </button>
+
     </ion-slide>
 
     <ion-slide>
@@ -33,7 +43,11 @@
       <p>
         Obrigado por participar da avaliação.
       </p>
-      <button ion-button color="accent" class="pergunta" round (click)='finalizar()'>Finalizar</button>
+
+      <button ion-button color="accent" round icon-start (click)="finalizar()">
+        <ion-icon name='checkbox-outline'></ion-icon>
+        Finalizar
+      </button>
     </ion-slide>
 
   </ion-slides>
