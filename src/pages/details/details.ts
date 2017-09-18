@@ -7,7 +7,15 @@ import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
 import { Action, Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { IonicPage, Loading, LoadingController, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import {
+  IonicPage,
+  Loading,
+  LoadingController,
+  NavController,
+  NavParams,
+  ToastController,
+  AlertController,
+  ActionSheetController  } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { ModalPage } from './../modal/modal';
 import { File, FileEntry} from "@ionic-native/file";
@@ -45,6 +53,7 @@ export class DetailsPage {
     private readonly http: Http,
     private readonly authHttp: AuthHttp,
     private launchNavigator: LaunchNavigator,
+    public actionSheetCtrl: ActionSheetController
   ) {
   }
 
@@ -163,6 +172,35 @@ export class DetailsPage {
     alert.present();
   }
 
+  mostrarOpcoesParaTirarFoto() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Escolha a opção de captura de foto',
+      enableBackdropDismiss: true,
+      cssClass: 'action-sheet',
+      buttons: [
+        {
+          text: 'Início do atendimento',
+          icon: 'camera',
+          cssClass: 'inicio',
+          role: 'destructive',
+          handler: () => {
+            console.log('Inicio do atendimento clicado');
+          }
+        },
+        {
+          text: 'Final do atendimento',
+          icon: 'camera',
+          cssClass: 'fim',
+          handler: () => {
+            console.log('Final do atendimento clicado');
+          }
+        },
+
+      ],
+    });
+    actionSheet.present();
+  }
+
   takePhoto() {
     this.camera
       .getPicture({
@@ -257,7 +295,7 @@ export class DetailsPage {
   mostrarConfirmacaoFimAtendimento(){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
-      message: `Deseja iniciar a avaliação?`,
+      message: `Deseja finalizar o atendimento?`,
       buttons: [
         {
           text: 'Não',
