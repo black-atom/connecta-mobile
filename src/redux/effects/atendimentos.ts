@@ -1,13 +1,10 @@
-import { Action } from 'rxjs/scheduler/Action';
+import { ActionWithPayload } from './../reducers/index';
 import { AtendimentoProvider } from '../../providers/atendimento/atendimento';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/take';
-
-
-
 import {
     RETRIEVE_ATENDIMENTOS,
     RETRIEVE_ATENDIMENTOS_FAILED,
@@ -19,8 +16,8 @@ import {
 } from './../actions/atendimentos';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
-
+import { Effect, toPayload, Actions } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class AtendimentoEffects {
@@ -31,7 +28,7 @@ export class AtendimentoEffects {
 
   @Effect() login$ = this.actions$
       .ofType(RETRIEVE_ATENDIMENTOS)
-      .map(action => action.payload)
+      .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload =>
         this.atendimentoProvider.getAllAtendimentos()
         //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
@@ -41,7 +38,7 @@ export class AtendimentoEffects {
 
   @Effect() syncAtendimentos$ = this.actions$
       .ofType(SYNC_ATENDIMENTOS)
-      .map(action => action.payload)
+      .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload => this.atendimentoProvider.updateMany(payload)
         .map(res => new SyncAtendimentosSuccess(res))
         .catch((error) => Observable.of({ type: SYNC_ATENDIMENTOS_FAILED, payload: error }))

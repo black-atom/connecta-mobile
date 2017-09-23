@@ -1,3 +1,4 @@
+import { ActionWithPayload } from './../../../redux/reducers/index';
 import { Login } from '../models/login';
 import { Action } from '@ngrx/store';
 
@@ -8,11 +9,11 @@ export class LoginActions {
   static LOGOUT = 'LOGOUT';
   static LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-  static login(payload: Login): Action {
+  static login(payload: Login): ActionWithPayload<any> {
     return { type: LoginActions.LOGIN, payload  };
   }
 
-  static loginSuccess(payload): Action {
+  static loginSuccess(payload): ActionWithPayload<any> {
     return { type: LoginActions.LOGIN_SUCCESS, payload};
   }
 
