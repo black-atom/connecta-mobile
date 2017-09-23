@@ -1,29 +1,19 @@
 import { Atendimento } from '../../models/atendimento';
 import { loginReducer, LoginState } from './../../pages/login/redux/login.reducer';
-import { LOAD_STATE_DB_SUCCESS } from './../actions/persistStateActions';
-import { SAVE_STATE_DB } from '../actions/persistStateActions';
 import { Action } from '@ngrx/store';
 import { networkReducer } from './networkReducer';
 import { atendimentosReducer } from './atendimentos';
-import { ActionReducer, combineReducers } from '@ngrx/store';
+import { ActionReducerMap, combineReducers } from '@ngrx/store';
 
-export const reducers = {
+export const reducer = {
     atendimentos: atendimentosReducer,
     networkStatus: networkReducer,
     login: loginReducer
 }
 
-
-const productionReducer: ActionReducer<any> = combineReducers(reducers);
-
-export function reducer(state: any, action: Action) {
-    switch(action.type){
-      case 'LOAD_STATE_DB_SUCCESS':
-        return action.payload;
-    }
-    return productionReducer(state, action);
+export interface ActionWithPayload<T> extends Action {
+  payload?: T;
 }
-
 
 export interface AppState {
   counter: number;

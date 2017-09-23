@@ -1,3 +1,4 @@
+import { ActionWithPayload } from './../../../redux/reducers/index';
 import { Funcionario } from './../../../models/funcionario';
 import { LoginState } from './login.reducer';
 import { LoginActions } from './login.actions';
@@ -19,7 +20,7 @@ const initialState : LoginState = {
 };
 
 export const loginReducer: ActionReducer<any> =
-  (state = initialState, { type, payload }: Action) => {
+  (state = initialState, { type, payload }: ActionWithPayload<any>) => {
     switch (type) {
       case LoginActions.LOGIN_SUCCESS:
         return Object.assign({}, state, payload, {logged: true});

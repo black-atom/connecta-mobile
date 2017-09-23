@@ -1,6 +1,5 @@
 import { SyncAtendimentos } from './../redux/actions/atendimentos';
 import { Funcionario } from './../models/funcionario';
-import { SaveStateDB } from '../redux/actions/persistStateActions';
 import { NETWORK_DISCONNETED } from './../redux/actions/networkActions';
 import { NETWORK_CONNECTED } from '../redux/actions/networkActions';
 import { AppState } from './../redux/reducers/index';
@@ -9,7 +8,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuController, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Network } from '@ionic-native/network';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -25,16 +23,12 @@ export class MyApp implements OnInit, OnDestroy {
 
   constructor(
     private platform: Platform,
-    private networdk: Network,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     menu: MenuController,
-    private network: Network,
     private store: Store<AppState>
   ) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
@@ -44,41 +38,6 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.platform.pause.subscribe(() => {
-        this.store.take(1)
-        .subscribe((state: AppState) =>
-          this.store.dispatch(new SaveStateDB(state))
-        );
-    })
-
-    this.platform.registerBackButtonAction(()=> {
-        this.store.take(1)
-        .subscribe((state: AppState) =>
-          this.store.dispatch(new SaveStateDB(state))
-        );
-    })
-
-    this.networdk
-      .onConnect()
-      .do(()=> this.store.dispatch({ type: NETWORK_CONNECTED }))
-      .switchMap(() => this.store.take(1))
-      .map(state => state.atendimentos.filter(at => at.synced === false))
-      .subscribe(atendimentosNotSynced => {
-        if(atendimentosNotSynced.length > 0){
-          this.store.dispatch(new SyncAtendimentos(atendimentosNotSynced));
-        }
-      });
-
-    this.networdk
-      .onDisconnect()
-      .do(() => this.store.dispatch({ type: NETWORK_DISCONNETED }))
-      .switchMap(() => this.store.take(1))
-      .subscribe((state: AppState) =>
-        this.store.dispatch(new SaveStateDB(state))
-      );
-
-
     this.store.select(appstate => appstate.atendimentos)
       .map(atendimentos => atendimentos.filter(at => at.synced === false))
       .subscribe(atendimentosNotSynced => {
@@ -89,7 +48,6 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("app exiting")
-    setTimeout(()=> console.log("dadasdsa"), 3000)
+
   }
 }
