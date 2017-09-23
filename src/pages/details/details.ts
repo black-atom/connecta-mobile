@@ -1,3 +1,5 @@
+import { AddImagem } from '../../redux/actions/imagem.actions';
+import { Imagem } from '../../models/imagem';
 import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
@@ -184,7 +186,7 @@ export class DetailsPage {
           cssClass: 'inicio',
           role: 'destructive',
           handler: () => {
-            console.log('Inicio do atendimento clicado');
+            this.takePhoto("inicio_atendimento");
           }
         },
         {
@@ -192,7 +194,7 @@ export class DetailsPage {
           icon: 'camera',
           cssClass: 'fim',
           handler: () => {
-            console.log('Final do atendimento clicado');
+            this.takePhoto("fim_atendimento");
           }
         },
 
@@ -201,11 +203,11 @@ export class DetailsPage {
     actionSheet.present();
   }
 
-  takePhoto() {
+  takePhoto(tipo: string) {
     this.camera
       .getPicture({
         quality: 1,
-        destinationType: this.camera.DestinationType.FILE_URI,
+        destinationType: this.camera.DestinationType.NATIVE_URI,
         sourceType: this.camera.PictureSourceType.CAMERA,
         encodingType: this.camera.EncodingType.PNG,
         saveToPhotoAlbum: true,
@@ -213,10 +215,14 @@ export class DetailsPage {
         targetHeight: 860
       })
       .then(
-        imageData => {
-          this.myPhoto = imageData.length;
-          this.uploadPhoto(imageData);
-          console.log(imageData);
+        imagemPath => {
+          const imagem: Imagem = {
+            atendimentoID: this.selectedId,
+            isUploaded: false,
+            localPath: imagemPath,
+            tipo: tipo
+          };
+          this.store.dispatch(new AddImagem(imagem));
         },
         error => {
           this.error = JSON.stringify(error);
