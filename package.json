@@ -53,6 +53,7 @@
         "ionic-plugin-keyboard": "^2.2.1",
         "ionic2-rating": "^1.2.2",
         "ionicons": "3.0.0",
+        "ngrx-store-localstorage": "^0.2.2",
         "redux": "^3.7.2",
         "redux-localstorage": "^0.4.1",
         "redux-offline": "^2.0.0",
