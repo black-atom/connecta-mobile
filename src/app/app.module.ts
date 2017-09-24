@@ -39,6 +39,7 @@ import { AtendimentoProvider } from '../providers/atendimento/atendimento';
 import {Storage} from '@ionic/storage';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Ionic2RatingModule } from 'ionic2-rating';
+import { ImagemProvider } from '../providers/imagem/imagem';
 
 
 // console.log all actions
@@ -104,6 +105,7 @@ export function getAuthHttp(http) {
       useFactory: getAuthHttp,
       deps: [Http]
     },
+    ImagemProvider,
   ]
 })
 export class AppModule {}

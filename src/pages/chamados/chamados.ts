@@ -1,3 +1,4 @@
+import { UploadImagem } from '../../redux/actions/imagem.actions';
 import { Atendimento, Endereco } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
@@ -33,8 +34,6 @@ export class ChamadosPage {
   selectedSegment = "1";
 
   public changeAtendimentos$: Subject<string> = new Subject<string>();
-
-  counter: Observable<number>;
   atendimentos$: Observable<Atendimento[]>;
 
   constructor(
@@ -46,6 +45,7 @@ export class ChamadosPage {
   }
 
   ionViewDidLoad() {
+
     this.atendimentos$ = this.changeAtendimentos$
     .switchMap( option =>
       this.store.select(appstate => appstate.atendimentos)

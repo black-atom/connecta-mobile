@@ -1,3 +1,4 @@
+import { ImagemEffects } from './effects/imagens.effects';
 import { LoginEffects } from '../pages/login/redux/login.effects';
 import { reducer } from './reducers';
 import { AtendimentoEffects } from './effects/atendimentos';
@@ -15,7 +16,7 @@ const metaReducers: [any] = [localStorageSyncReducer];
 
 @NgModule({
   imports:[
-    EffectsModule.forRoot([AtendimentoEffects, LoginEffects]),
+    EffectsModule.forRoot([AtendimentoEffects, LoginEffects, ImagemEffects]),
     StoreModule.forRoot(reducer,{metaReducers}),
     StoreDevtoolsModule.instrument({
       maxAge: 5

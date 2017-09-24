@@ -72,9 +72,9 @@
   version "3.12.1"
   resolved "https://registry.yarnpkg.com/@ionic-native/status-bar/-/status-bar-3.12.1.tgz#5b2491b43a3d7e08d65ac0e9fdb1927493e32472"
 
-"@ionic/app-scripts@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@ionic/app-scripts/-/app-scripts-2.0.1.tgz#62027703595d4b77ee8805c328717d1d1ce7e713"
+"@ionic/app-scripts@2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@ionic/app-scripts/-/app-scripts-2.1.4.tgz#832fbfaad23e826773bdb071bf63416f4ce404de"
   dependencies:
     autoprefixer "7.1.1"
     babili "0.1.2"
@@ -103,7 +103,7 @@
     tslint "^5.5.0"
     tslint-eslint-rules "4.1.1"
     uglify-js "^3.0.23"
-    webpack "^3.1.0"
+    webpack "^3.4.1"
     ws "1.1.1"
     xml2js "0.4.17"
 
@@ -4110,9 +4110,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.1.0:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.4.tgz#5583eb263ed27b78b5bd17bfdfb0eb1b1cd1bf81"
+webpack@^3.4.1:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.6.0.tgz#a89a929fbee205d35a4fa2cc487be9cbec8898bc"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
