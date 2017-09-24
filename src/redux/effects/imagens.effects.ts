@@ -8,15 +8,14 @@ import { Effect, toPayload, Actions } from '@ngrx/effects';
 
 @Injectable()
 export class ImagemEffects{
+  counter = 0
   constructor(private actions$: Actions,private imagemProvider: ImagemProvider){
 
   }
 
   @Effect() upload$ = this.actions$.ofType(UPLOAD_IMAGEM)
-  .do(() => console.log("Sucesso Na Nave"))
   .map((action: ActionWithPayload<Imagem>) => action.payload)
-  .switchMap(imagem =>  this.imagemProvider.enviarFoto(imagem)
-      .do(() => console.log("Sucesso Na Nave"))
+  .mergeMap(imagem =>  this.imagemProvider.enviarFoto(imagem)
       .map(() => new UploadImagemSuccess(imagem))
       //.catch(() => new UploadImagemFailed(imagem))
   )

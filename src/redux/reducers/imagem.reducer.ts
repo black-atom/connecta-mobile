@@ -28,7 +28,6 @@ export const selectImagensToUpload = createSelector(selectImagens, (imagens: Ima
 
 export const nImagensParaUploadSelector = createSelector(selectImagensToUpload, (imagens: Imagem[]) => {
   return imagens.reduce((sum, item) => {
-    console.log(item);
     return sum + 1 ;
   },0);
 })
