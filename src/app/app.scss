@@ -20,6 +20,8 @@
     .img-avatar {
       border-radius: 50%;
       width: 80px;
+      display: block;
+      margin: 0 auto;
     }
   }
 
@@ -27,6 +29,16 @@
     width: 100%;
     padding-top: 16px;
     font-size: 15px;
+    text-align: center;
+  }
+
+  .custom {
+    .item {
+    border-top: 3px solid green !important;
+    }
   }
 
 }
+
+
+
