@@ -31,18 +31,6 @@ export class TabsPage implements OnInit{
     this.navController.pop();
   }
 
-  uploadPhotos(){
-    this.store.select(selectImagensToUpload)
-    .take(1)
-    .do(() => this.uploadingPhotos = true)
-    .subscribe(imagens => {
-      imagens.forEach(imagem =>{
-        this.store.dispatch(new UploadImagem(imagem));
-      })
-    })
-  }
-
-
   public ngOnInit(): void {
     this.store.select(state => state.login.funcionario)
     .subscribe(funcionario => this.funcionario = funcionario);

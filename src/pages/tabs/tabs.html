@@ -12,11 +12,6 @@
   </ion-header>
   <ion-content class="custom">
     <ion-list no-lines>
-      <button ion-item (click)="uploadPhotos()">
-          <ion-icon name="reverse-camera" item-start></ion-icon>
-          {{(!uploadingPhotos)? 'Fotos a enviar': 'Enviando fotos...' }}
-          <ion-badge item-end>  {{nImagensParaUpload$ | async}} </ion-badge>
-      </button>
       <button ion-item>
         <ion-icon name="md-person" item-start></ion-icon>
         Perfil
