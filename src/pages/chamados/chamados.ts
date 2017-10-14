@@ -64,8 +64,12 @@ export class ChamadosPage {
     setTimeout(() =>{
       this.store.dispatch({ type: RETRIEVE_ATENDIMENTOS });
       this.changeAtendimentos$.next('1');
-    }, 500
-    );
+    }, 500);
+
+    setInterval(() =>{
+      this.store.dispatch({ type: RETRIEVE_ATENDIMENTOS });
+      this.changeAtendimentos$.next('1');
+    }, 60000)//300000)
   }
 
   changeSegment(){

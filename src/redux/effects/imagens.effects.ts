@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { ImagemProvider } from './../../providers/imagem/imagem';
 import { Imagem } from '../../models/imagem';
 import { ActionWithPayload } from '../reducers';
@@ -17,6 +18,6 @@ export class ImagemEffects{
   .map((action: ActionWithPayload<Imagem>) => action.payload)
   .mergeMap(imagem =>  this.imagemProvider.enviarFoto(imagem)
       .map(() => new UploadImagemSuccess(imagem))
-      //.catch(() => new UploadImagemFailed(imagem))
+      .catch(() => Observable.of(new UploadImagemFailed(imagem)))
   )
 }
