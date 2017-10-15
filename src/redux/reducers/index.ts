@@ -5,7 +5,6 @@ import { loginReducer, LoginState } from './../../pages/login/redux/login.reduce
 import { Action } from '@ngrx/store';
 import { networkReducer } from './networkReducer';
 import { atendimentosReducer } from './atendimentos';
-import { ActionReducerMap, combineReducers } from '@ngrx/store';
 
 export const reducer = {
     atendimentos: atendimentosReducer,

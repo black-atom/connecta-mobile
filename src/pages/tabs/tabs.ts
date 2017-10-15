@@ -2,11 +2,11 @@ import { Observable } from 'rxjs/Rx';
 import { UploadImagem } from './../../redux/actions/imagem.actions';
 import { selectImagensToUpload, nImagensParaUploadSelector } from './../../redux/reducers/imagem.reducer';
 import { Funcionario } from '../../models/funcionario';
-import { App, NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { LoginActions } from '../login/redux/login.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../redux/reducers';
-import { Component, OnInit, style } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -21,7 +21,6 @@ export class TabsPage implements OnInit{
   constructor(
     private store:Store<AppState>,
     private navController:NavController,
-    private app: App
   ) {
 
   }

@@ -3,11 +3,11 @@ import { Imagem } from '../../models/imagem';
 import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
-import { FIM_ATENDIMENTO, INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
+import { INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento, Endereco } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import {
   IonicPage,
@@ -18,10 +18,8 @@ import {
   ToastController,
   AlertController,
   ActionSheetController  } from 'ionic-angular';
-import { ModalController } from 'ionic-angular';
-import { ModalPage } from './../modal/modal';
 import { File, FileEntry} from "@ionic-native/file";
-import { Http, Response} from "@angular/http";
+import { Response} from "@angular/http";
 import { AuthHttp } from 'angular2-jwt';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
@@ -46,13 +44,10 @@ export class DetailsPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     private store: Store<AppState>,
-    private modal: ModalController,
     private readonly camera: Camera,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
     private readonly file: File,
-    private modalCtrl: ModalController,
-    private readonly http: Http,
     private readonly authHttp: AuthHttp,
     private launchNavigator: LaunchNavigator,
     public actionSheetCtrl: ActionSheetController

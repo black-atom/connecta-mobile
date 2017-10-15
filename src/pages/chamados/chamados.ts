@@ -1,23 +1,16 @@
-import { UploadImagem } from '../../redux/actions/imagem.actions';
-import { Atendimento, Endereco } from '../../models/atendimento';
+import { Atendimento } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
 import { AppState } from './../../redux/reducers/index';
 import { Observable, Subject } from 'rxjs/Rx';
-import { PesquisaPage } from '../pesquisa/pesquisa';
 import { Component } from '@angular/core';
 import {
     App,
     IonicPage,
     ModalController,
     NavController,
-    NavParams,
 } from 'ionic-angular';
 import { Store } from "@ngrx/store";
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
-
-
-
 
 /**
  * Generated class for the ChamadosPage page.

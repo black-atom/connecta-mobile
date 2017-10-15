@@ -3,11 +3,10 @@ import { AppState } from '../../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { LoginActions } from './login.actions';
-import { Login } from './../models/login';
 import { LoginProvider } from './../../../providers/login/login';
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 
 let storage = new Storage({});
 
