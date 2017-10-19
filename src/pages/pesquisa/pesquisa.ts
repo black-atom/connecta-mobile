@@ -1,8 +1,7 @@
-import { Avaliacao } from '../../models/atendimento';
 import { AppState } from './../../redux/reducers/index';
+import { Avaliacao } from '../../models/atendimento';
 import { Store } from '@ngrx/store';
-import { AdicionarPerguntas, FIM_ATENDIMENTO } from './../../redux/actions/atendimentos';
-import { TabsPage } from '../tabs/tabs';
+import { AdicionarPerguntas } from './../../redux/actions/atendimentos';
 
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides } from 'ionic-angular';

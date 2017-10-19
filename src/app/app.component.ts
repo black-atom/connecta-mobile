@@ -1,19 +1,12 @@
 import { Observable } from 'rxjs/Rx';
 import { SyncAtendimentos } from './../redux/actions/atendimentos';
-import { Funcionario } from './../models/funcionario';
-import { NETWORK_DISCONNETED } from './../redux/actions/networkActions';
-import { NETWORK_CONNECTED } from '../redux/actions/networkActions';
 import { AppState } from './../redux/reducers/index';
 import { Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuController, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { TabsPage } from '../pages/tabs/tabs';
-
 import 'rxjs/add/operator/switchMap';
-
 
 @Component({
   templateUrl: "app.html"

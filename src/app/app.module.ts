@@ -1,7 +1,6 @@
 import { AuthHttp, AuthConfig } from "angular2-jwt";
 import { ReduxModule } from './../redux/redux.module';
 import { PagesModule } from './../pages/pages';
-import { LoginPage } from '../pages/login/login';
 import { Network } from '@ionic-native/network';
 
 import { HttpModule, Http } from '@angular/http';
@@ -18,25 +17,17 @@ import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { PesquisaPage } from '../pages/pesquisa/pesquisa';
-import { ModalPage } from './../pages/modal/modal';
-
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocketIoProvider } from '../providers/socket-io/socket-io';
-import { StoreModule, ActionReducer } from '@ngrx/store';
+import { ActionReducer } from '@ngrx/store';
 
-import { offline } from 'redux-offline';
-import offlineConfig from 'redux-offline/lib/defaults';
-import { EffectsModule } from '@ngrx/effects';
-import { compose } from 'redux';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import persistState from 'redux-localstorage'
 import { SyncDataProvider } from '../providers/sync-data/sync-data';
 import { NetwordStatusProvider } from '../providers/netword-status/netword-status';
 import { LoginProvider } from '../providers/login/login';
 import { AtendimentoProvider } from '../providers/atendimento/atendimento';
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { ImagemProvider } from '../providers/imagem/imagem';
@@ -70,8 +61,7 @@ export function getAuthHttp(http) {
   declarations: [
     MyApp,
     TabsPage,
-    PesquisaPage,
-    ModalPage
+    PesquisaPage
   ],
   imports: [
     BrowserModule,
@@ -85,8 +75,7 @@ export function getAuthHttp(http) {
   bootstrap: [IonicApp],
   entryComponents: [
     TabsPage,
-    PesquisaPage,
-    ModalPage
+    PesquisaPage
   ],
   providers: [
     StatusBar,
