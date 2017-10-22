@@ -38,7 +38,7 @@ export class TabsPage implements OnInit{
     this.nImagensParaUpload$ = this.store.select(nImagensParaUploadSelector)
     .do((n) => { if(n === 0){this.uploadingPhotos = false} });
 
-    Observable.interval(60000)
+    Observable.interval(300000)
     .switchMap(() => this.store.select(selectImagensToUpload).take(1))
     .subscribe(imagens => {
       imagens.forEach(imagem =>{
