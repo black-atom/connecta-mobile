@@ -2,8 +2,8 @@ import { ActionWithPayload } from './../../../redux/reducers/index';
 import { Funcionario } from './../../../models/funcionario';
 import { LoginState } from './login.reducer';
 import { LoginActions } from './login.actions';
-import { Action, ActionReducer } from '@ngrx/store';
-import {Storage} from '@ionic/storage';
+import { ActionReducer } from '@ngrx/store';
+import { Storage } from '@ionic/storage';
 let storage = new Storage({});
 
 

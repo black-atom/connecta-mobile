@@ -49,8 +49,6 @@ export class ImagemProvider {
 
   public enviarFoto(imagem: Imagem): Observable<Atendimento> {
 
-    const inicio_atendimento = imagem.tipo == 'inicio_atendimento' ? true : false;
-
     return Observable.fromPromise(this.getFile(imagem))
     .switchMap(file => Observable.fromPromise(this.getFormData(file, imagem)))
     .switchMap(formData => this.http.post(`http://165.227.78.113:3000/api/atendimentos/${imagem.atendimentoID}/imagens`, formData))

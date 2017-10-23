@@ -8,16 +8,13 @@ import 'rxjs/add/operator/take';
 import {
     RETRIEVE_ATENDIMENTOS,
     RETRIEVE_ATENDIMENTOS_FAILED,
-    RETRIEVE_ATENDIMENTOS_SUCCESS,
     RetriveAtendimentoSuccess,
     SYNC_ATENDIMENTOS,
     SYNC_ATENDIMENTOS_FAILED,
     SyncAtendimentosSuccess,
 } from './../actions/atendimentos';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Effect, toPayload, Actions } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Effect, Actions } from '@ngrx/effects';
 
 @Injectable()
 export class AtendimentoEffects {

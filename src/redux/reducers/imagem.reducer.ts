@@ -1,7 +1,7 @@
 import { ADD_IMAGEM, UPLOAD_IMAGEM_SUCCESS } from './../actions/imagem.actions';
 import { ActionWithPayload, AppState } from './';
 import { Imagem } from './../../models/imagem';
-import { ActionReducer, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
 
 export function imagemReducer(state: Imagem[] = [], action: ActionWithPayload<Imagem | any>){

@@ -1,11 +1,10 @@
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
-import { Funcionario } from '../../models/funcionario';
 import { LoginState } from './../../pages/login/redux/login.reducer';
 import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
 
