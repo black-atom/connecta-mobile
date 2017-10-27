@@ -27,6 +27,10 @@ export interface Atendimento {
   imagens: any[];
   cliente: Cliente;
   synced?: boolean;
+  retorno: Retorno;
+  relatorio_tecnico: RelatorioTecnico;
+  treinamento: Treinamento;
+  remocao_relogio: RemocaoRelogio;
 }
 
 interface Cliente {
@@ -75,4 +79,35 @@ export interface Endereco {
   _id: string;
   ponto_referencia: string;
   complemento: string;
+}
+
+interface Retorno {
+  retornar: boolean;
+  motivo: string;
+}
+
+interface RelatorioTecnico {
+  relatorio: string
+}
+
+interface Treinamento {
+  interrupcoes: boolean;
+  cadastros: boolean;
+  relatorios: boolean;
+  importacao_dados: boolean;
+  parametros_gerais: boolean;
+  abonos_justificativas: boolean;
+  backup_sistema: boolean;
+  software: boolean;
+  caminho: string
+}
+
+interface RemocaoRelogio {
+  retirado: boolean;
+  chave: boolean;
+  bateria: boolean;
+  bobina: boolean;
+  fonte: boolean;
+  pino: boolean;
+  impressora: boolean;
 }
