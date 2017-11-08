@@ -1,5 +1,4 @@
 import { SocketIoProvider } from './../../providers/socket-io/socket-io';
-import { SocketIoProvider } from '../../providers/socket-io/socket-io';
 import { Observable } from 'rxjs/Rx';
 import { UploadImagem } from './../../redux/actions/imagem.actions';
 import { selectImagensToUpload, nImagensParaUploadSelector } from './../../redux/reducers/imagem.reducer';

@@ -1,3 +1,4 @@
+import { selectAtendiementosDeHoje } from './../../redux/reducers/atendimentos';
 import { Atendimento } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
@@ -41,7 +42,7 @@ export class ChamadosPage {
 
     this.atendimentos$ = this.changeAtendimentos$
     .switchMap( option =>
-      this.store.select(appstate => appstate.atendimentos)
+      this.store.select(selectAtendiementosDeHoje)
       .map(atendimentos => {
         return atendimentos.filter(atendimento => {
           if(option==='2' && atendimento.estado.indexOf('fim_do_atendimento')>-1){

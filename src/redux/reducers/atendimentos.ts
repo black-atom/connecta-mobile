@@ -1,3 +1,4 @@
+import { AppState } from './index';
 import { Atendimento, KM } from './../../models/atendimento';
 import {
     ADICIONAR_PERGUNTAS,
@@ -142,4 +143,20 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 		default:
 			return state;
 	}
+}
+
+export const selectAtendiementosDeHoje = (state: AppState) => {
+  const today = new Date();
+  const date = today.getDate();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+
+  return state.atendimentos.filter(atendimentos => {
+    const dataAtendimento = new Date(atendimentos.data_atendimento);
+    if(dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month && dataAtendimento.getFullYear()===year){
+      return true;
+    }
+    return false;
+  })
+
 }
