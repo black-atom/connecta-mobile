@@ -160,3 +160,33 @@ export const selectAtendiementosDeHoje = (state: AppState) => {
   })
 
 }
+
+export const selectPromixosAtendimentos = (state: AppState) => {
+  const today = new Date();
+  const date = today.getDate();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+
+  return state.atendimentos.filter(atendimentos => {
+    const dataAtendimento = new Date(atendimentos.data_atendimento);
+    if(
+      (
+        dataAtendimento.getDate() > date 
+        && dataAtendimento.getMonth() >= month 
+        && dataAtendimento.getFullYear() >= year
+      ) ||
+      (
+        dataAtendimento.getMonth() > month 
+        && dataAtendimento.getFullYear() >= year
+      )
+    ){
+      return true;
+    }
+    return false;
+  })
+
+}
+
+export const selectAtendimentosConcluidos = (state: AppState) => {
+  return state.atendimentos.filter(atendimento => atendimento.estado === 'fim_do_atendimento')
+}
