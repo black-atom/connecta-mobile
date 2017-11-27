@@ -1,3 +1,4 @@
+import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { Observable } from 'rxjs/Rx';
 import { UploadImagem } from './../../redux/actions/imagem.actions';
 import { selectImagensToUpload, nImagensParaUploadSelector } from './../../redux/reducers/imagem.reducer';
@@ -21,6 +22,7 @@ export class TabsPage implements OnInit{
   constructor(
     private store:Store<AppState>,
     private navController:NavController,
+    private socketIoProvider: SocketIoProvider,
   ) {
 
   }
@@ -37,7 +39,7 @@ export class TabsPage implements OnInit{
     this.nImagensParaUpload$ = this.store.select(nImagensParaUploadSelector)
     .do((n) => { if(n === 0){this.uploadingPhotos = false} });
 
-    Observable.interval(60000)
+    Observable.interval(300000)
     .switchMap(() => this.store.select(selectImagensToUpload).take(1))
     .subscribe(imagens => {
       imagens.forEach(imagem =>{

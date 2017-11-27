@@ -1,3 +1,4 @@
+import { selectAtendiementosDeHoje, selectAtendimentosConcluidos, selectPromixosAtendimentos } from './../../redux/reducers/atendimentos';
 import { Atendimento } from '../../models/atendimento';
 import { KmInicialComponent } from './components/km-inicial.component';
 import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
@@ -24,7 +25,7 @@ import { Store } from "@ngrx/store";
   templateUrl: "chamados.html"
 })
 export class ChamadosPage {
-  selectedSegment = "1";
+  selectedSegment = "hoje";
 
   public changeAtendimentos$: Subject<string> = new Subject<string>();
   atendimentos$: Observable<Atendimento[]>;
@@ -40,20 +41,20 @@ export class ChamadosPage {
   ionViewDidLoad() {
 
     this.atendimentos$ = this.changeAtendimentos$
-    .switchMap( option =>
-      this.store.select(appstate => appstate.atendimentos)
-      .map(atendimentos => {
-        return atendimentos.filter(atendimento => {
-          if(option==='2' && atendimento.estado.indexOf('fim_do_atendimento')>-1){
-            return true;
-          }else if(option==='1' && atendimento.estado.indexOf('fim_do_atendimento')==-1){
-            return true;
-          }else{
-            return false;
-          }
-        })
-      })
-    )
+    .switchMap( selectTab => {
+
+        switch(selectTab){
+          case 'hoje':
+            return this.store.select(selectAtendiementosDeHoje)
+          case 'concluidos':
+            return this.store.select(selectAtendimentosConcluidos)
+          case 'proximos':
+            return this.store.select(selectPromixosAtendimentos)
+          default:
+            return this.store.select(selectAtendiementosDeHoje)
+        }
+    })
+
     setTimeout(() =>{
       this.store.dispatch({ type: RETRIEVE_ATENDIMENTOS });
       this.changeAtendimentos$.next('1');
