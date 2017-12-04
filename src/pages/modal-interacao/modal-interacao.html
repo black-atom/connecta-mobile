@@ -1,0 +1,192 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Interação de dados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      Retornará ao local?
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list radio-group>
+        <ion-item>
+          <ion-label>Sim</ion-label>
+          <ion-radio color="accent" value="sim" (ionSelect)="retornarLocal = true"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Não</ion-label>
+          <ion-radio color="accent" value="nao" checked (ionSelect)="retornarLocal = false"></ion-radio>
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngIf="retornarLocal === true">
+        <ion-label color="accent" stacked>Motivo</ion-label>
+        <ion-input placeholder="Insira o motivo"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Houve treinamento?
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <div>
+        <ion-list radio-group>
+          <ion-item>
+            <ion-label>Sim</ion-label>
+            <ion-radio color="accent" value="sim" (ionSelect)="houveTreinamento = true"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Não</ion-label>
+            <ion-radio color="accent" value="nao" checked (ionSelect)="houveTreinamento = false"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </div>
+
+
+
+      <div *ngIf="houveTreinamento === true">
+
+        <ion-item text-wrap>
+          Selecione os tópicos abordados no treinamento
+        </ion-item>
+        <ion-item>
+          <ion-label>Cadastros</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Abonos/Justificativas</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Parâmetros Gerais</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Relatórios</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Importação</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Backup do Sistema</ion-label>
+          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="accent">Software</ion-label>
+          <ion-input placeholder="Insira o software"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="accent">Caminho</ion-label>
+          <ion-input placeholder="Insira o caminho da rede"></ion-input>
+        </ion-item>
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-header>
+      Houve remoção do relógio?
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list radio-group>
+
+        <ion-item>
+          <ion-label>Sim</ion-label>
+          <ion-radio color="accent" value="sim" (ionSelect)="houveRemocao = true"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Não</ion-label>
+          <ion-radio color="accent" value="nao" checked (ionSelect)="houveRemocao = false"></ion-radio>
+        </ion-item>
+
+      </ion-list>
+
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngIf="houveRemocao">
+
+    <ion-card-header>
+      Foi o mesmo relógio?
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list radio-group>
+
+        <ion-item>
+          <ion-label>Sim</ion-label>
+          <ion-radio color="accent" value="sim" checked (ionSelect)="mesmoRelogio = true"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Não</ion-label>
+          <ion-radio color="accent" value="nao" (ionSelect)="mesmoRelogio = false"></ion-radio>
+        </ion-item>
+
+      </ion-list>
+
+
+      <div *ngIf="!mesmoRelogio">
+
+
+        <ion-item text-wrap>
+          <ion-textarea class="pecas-removidas" rows="7" cols="10" placeholder="Insira o(s) relógio(s) que foram removidos, seu(s) respectivos número de série e o que foi cada removido de cada um deles"></ion-textarea>
+        </ion-item>
+
+      </div>
+
+      <div *ngIf="mesmoRelogio">
+
+        <ion-item text-wrap>
+          <ion-textarea rows="3" cols="10" placeholder="Insira a(s) peça(s) que foram removidas do relógio"></ion-textarea>
+        </ion-item>
+
+      </div>
+
+
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-content>
+      <button ion-button block>Salvar</button>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>
+
