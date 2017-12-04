@@ -18,17 +18,17 @@
       <ion-list radio-group>
         <ion-item>
           <ion-label>Sim</ion-label>
-          <ion-radio color="accent" value="sim" (ionSelect)="retornarLocal = true"></ion-radio>
+          <ion-radio color="primary" value="sim" (ionSelect)="retornarLocal = true"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Não</ion-label>
-          <ion-radio color="accent" value="nao" checked (ionSelect)="retornarLocal = false"></ion-radio>
+          <ion-radio color="primary" value="nao" checked (ionSelect)="retornarLocal = false"></ion-radio>
         </ion-item>
       </ion-list>
 
       <ion-item *ngIf="retornarLocal === true">
-        <ion-label color="accent" stacked>Motivo</ion-label>
+        <ion-label color="primary" stacked>Motivo</ion-label>
         <ion-input placeholder="Insira o motivo"></ion-input>
       </ion-item>
 
@@ -47,12 +47,12 @@
         <ion-list radio-group>
           <ion-item>
             <ion-label>Sim</ion-label>
-            <ion-radio color="accent" value="sim" (ionSelect)="houveTreinamento = true"></ion-radio>
+            <ion-radio color="primary" value="sim" (ionSelect)="houveTreinamento = true"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Não</ion-label>
-            <ion-radio color="accent" value="nao" checked (ionSelect)="houveTreinamento = false"></ion-radio>
+            <ion-radio color="primary" value="nao" checked (ionSelect)="houveTreinamento = false"></ion-radio>
           </ion-item>
         </ion-list>
       </div>
@@ -66,41 +66,41 @@
         </ion-item>
         <ion-item>
           <ion-label>Cadastros</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Abonos/Justificativas</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Parâmetros Gerais</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Relatórios</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Importação</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Backup do Sistema</ion-label>
-          <ion-checkbox color="accent" checked="false"></ion-checkbox>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
         </ion-item>
 
         <ion-item>
-          <ion-label stacked color="accent">Software</ion-label>
+          <ion-label stacked color="primary">Software</ion-label>
           <ion-input placeholder="Insira o software"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label stacked color="accent">Caminho</ion-label>
+          <ion-label stacked color="primary">Caminho</ion-label>
           <ion-input placeholder="Insira o caminho da rede"></ion-input>
         </ion-item>
       </div>
@@ -121,12 +121,12 @@
 
         <ion-item>
           <ion-label>Sim</ion-label>
-          <ion-radio color="accent" value="sim" (ionSelect)="houveRemocao = true"></ion-radio>
+          <ion-radio color="primary" value="sim" (ionSelect)="houveRemocao = true"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Não</ion-label>
-          <ion-radio color="accent" value="nao" checked (ionSelect)="houveRemocao = false"></ion-radio>
+          <ion-radio color="primary" value="nao" checked (ionSelect)="houveRemocao = false"></ion-radio>
         </ion-item>
 
       </ion-list>
@@ -148,12 +148,12 @@
 
         <ion-item>
           <ion-label>Sim</ion-label>
-          <ion-radio color="accent" value="sim" checked (ionSelect)="mesmoRelogio = true"></ion-radio>
+          <ion-radio color="primary" value="sim" checked (ionSelect)="mesmoRelogio = true"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Não</ion-label>
-          <ion-radio color="accent" value="nao" (ionSelect)="mesmoRelogio = false"></ion-radio>
+          <ion-radio color="primary" value="nao" (ionSelect)="mesmoRelogio = false"></ion-radio>
         </ion-item>
 
       </ion-list>
@@ -180,6 +180,69 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card>
+    <ion-card-header>
+      Faturamento
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item class="mesmo-cnpj">
+        Mesmo CNPJ?
+      </ion-item>
+
+      <ion-list radio-group>
+
+        <ion-item>
+          <ion-label>Sim</ion-label>
+          <ion-radio color="primary" value="sim" checked (ionSelect)="mesmoCnpj = true"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Não</ion-label>
+          <ion-radio color="primary" value="nao" (ionSelect)="mesmoCnpj = false"></ion-radio>
+        </ion-item>
+
+      </ion-list>
+
+      <div *ngIf="!mesmoCnpj">
+
+        <ion-item>
+          <ion-label stacked color="primary">CNPJ</ion-label>
+          <ion-input placeholder="CNPJ"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="primary">Razão social</ion-label>
+          <ion-input placeholder="Razão social"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="primary">E-mail</ion-label>
+          <ion-input placeholder="E-mail"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="primary">Quem aprovou</ion-label>
+          <ion-input placeholder="Quem aprovou"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked color="primary">Valor</ion-label>
+          <ion-input placeholder="Valor"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked color="primary">Prazo de pagamento</ion-label>
+            <ion-input placeholder="Prazo de pagamento"></ion-input>
+        </ion-item>
+
+
+      </div>
+    </ion-card-content>
+
+
+  </ion-card>
+
 
   <ion-card>
     <ion-card-content>
@@ -189,4 +252,3 @@
 
 
 </ion-content>
-

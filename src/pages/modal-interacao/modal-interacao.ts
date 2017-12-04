@@ -19,6 +19,7 @@ export class ModalInteracaoPage {
   houveRemocao: boolean = false;
   retornarLocal: boolean = false;
   houveTreinamento: boolean = false;
+  mesmoCnpj: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
   }
