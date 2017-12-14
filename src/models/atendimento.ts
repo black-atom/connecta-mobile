@@ -91,6 +91,7 @@ interface RelatorioTecnico {
 }
 
 interface Treinamento {
+  treinamento: boolean;
   interrupcoes: boolean;
   cadastros: boolean;
   relatorios: boolean;
@@ -98,7 +99,7 @@ interface Treinamento {
   parametros_gerais: boolean;
   abonos_justificativas: boolean;
   backup_sistema: boolean;
-  software: boolean;
+  software: string;
   caminho: string
 }
 
@@ -110,4 +111,15 @@ interface RemocaoRelogio {
   fonte: boolean;
   pino: boolean;
   impressora: boolean;
+  mesmo_equipamento: string,
+  outro_equipamento: string,
+}
+
+interface Faturamento {
+  cnpj: string;
+  nome_razao_social: string;
+  email: string;
+  quem_aprovou: string;
+  valor: string;
+  prazo_pagamento: string;
 }

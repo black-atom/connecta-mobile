@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { ModalInteracaoPageModule } from './modal-interacao/modal-interacao.module';
 import { DetailsModule } from './details/details.module';
 import { LoginModule } from './login/login.module';
@@ -9,6 +10,7 @@ import { NgModule } from '@angular/core';
     ChamadosModule,
     LoginModule,
     DetailsModule,
+    ReactiveFormsModule,
     ModalInteracaoPageModule
   ]
 })
