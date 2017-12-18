@@ -18,7 +18,7 @@ import {
   NavParams,
   ToastController,
   AlertController,
-  ActionSheetController,  
+  ActionSheetController,
   ModalController} from 'ionic-angular';
 import { File, FileEntry} from "@ionic-native/file";
 import { Response} from "@angular/http";
@@ -59,14 +59,14 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    this.atendimento$ =this.store.select(appState =>
+    this.atendimento$ = this.store.select(appState =>
       appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId)
     );
   }
 
   mostrarModalInteracaoDados() {
-    const modal = this.modalCtrl.create(ModalInteracaoPage);
+    const modal = this.modalCtrl.create(ModalInteracaoPage, { id: this.selectedId });
     modal.present();
   }
 

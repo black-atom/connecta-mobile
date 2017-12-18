@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="interacaoTecnicoForm" (ngSubmit)="logForm()">
+  <form [formGroup]="interacaoTecnicoForm" (ngSubmit)="salvarDados(interacaoTecnicoForm.value)">
 
     <ion-card>
       <ion-card-header>
@@ -18,16 +18,18 @@
         <ion-list radio-group formControlName='retornar' (ngModel)="validacaoCampo.retornarLocal">
           <ion-item>
             <ion-label>Sim</ion-label>
-            <ion-radio value="true" (ionSelect)="validacaoCampo.retornarLocal = false"></ion-radio>
+            <ion-radio value="true" (ionSelect)="validacaoCampo.retornarLocal = true"
+            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Não</ion-label>
-            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.retornarLocal = true"></ion-radio>
+            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.retornarLocal = false"
+            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
           </ion-item>
         </ion-list>
 
-        <ion-item *ngIf="validacaoCampo.retornarLocal === false">
+        <ion-item *ngIf="validacaoCampo.retornarLocal === true">
           <ion-label color="primary" stacked>Motivo</ion-label>
           <ion-input formControlName="motivo" placeholder="Insira o motivo"></ion-input>
         </ion-item>
@@ -47,19 +49,21 @@
           <ion-list radio-group formControlName="treinamento">
             <ion-item>
               <ion-label>Sim</ion-label>
-              <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveTreinamento = true"></ion-radio>
+              <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveTreinamento = true"
+              (click)="treinamento(validacaoCampo.houveTreinamento)"></ion-radio>
             </ion-item>
 
             <ion-item>
               <ion-label>Não</ion-label>
-              <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.houveTreinamento = false"></ion-radio>
+              <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.houveTreinamento = false"
+              (click)="treinamento(validacaoCampo.houveTreinamento)"></ion-radio>
             </ion-item>
           </ion-list>
         </div>
 
 
 
-        <div *ngIf="validacaoCampo.houveTreinamento === true">
+        <div *ngIf="validacaoCampo.houveTreinamento !== false">
 
           <ion-item text-wrap>
             Selecione os tópicos abordados no treinamento
@@ -90,7 +94,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label>Interrupçoẽs</ion-label>
+            <ion-label>Interrupções</ion-label>
             <ion-checkbox color="primary" formControlName="interrupcoes"></ion-checkbox>
           </ion-item>
 
@@ -126,12 +130,14 @@
 
           <ion-item>
             <ion-label>Sim</ion-label>
-            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveRemocao = true"></ion-radio>
+            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveRemocao = true"
+            (click)="retiradaEquipamento(validacaoCampo.houveRemocao)"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Não</ion-label>
-            <ion-radio color="primary" value="false" checked (ionSelect)="validacaoCampo.houveRemocao = false"></ion-radio>
+            <ion-radio color="primary" value="false" checked (ionSelect)="validacaoCampo.houveRemocao = false"
+            (click)="retiradaEquipamento(validacaoCampo.houveRemocao)"></ion-radio>
           </ion-item>
 
         </ion-list>
@@ -147,9 +153,9 @@
         Foi o mesmo relógio?
       </ion-card-header>
 
-      <ion-card-content>
+      <ion-card-content formGroupName="retirou_equipamento">
 
-        <ion-list radio-group>
+        <ion-list radio-group formControlName="mesmo_equipamento">
 
           <ion-item>
             <ion-label>Sim</ion-label>
@@ -163,29 +169,15 @@
 
         </ion-list>
 
-
-        <div *ngIf="!validacaoCampo.mesmoRelogio">
-
-
           <ion-item text-wrap>
-            <ion-textarea formControlName="mesmo_equipamento" class="pecas-removidas" rows="7" cols="10" placeholder="Insira o(s) relógio(s) que foram removidos, seu(s) respectivos número de série e o que foi cada removido de cada um deles"></ion-textarea>
+            <ion-textarea formControlName="informacoe_equipamento" class="pecas-removidas" rows="7" cols="10"
+            placeholder="Digite os dados do equipamento"></ion-textarea>
           </ion-item>
-
-        </div>
-
-        <div *ngIf="validacaoCampo.mesmoRelogio">
-
-          <ion-item text-wrap>
-            <ion-textarea  formControlName="outro_equipamento"  rows="3" cols="10" placeholder="Insira a(s) peça(s) que foram removidas do relógio"></ion-textarea>
-          </ion-item>
-
-        </div>
-
 
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <ion-card formGroupName="faturamento">
       <ion-card-header>
         Faturamento
       </ion-card-header>
@@ -195,16 +187,18 @@
           Mesmo CNPJ?
         </ion-item>
 
-        <ion-list radio-group>
+        <ion-list radio-group formControlName="mesmo_cnpj">
 
           <ion-item>
             <ion-label>Sim</ion-label>
-            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.mesmoCnpj = true"></ion-radio>
+            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.mesmoCnpj = true"
+            (click)="faturamento(validacaoCampo.mesmoCnpj)"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Não</ion-label>
-            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.mesmoCnpj = false"></ion-radio>
+            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.mesmoCnpj = false"
+            (click)="faturamento(validacaoCampo.mesmoCnpj)"></ion-radio>
           </ion-item>
 
 
@@ -214,32 +208,32 @@
 
           <ion-item>
             <ion-label stacked color="primary">CNPJ</ion-label>
-            <ion-input placeholder="CNPJ"></ion-input>
+            <ion-input formControlName="cnpj" placeholder="CNPJ"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked color="primary">Razão social</ion-label>
-            <ion-input placeholder="Razão social"></ion-input>
+            <ion-input formControlName="nome_razao_social" placeholder="Razão social"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked color="primary">E-mail</ion-label>
-            <ion-input placeholder="E-mail"></ion-input>
+            <ion-input formControlName="email" placeholder="E-mail"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked color="primary">Quem aprovou</ion-label>
-            <ion-input placeholder="Quem aprovou"></ion-input>
+            <ion-input formControlName="quem_aprovou" placeholder="Quem aprovou"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked color="primary">Valor</ion-label>
-            <ion-input placeholder="Valor"></ion-input>
+            <ion-input formControlName="valor" placeholder="Valor"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label stacked color="primary">Prazo de pagamento</ion-label>
-            <ion-input placeholder="Prazo de pagamento"></ion-input>
+            <ion-input formControlName="prazo_pagamento" placeholder="Prazo de pagamento"></ion-input>
           </ion-item>
 
 
@@ -247,7 +241,7 @@
       </ion-card-content>
 
 
-    </ion-card> -->
+    </ion-card>
 
     <ion-card>
       <ion-card-content>

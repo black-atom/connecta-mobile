@@ -30,7 +30,7 @@ export interface Atendimento {
   retorno: Retorno;
   relatorio_tecnico: RelatorioTecnico;
   treinamento: Treinamento;
-  remocao_relogio: RemocaoRelogio;
+  retirou_equipamento: RemocaoRelogio;
 }
 
 interface Cliente {
@@ -105,17 +105,12 @@ interface Treinamento {
 
 interface RemocaoRelogio {
   retirado: boolean;
-  chave: boolean;
-  bateria: boolean;
-  bobina: boolean;
-  fonte: boolean;
-  pino: boolean;
-  impressora: boolean;
-  mesmo_equipamento: string,
-  outro_equipamento: string,
+  mesmo_equipamento: boolean,
+  informacoe_equipamento: string,
 }
 
 interface Faturamento {
+  mesmo_cnpj: boolean;
   cnpj: string;
   nome_razao_social: string;
   email: string;
