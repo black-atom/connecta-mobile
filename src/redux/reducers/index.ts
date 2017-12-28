@@ -6,11 +6,15 @@ import { Action } from '@ngrx/store';
 import { networkReducer } from './networkReducer';
 import { atendimentosReducer } from './atendimentos';
 
+import { MonitoramentoReducer } from './monitoramento';
+import { Monitoramento } from '../../models/monitoramento';
+
 export const reducer = {
     atendimentos: atendimentosReducer,
     networkStatus: networkReducer,
     login: loginReducer,
-    imagens: imagemReducer
+    imagens: imagemReducer,
+    monitoramentos: MonitoramentoReducer
 }
 
 export interface ActionWithPayload<T> extends Action {
@@ -22,5 +26,7 @@ export interface AppState {
   networkStatus: boolean;
   atendimentos: Atendimento[];
   imagens: Imagem[];
-  login: LoginState
+  login: LoginState;
+  monitoramentos: Monitoramento[];
+
 }

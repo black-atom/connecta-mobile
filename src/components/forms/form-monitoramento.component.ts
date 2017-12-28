@@ -2,6 +2,11 @@ import { ViewController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core/src/metadata/view';
+import { AppState } from '../../redux/reducers';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
+import { Monitoramento } from '../../models/monitoramento';
+import { inserirKMInicial, MONITORAMENTO_CRIAR_DESLOCAMENTO } from '../../redux/reducers/monitoramento';
 
 @Component({
   templateUrl: 'form-monitoramento.html',
@@ -10,8 +15,14 @@ import { ViewEncapsulation } from '@angular/core/src/metadata/view';
 export class FormMonitoramentoComponent implements OnInit {
 
   @Input('tipo') tipo: string;
+  private selectedId = null;
+  public monitoramento$: Observable<Monitoramento>;
 
-  constructor(public alertCtrl: AlertController) {
+  constructor(
+              public alertCtrl: AlertController,
+              public navParams: NavParams,
+              private store: Store<AppState>
+            ) {
   }
 
   public iconDefault = 'assets/icon/speed.png';
@@ -77,8 +88,9 @@ export class FormMonitoramentoComponent implements OnInit {
         },
         {
           text: 'Salvar',
-          handler: data => {
-            console.log('Saved clicked');
+          handler: (data) => {
+            const km = parseInt(data.km_inicial);
+            this.store.dispatch(new inserirKMInicial(km, this.tipo))
           }
         }
       ]
@@ -87,6 +99,10 @@ export class FormMonitoramentoComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.selectedId = this.navParams.get('id');
+    this.monitoramento$ = this.store.select(appState =>
+      appState.monitoramentos
+        .find(deslocamento => deslocamento._id == this.selectedId)
+    );
   }
 }
