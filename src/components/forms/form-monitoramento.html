@@ -1,0 +1,98 @@
+<ion-grid>
+
+  <ion-row>
+    <ion-col col-12 text-center>
+      <img  src='assets/icon/speed.png' />
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col col-12>
+      <ion-card padding >
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/speed.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a (click)="showPrompt('Inicial')">
+                  <h1>Deslocamento Incial</h1>
+                  <h2>...</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='assets/icon/speed-check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a (click)="showPrompt('Final')">
+                  <h1>Deslocamento Final</h1>
+                  <h2>...</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a >
+                  <h1>Inicio {{ tipo }}</h1>
+                  <h2>...</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a >
+                  <h1>Final {{ tipo }}</h1>
+                  <h2>...</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+
+</ion-grid>
