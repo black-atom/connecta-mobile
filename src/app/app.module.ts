@@ -11,8 +11,6 @@ import { Camera } from '@ionic-native/camera';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-
-
 import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
