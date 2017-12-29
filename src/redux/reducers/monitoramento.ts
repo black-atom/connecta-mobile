@@ -1,6 +1,8 @@
+import { AppState } from './index';
 import { Action } from '@ngrx/store';
 import { Monitoramento } from '../../models/monitoramento';
 import  uuidv4 from 'uuid/v4';
+import { createSelector } from '@ngrx/store';
 
 export const MONITORAMENTO_CRIAR_DESLOCAMENTO = 'MONITORAMENTO_CRIAR_DESLOCAMENTO';
 export const MONITORAMENTO_EDITAR = 'MONITORAMENTO_EDITAR';
@@ -98,3 +100,8 @@ export const MonitoramentoReducer = (state: Monitoramento[] = [], action: monito
       return state;
   }
 };
+const getMonitoramentos = (appState: AppState) => appState.monitoramentos;
+
+export const getMonitoramentoAtual = createSelector(getMonitoramentos, (monitoramentos: Monitoramento[]) => {
+    return monitoramentos.find(monitoramento => monitoramento.data_hora_final_virgente_local === null)
+});

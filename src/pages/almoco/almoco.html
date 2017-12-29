@@ -9,6 +9,10 @@
 
 </ion-header>
 
+
 <ion-content>
-  <form-monitoramento [tipo]='tipo'></form-monitoramento>
+  <pre>
+    {{ monitoramento$ | async | json }}
+  </pre>
+  <form-monitoramento [tipo]='tipo' [monitoramento]="monitoramento$ | async"></form-monitoramento>
 </ion-content>

@@ -14,7 +14,9 @@ import { inserirKMInicial, MONITORAMENTO_CRIAR_DESLOCAMENTO } from '../../redux/
 })
 export class FormMonitoramentoComponent implements OnInit {
 
+
   @Input('tipo') tipo: string;
+  @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
   public monitoramento$: Observable<Monitoramento>;
 
@@ -88,7 +90,7 @@ export class FormMonitoramentoComponent implements OnInit {
         },
         {
           text: 'Salvar',
-          handler: (data) => {
+          handler: data => {
             const km = parseInt(data.km_inicial);
             this.store.dispatch(new inserirKMInicial(km, this.tipo))
           }

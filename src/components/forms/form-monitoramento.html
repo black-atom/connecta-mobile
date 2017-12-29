@@ -18,7 +18,7 @@
               <ion-card-content>
                 <a (click)="showPrompt('Inicial')">
                   <h1>Deslocamento Incial</h1>
-                  <h2>...</h2>
+                  <h2>{{ monitoramento?.km_inicial }} km - {{ monitoramento?.data_hora_inicial_km | date: 'HH:mm'}} h </h2>
                 </a>
               </ion-card-content>
             </ion-col>
@@ -39,7 +39,7 @@
               <ion-card-content>
                 <a (click)="showPrompt('Final')">
                   <h1>Deslocamento Final</h1>
-                  <h2>...</h2>
+                  <h2>{{ monitoramento?.km_final }} km - {{ monitoramento?.data_hora_final_km | date: 'HH:mm' }} h</h2>
                 </a>
               </ion-card-content>
             </ion-col>
@@ -61,7 +61,7 @@
               <ion-card-content>
                 <a >
                   <h1>Inicio {{ tipo }}</h1>
-                  <h2>...</h2>
+                  <h2>{{ monitoramento?.data_hora_inicial_virgente_local | date: 'HH:mm' }} h</h2>
                 </a>
               </ion-card-content>
             </ion-col>
@@ -83,7 +83,7 @@
               <ion-card-content>
                 <a >
                   <h1>Final {{ tipo }}</h1>
-                  <h2>...</h2>
+                  <h2>{{ monitoramento?.data_hora_final_virgente_local | date: 'HH:mm' }} h</h2>
                 </a>
               </ion-card-content>
             </ion-col>
