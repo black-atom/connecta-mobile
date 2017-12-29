@@ -40,6 +40,31 @@ export class inserirKMFinal implements Action {
   }
 }
 
+export class updateKMInicial implements Action {
+  readonly type: string = MONITORAMENTO_EDITAR;
+  public payload: Monitoramento
+  constructor(public km_inicial:number, public uuid:string) {
+  	this.payload = {
+    		uuid,
+        km_inicial,
+        isUploaded: false
+    }
+  }
+}
+
+
+export class updateKMFinal implements Action {
+  readonly type: string = MONITORAMENTO_EDITAR;
+  public payload: Monitoramento
+  constructor(public km_final:number, public uuid:string) {
+  	this.payload = {
+    		uuid,
+        km_final,
+        isUploaded: false
+    }
+  }
+}
+
 
 export class iniciarMonitoramento implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;

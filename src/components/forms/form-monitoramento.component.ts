@@ -6,7 +6,7 @@ import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Monitoramento } from '../../models/monitoramento';
-import { inserirKMInicial, MONITORAMENTO_CRIAR_DESLOCAMENTO } from '../../redux/reducers/monitoramento';
+import { inserirKMInicial, updateKMInicial, inserirKMFinal, updateKMFinal } from '../../redux/reducers/monitoramento';
 
 @Component({
   templateUrl: 'form-monitoramento.html',
@@ -18,7 +18,6 @@ export class FormMonitoramentoComponent implements OnInit {
   @Input('tipo') tipo: string;
   @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
-  public monitoramento$: Observable<Monitoramento>;
 
   constructor(
               public alertCtrl: AlertController,
@@ -77,7 +76,7 @@ export class FormMonitoramentoComponent implements OnInit {
       message: this.message,
       inputs: [
         {
-          name: 'km_inicial',
+          name: 'km',
           placeholder: `Insira KM ${tipo}.`
         },
       ],
@@ -91,8 +90,20 @@ export class FormMonitoramentoComponent implements OnInit {
         {
           text: 'Salvar',
           handler: data => {
-            const km = parseInt(data.km_inicial);
-            this.store.dispatch(new inserirKMInicial(km, this.tipo))
+            const KM = parseInt(data.km);
+           if(tipo === 'inicial') {
+            if(this.monitoramento && this.monitoramento.km_inicial === null) {
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo))
+            }else {
+              this.store.dispatch(new updateKMInicial(KM, this.monitoramento.uuid))
+            }
+           }else if(tipo === 'final') {
+            if(this.monitoramento && this.monitoramento.km_final === null) {
+              this.store.dispatch(new inserirKMFinal(KM, this.monitoramento.uuid))
+            }else {
+              this.store.dispatch(new updateKMFinal(KM, this.monitoramento.uuid))
+            }
+           }
           }
         }
       ]
@@ -101,10 +112,6 @@ export class FormMonitoramentoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedId = this.navParams.get('id');
-    this.monitoramento$ = this.store.select(appState =>
-      appState.monitoramentos
-        .find(deslocamento => deslocamento._id == this.selectedId)
-    );
+
   }
 }

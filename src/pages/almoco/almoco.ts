@@ -1,11 +1,10 @@
-
-import { Monitoramento } from './../../models/monitoramento';
 import { Component } from '@angular/core';
 import { App, IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { AppState } from './../../redux/reducers/index';
 import { getMonitoramentoAtual } from './../../redux/reducers/monitoramento';
+import { Monitoramento } from './../../models/monitoramento';
 
 @IonicPage()
 @Component({
