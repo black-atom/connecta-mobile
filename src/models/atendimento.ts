@@ -30,7 +30,7 @@ export interface Atendimento {
   retorno: Retorno;
   relatorio_tecnico: RelatorioTecnico;
   treinamento: Treinamento;
-  remocao_relogio: RemocaoRelogio;
+  retirou_equipamento: RemocaoRelogio;
 }
 
 interface Cliente {
@@ -91,6 +91,7 @@ interface RelatorioTecnico {
 }
 
 interface Treinamento {
+  treinamento: boolean;
   interrupcoes: boolean;
   cadastros: boolean;
   relatorios: boolean;
@@ -98,16 +99,22 @@ interface Treinamento {
   parametros_gerais: boolean;
   abonos_justificativas: boolean;
   backup_sistema: boolean;
-  software: boolean;
+  software: string;
   caminho: string
 }
 
 interface RemocaoRelogio {
   retirado: boolean;
-  chave: boolean;
-  bateria: boolean;
-  bobina: boolean;
-  fonte: boolean;
-  pino: boolean;
-  impressora: boolean;
+  mesmo_equipamento: boolean,
+  informacoe_equipamento: string,
+}
+
+interface Faturamento {
+  mesmo_cnpj: boolean;
+  cnpj: string;
+  nome_razao_social: string;
+  email: string;
+  quem_aprovou: string;
+  valor: string;
+  prazo_pagamento: string;
 }

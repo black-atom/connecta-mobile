@@ -1,0 +1,254 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Interação de dados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="interacaoTecnicoForm" (ngSubmit)="salvarDados(interacaoTecnicoForm.value)">
+
+    <ion-card>
+      <ion-card-header>
+        Retornará ao local?
+      </ion-card-header>
+
+      <ion-card-content formGroupName="retorno">
+        <ion-list radio-group formControlName='retornar' (ngModel)="validacaoCampo.retornarLocal">
+          <ion-item>
+            <ion-label>Sim</ion-label>
+            <ion-radio value="true" (ionSelect)="validacaoCampo.retornarLocal = true"
+            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Não</ion-label>
+            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.retornarLocal = false"
+            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
+          </ion-item>
+        </ion-list>
+
+        <ion-item *ngIf="validacaoCampo.retornarLocal === true">
+          <ion-label color="primary" stacked>Motivo</ion-label>
+          <ion-input formControlName="motivo" placeholder="Insira o motivo"></ion-input>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+
+      <ion-card-header>
+        Houve treinamento?
+      </ion-card-header>
+
+      <ion-card-content formGroupName="treinamento">
+
+        <div>
+          <ion-list radio-group formControlName="treinamento">
+            <ion-item>
+              <ion-label>Sim</ion-label>
+              <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveTreinamento = true"
+              (click)="treinamento(validacaoCampo.houveTreinamento)"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Não</ion-label>
+              <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.houveTreinamento = false"
+              (click)="treinamento(validacaoCampo.houveTreinamento)"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </div>
+
+
+
+        <div *ngIf="validacaoCampo.houveTreinamento !== false">
+
+          <ion-item text-wrap>
+            Selecione os tópicos abordados no treinamento
+          </ion-item>
+          <ion-item>
+            <ion-label>Cadastros</ion-label>
+            <ion-checkbox color="primary" formControlName="cadastros"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Abonos/Justificativas</ion-label>
+            <ion-checkbox color="primary" formControlName="abonos_justificativas"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Parâmetros Gerais</ion-label>
+            <ion-checkbox color="primary" formControlName="parametros_gerais"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Relatórios</ion-label>
+            <ion-checkbox color="primary" formControlName="relatorios"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Importação</ion-label>
+            <ion-checkbox color="primary" formControlName="importacao_dados"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Interrupções</ion-label>
+            <ion-checkbox color="primary" formControlName="interrupcoes"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Backup do Sistema</ion-label>
+            <ion-checkbox color="primary" formControlName="backup_sistema"></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Software</ion-label>
+            <ion-input placeholder="Insira o software" formControlName="software"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Caminho</ion-label>
+            <ion-input placeholder="Insira o caminho da rede" formControlName="caminho"></ion-input>
+          </ion-item>
+        </div>
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <ion-card>
+      <ion-card-header>
+        Houve remoção do relógio?
+      </ion-card-header>
+
+      <ion-card-content formGroupName="retirou_equipamento">
+
+        <ion-list radio-group formControlName="retirado">
+
+          <ion-item>
+            <ion-label>Sim</ion-label>
+            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.houveRemocao = true"
+            (click)="retiradaEquipamento(validacaoCampo.houveRemocao)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Não</ion-label>
+            <ion-radio color="primary" value="false" checked (ionSelect)="validacaoCampo.houveRemocao = false"
+            (click)="retiradaEquipamento(validacaoCampo.houveRemocao)"></ion-radio>
+          </ion-item>
+
+        </ion-list>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <ion-card *ngIf="validacaoCampo.houveRemocao">
+
+      <ion-card-header>
+        Foi o mesmo relógio?
+      </ion-card-header>
+
+      <ion-card-content formGroupName="retirou_equipamento">
+
+        <ion-list radio-group formControlName="mesmo_equipamento">
+
+          <ion-item>
+            <ion-label>Sim</ion-label>
+            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.mesmoRelogio = true"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Não</ion-label>
+            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.mesmoRelogio = false"></ion-radio>
+          </ion-item>
+
+        </ion-list>
+
+          <ion-item text-wrap>
+            <ion-textarea formControlName="informacoe_equipamento" class="pecas-removidas" rows="7" cols="10"
+            placeholder="Digite os dados do equipamento"></ion-textarea>
+          </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card formGroupName="faturamento">
+      <ion-card-header>
+        Faturamento
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item class="mesmo-cnpj">
+          Mesmo CNPJ?
+        </ion-item>
+
+        <ion-list radio-group formControlName="mesmo_cnpj">
+
+          <ion-item>
+            <ion-label>Sim</ion-label>
+            <ion-radio color="primary" value="true" (ionSelect)="validacaoCampo.mesmoCnpj = true"
+            (click)="faturamento(validacaoCampo.mesmoCnpj)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Não</ion-label>
+            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.mesmoCnpj = false"
+            (click)="faturamento(validacaoCampo.mesmoCnpj)"></ion-radio>
+          </ion-item>
+
+
+        </ion-list>
+
+        <div *ngIf="!validacaoCampo.mesmoCnpj">
+
+          <ion-item>
+            <ion-label stacked color="primary">CNPJ</ion-label>
+            <ion-input formControlName="cnpj" placeholder="CNPJ"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Razão social</ion-label>
+            <ion-input formControlName="nome_razao_social" placeholder="Razão social"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">E-mail</ion-label>
+            <ion-input formControlName="email" placeholder="E-mail"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Quem aprovou</ion-label>
+            <ion-input formControlName="quem_aprovou" placeholder="Quem aprovou"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Valor</ion-label>
+            <ion-input formControlName="valor" placeholder="Valor"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked color="primary">Prazo de pagamento</ion-label>
+            <ion-input formControlName="prazo_pagamento" placeholder="Prazo de pagamento"></ion-input>
+          </ion-item>
+
+
+        </div>
+      </ion-card-content>
+
+
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <button ion-button block type="submit" [disabled]="!interacaoTecnicoForm.valid">Salvar</button>
+      </ion-card-content>
+    </ion-card>
+
+
+  </form>
+</ion-content>

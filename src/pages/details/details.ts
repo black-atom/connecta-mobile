@@ -1,3 +1,4 @@
+import { ModalInteracaoPage } from './../modal-interacao/modal-interacao';
 import { AddImagem } from '../../redux/actions/imagem.actions';
 import { Imagem } from '../../models/imagem';
 import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
@@ -17,7 +18,8 @@ import {
   NavParams,
   ToastController,
   AlertController,
-  ActionSheetController  } from 'ionic-angular';
+  ActionSheetController,
+  ModalController} from 'ionic-angular';
 import { File, FileEntry} from "@ionic-native/file";
 import { Response} from "@angular/http";
 import { AuthHttp } from 'angular2-jwt';
@@ -50,16 +52,22 @@ export class DetailsPage {
     private readonly file: File,
     private readonly authHttp: AuthHttp,
     private launchNavigator: LaunchNavigator,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    private modalCtrl: ModalController
   ) {
   }
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    this.atendimento$ =this.store.select(appState =>
+    this.atendimento$ = this.store.select(appState =>
       appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId)
     );
+  }
+
+  mostrarModalInteracaoDados() {
+    const modal = this.modalCtrl.create(ModalInteracaoPage, { id: this.selectedId });
+    modal.present();
   }
 
   iniciarAtendimento(){
@@ -214,6 +222,7 @@ export class DetailsPage {
           const imagem: Imagem = {
             atendimentoID: this.selectedId,
             isUploaded: false,
+            isUploading: false,
             localPath: imagemPath,
             tipo: tipo
           };
