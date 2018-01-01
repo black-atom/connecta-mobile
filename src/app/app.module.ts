@@ -29,6 +29,7 @@ import { Storage } from '@ionic/storage';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { ImagemProvider } from '../providers/imagem/imagem';
+import { MonitoramentoProvider } from '../providers/monitoramento/monitoramento';
 
 
 // console.log all actions
@@ -93,6 +94,7 @@ export function getAuthHttp(http) {
       deps: [Http]
     },
     ImagemProvider,
+    MonitoramentoProvider,
   ]
 })
 export class AppModule {}
