@@ -9,6 +9,7 @@
 
 </ion-header>
 
+
 <ion-content>
   <pre *ngIf="(monitoramento$ | async) as monitoramento">
     {{ monitoramento$ | async | json }}
@@ -23,4 +24,5 @@
         <h1>Já exite um destino do {{ monitoramento?.tipo_quilometragem }} que não foi finalizado!</h1>
     </div>
   </div>
+
 </ion-content>
