@@ -12,12 +12,12 @@
   <pre *ngIf="(monitoramento$ | async) as monitoramento">
     {{ monitoramento$ | async | json }}
   </pre>
+  <form-monitoramento
+    [tipo]='tipo'
+    [monitoramento]="monitoramento$ | async"
+  >
+  </form-monitoramento>
   <div *ngIf="(monitoramento$ | async) as monitoramento">
-    <form-monitoramento
-      [tipo]='tipo'
-      [monitoramento]="monitoramento$ | async"
-      *ngIf="monitoramento?.tipo_quilometragem === tipo">
-    </form-monitoramento>
     <div *ngIf="monitoramento?.tipo_quilometragem !== tipo">
         <h1>Já exite um destino do {{ monitoramento?.tipo_quilometragem }} que não foi finalizado!</h1>
     </div>
