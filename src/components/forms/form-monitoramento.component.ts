@@ -19,6 +19,14 @@ export class FormMonitoramentoComponent implements OnInit {
   @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
 
+  get canShowInicio(){
+    return this.monitoramento !==null
+  }
+
+  get canShow(){
+    return this.monitoramento && this.monitoramento.tipo_quilometragem === this.tipo
+  }
+
   constructor(
               public alertCtrl: AlertController,
               public navParams: NavParams,
