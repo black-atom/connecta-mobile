@@ -6,7 +6,12 @@ import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Monitoramento } from '../../models/monitoramento';
-import { inserirKMInicial, updateKMInicial, inserirKMFinal, updateKMFinal } from '../../redux/reducers/monitoramento';
+import { inserirKMInicial,
+        updateKMInicial, 
+        inserirKMFinal,
+        updateKMFinal,
+        iniciarMonitoramento, 
+        finalizarMonitoramento } from '../../redux/reducers/monitoramento';
 
 @Component({
   templateUrl: 'form-monitoramento.html',
@@ -26,7 +31,13 @@ export class FormMonitoramentoComponent implements OnInit {
             ) {
   }
 
-  public iconDefault = 'assets/icon/speed.png';
+  iniciarMonitoramento() {
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramento.uuid));
+  }
+
+  finalizarMonitoramento() {
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramento.uuid));
+  }
 
   get message(){
     const messagens = {
@@ -39,17 +50,9 @@ export class FormMonitoramentoComponent implements OnInit {
     return messagens[this.tipo]
   }
 
-  iconPath() {
-    const icons = {
-
-    }
-    return icons[this.tipo];
-  }
-
-
   imagePath() {
     const imagens = {
-      almoco:  "assets/img/background-almoco-1.png",
+      almoco:  "assets/img/background-almoco.png",
       atendimento:  "assets/img/background-chamados.svg",
       deslocamento_empresa: "assets/img/background-deslocamento-empresa.png",
       abastecimento: "assets/img/background-abastecimento.png",
@@ -57,7 +60,6 @@ export class FormMonitoramentoComponent implements OnInit {
     }
     return  imagens[this.tipo];
   }
-
 
   get titleButton(){
     const titles = {
@@ -91,19 +93,19 @@ export class FormMonitoramentoComponent implements OnInit {
           text: 'Salvar',
           handler: data => {
             const KM = parseInt(data.km);
-           if(tipo === 'inicial') {
-            if(this.monitoramento && this.monitoramento.km_inicial === null) {
-              this.store.dispatch(new inserirKMInicial(KM, this.tipo))
-            }else {
-              this.store.dispatch(new updateKMInicial(KM, this.monitoramento.uuid))
+            if(tipo === 'inicial') {
+              if(this.monitoramento && this.monitoramento.km_inicial === null) {
+                this.store.dispatch(new inserirKMInicial(KM, this.tipo))
+              }else {
+                this.store.dispatch(new updateKMInicial(KM, this.monitoramento.uuid))
+              }
+            } else if(tipo === 'final') {
+              if(this.monitoramento && this.monitoramento.km_final === null) {
+                this.store.dispatch(new inserirKMFinal(KM, this.monitoramento.uuid))
+              }else {
+                this.store.dispatch(new updateKMFinal(KM, this.monitoramento.uuid))
+              }
             }
-           }else if(tipo === 'final') {
-            if(this.monitoramento && this.monitoramento.km_final === null) {
-              this.store.dispatch(new inserirKMFinal(KM, this.monitoramento.uuid))
-            }else {
-              this.store.dispatch(new updateKMFinal(KM, this.monitoramento.uuid))
-            }
-           }
           }
         }
       ]

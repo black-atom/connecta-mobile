@@ -11,9 +11,10 @@
 
 
 <ion-content>
-  <pre *ngIf="(monitoramento$ | async) as monitoramento">
+
+  <!-- <pre *ngIf="(monitoramento$ | async) as monitoramento">
     {{ monitoramento$ | async | json }}
-  </pre>
+  </pre> -->
   <div *ngIf="(monitoramento$ | async) as monitoramento">
     <form-monitoramento
       [tipo]='tipo'
