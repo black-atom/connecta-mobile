@@ -6,7 +6,13 @@ import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Monitoramento } from '../../models/monitoramento';
-import { inserirKMInicial, updateKMInicial, inserirKMFinal, updateKMFinal } from '../../redux/reducers/monitoramento';
+import { inserirKMInicial,
+    updateKMInicial,
+    inserirKMFinal,
+    updateKMFinal,
+    iniciarMonitoramento,
+    finalizarMonitoramento
+    } from '../../redux/reducers/monitoramento';
 
 @Component({
   templateUrl: 'form-monitoramento.html',
@@ -19,12 +25,33 @@ export class FormMonitoramentoComponent implements OnInit {
   @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
 
-  get canShowInicio(){
-    return this.monitoramento !==null
+  get canShowKMInicial(){
+    return this.monitoramento  === undefined
   }
 
-  get canShow(){
-    return this.monitoramento && this.monitoramento.tipo_quilometragem === this.tipo
+  get canShowTipo(){
+    return this.monitoramento.tipo_quilometragem === this.tipo
+  }
+
+  get canShowKmFinal(){
+    return this.monitoramento
+      && this.canShowTipo
+      && this.monitoramento.km_final === null
+      && this.monitoramento.km_inicial
+  }
+
+  get canShowIniciar(){
+    return this.monitoramento
+      && this.canShowTipo
+      && this.monitoramento.data_hora_inicial_virgente_local === null
+      && this.monitoramento.km_final
+  }
+
+  get canShowFinalizar(){
+    return this.monitoramento
+      && this.canShowTipo
+      && this.monitoramento.data_hora_final_virgente_local === null
+      && this.monitoramento.data_hora_inicial_virgente_local
   }
 
   constructor(
@@ -34,7 +61,13 @@ export class FormMonitoramentoComponent implements OnInit {
             ) {
   }
 
-  public iconDefault = 'assets/icon/speed.png';
+  iniciarMonitoramento() {
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramento.uuid));
+  }
+
+  finalizarMonitoramento() {
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramento.uuid));
+  }
 
   get message(){
     const messagens = {
@@ -46,14 +79,6 @@ export class FormMonitoramentoComponent implements OnInit {
     }
     return messagens[this.tipo]
   }
-
-  iconPath() {
-    const icons = {
-
-    }
-    return icons[this.tipo];
-  }
-
 
   imagePath() {
     const imagens = {
@@ -78,14 +103,14 @@ export class FormMonitoramentoComponent implements OnInit {
     return titles[this.tipo]
   }
 
-  showPrompt(tipo) {
+  showPromptKmInicial() {
     let prompt = this.alertCtrl.create({
-      title: `Quilometragem ${tipo}.`,
+      title: `Quilometragem Inicial`,
       message: this.message,
       inputs: [
         {
           name: 'km',
-          placeholder: `Insira KM ${tipo}.`
+          placeholder: `Insira KM Inicial`
         },
       ],
       buttons: [
@@ -99,19 +124,45 @@ export class FormMonitoramentoComponent implements OnInit {
           text: 'Salvar',
           handler: data => {
             const KM = parseInt(data.km);
-           if(tipo === 'inicial') {
-            if(this.monitoramento && this.monitoramento.km_inicial === null) {
+            if(!this.monitoramento) {
               this.store.dispatch(new inserirKMInicial(KM, this.tipo))
             }else {
               this.store.dispatch(new updateKMInicial(KM, this.monitoramento.uuid))
             }
-           }else if(tipo === 'final') {
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  showPromptFinal() {
+    let prompt = this.alertCtrl.create({
+      title: `Quilometragem Final`,
+      message: this.message,
+      inputs: [
+        {
+          name: 'km',
+          placeholder: `Insira KM Final`
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Salvar',
+          handler: data => {
+            const KM = parseInt(data.km);
+
             if(this.monitoramento && this.monitoramento.km_final === null) {
               this.store.dispatch(new inserirKMFinal(KM, this.monitoramento.uuid))
             }else {
               this.store.dispatch(new updateKMFinal(KM, this.monitoramento.uuid))
             }
-           }
           }
         }
       ]

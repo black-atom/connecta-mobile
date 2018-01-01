@@ -69,11 +69,22 @@ export class updateKMFinal implements Action {
 export class iniciarMonitoramento implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
   public payload: Monitoramento
-  constructor(public km_final:number, public uuid:string) {
+  constructor(public uuid:string) {
   	this.payload = {
     		uuid,
-        km_final,
-        data_hora_final_km: new Date(),
+        data_hora_inicial_virgente_local: new Date(),
+        isUploaded: false
+    }
+  }
+}
+
+export class finalizarMonitoramento implements Action {
+  readonly type: string = MONITORAMENTO_EDITAR;
+  public payload: Monitoramento
+  constructor(public uuid:string) {
+  	this.payload = {
+    		uuid,
+        data_hora_final_virgente_local: new Date(),
         isUploaded: false
     }
   }
@@ -87,7 +98,10 @@ export class successMonitoramento implements Action {
 export type monitoramentoActions =
     | inserirKMInicial
     | inserirKMFinal
+    | updateKMInicial
+    | updateKMFinal
     | iniciarMonitoramento
+    | finalizarMonitoramento
     | successMonitoramento;
 
 export const MonitoramentoReducer = (state: Monitoramento[] = [], action: monitoramentoActions) => {

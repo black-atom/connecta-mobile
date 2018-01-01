@@ -6,8 +6,8 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="canShowInicio">
-    <ion-col col-12>
+  <ion-row >
+    <ion-col col-12 *ngIf="canShowKMInicial">
       <ion-card padding >
         <ion-item>
           <ion-row>
@@ -16,7 +16,7 @@
             </ion-col>
             <ion-col col-10>
               <ion-card-content>
-                <a (click)="showPrompt('inicial')">
+                <a (click)="showPromptKmInicial()">
                   <h1>Deslocamento Incial</h1>
                   <h2>{{ monitoramento?.km_inicial }} km - {{ monitoramento?.data_hora_inicial_km | date: 'HH:mm'}} h </h2>
                 </a>
@@ -26,11 +26,9 @@
         </ion-item>
       </ion-card>
     </ion-col>
-  </ion-row>
-  <ion-row *ngIf="canShow">
-    <ion-col col-12>
-      <ion-card padding >
 
+    <ion-col col-12 *ngIf="canShowKmFinal">
+      <ion-card padding >
         <ion-item>
           <ion-row>
             <ion-col col-2>
@@ -38,7 +36,7 @@
             </ion-col>
             <ion-col col-10>
               <ion-card-content>
-                <a (click)="showPrompt('final')">
+                <a (click)="showPromptFinal()">
                   <h1>Deslocamento Final</h1>
                   <h2>{{ monitoramento?.km_final }} km - {{ monitoramento?.data_hora_final_km | date: 'HH:mm' }} h</h2>
                 </a>
@@ -50,7 +48,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col col-12>
+    <ion-col col-12  *ngIf="canShowIniciar">
       <ion-card padding >
 
         <ion-item>
@@ -72,7 +70,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col col-12>
+    <ion-col col-12 *ngIf="canShowFinalizar">
       <ion-card padding >
 
         <ion-item>
@@ -94,6 +92,25 @@
       </ion-card>
     </ion-col>
 
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+
+        <div *ngIf="canShowKMInicial">
+          <button (click)="showPromptKmInicial()"ion-button color="light">Iniciar deslocamento</button>
+        </div>
+        <div *ngIf="canShowKmFinal">
+          <button (click)="showPromptFinal()" ion-button color="light">Finalizar deslocamento</button>
+        </div>
+        <div *ngIf="canShowIniciar">
+          <button ion-button (click)="iniciarMonitoramento()" color="light">Iniciar</button>
+        </div>
+        <div *ngIf="canShowFinalizar">
+          <button ion-button (click)="finalizarMonitoramento()" color="light">Finalizar</button>
+        </div>
+
+    </ion-col>
   </ion-row>
 
 </ion-grid>
