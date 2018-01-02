@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Rx';
 import { AppState } from '../../redux/reducers';
 import { LoginActions } from '../login/redux/login.actions';
 import { Funcionario } from '../../models/funcionario';
-import { SocketIoProvider } from './../../providers/socket-io/socket-io';
 import { UploadImagem } from './../../redux/actions/imagem.actions';
 import { selectImagensToUpload, nImagensParaUploadSelector } from './../../redux/reducers/imagem.reducer';
 import { ChamadosPage } from './../chamados/chamados';
@@ -32,7 +31,6 @@ export class TabsPage implements OnInit{
   constructor(
     private store:Store<AppState>,
     private navController:NavController,
-    private socketIoProvider: SocketIoProvider,
   ) {
 
   }

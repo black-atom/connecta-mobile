@@ -7,12 +7,6 @@ import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 import { File, FileEntry, IFile } from '@ionic-native/file';
 
-/*
-  Generated class for the ImagemProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class ImagemProvider {
 

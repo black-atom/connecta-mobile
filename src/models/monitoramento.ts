@@ -7,6 +7,7 @@ export interface Monitoramento {
   data_hora_final_km?: Date,
   data_hora_inicial_virgente_local?: Date,
   data_hora_final_virgente_local?: Date,
-  tipo_quilometragem?: string,
+  tipo?: string,
+  id_funcionario?: string,
   isUploaded?: boolean,
 }

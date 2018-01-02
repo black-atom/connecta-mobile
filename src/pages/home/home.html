@@ -20,8 +20,8 @@
   >
   </form-monitoramento>
   <div *ngIf="(monitoramento$ | async) as monitoramento">
-    <div *ngIf="monitoramento?.tipo_quilometragem !== tipo">
-        <h1>Já exite um destino do {{ monitoramento?.tipo_quilometragem }} que não foi finalizado!</h1>
+    <div *ngIf="monitoramento?.tipo !== tipo">
+        <h1>Já exite um destino do {{ monitoramento?.tipo }} que não foi finalizado!</h1>
     </div>
   </div>
 

@@ -18,7 +18,7 @@ import { PesquisaPage } from '../pages/pesquisa/pesquisa';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { SocketIoProvider } from '../providers/socket-io/socket-io';
+// import { SocketIoProvider } from '../providers/socket-io/socket-io';
 import { ActionReducer } from '@ngrx/store';
 
 import { SyncDataProvider } from '../providers/sync-data/sync-data';
@@ -80,7 +80,7 @@ export function getAuthHttp(http) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SocketIoProvider,
+    // SocketIoProvider,
     Camera,
     SyncDataProvider,
     NetwordStatusProvider,

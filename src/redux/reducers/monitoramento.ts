@@ -12,7 +12,7 @@ export const MONITORAMENTO_UPLOAD_FAILED = 'MONITORAMENTO_UPLOAD_FAILED';
 export class inserirKMInicial implements Action {
   readonly type: string = MONITORAMENTO_CRIAR_DESLOCAMENTO;
   public payload: Monitoramento
-  constructor(public km_inicial:number, public tipo:string) {
+  constructor(public km_inicial:number, public tipo:string, public id_funcionario: string) {
   	this.payload = {
         km_inicial,
         km_final: null,
@@ -20,8 +20,9 @@ export class inserirKMInicial implements Action {
         data_hora_final_km: null,
         data_hora_inicial_virgente_local: null,
         data_hora_final_virgente_local: null,
-        tipo_quilometragem: tipo,
+        tipo: tipo,
         uuid: uuidv4(),
+        id_funcionario,
         isUploaded: false
     }
   }
@@ -29,9 +30,9 @@ export class inserirKMInicial implements Action {
 
 export class inserirKMFinal implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
-  public payload: Monitoramento
-  constructor(public km_final:number, public uuid:string) {
+  constructor(public payload: Monitoramento,public km_final:number, public uuid:string) {
   	this.payload = {
+        ...payload,
     		uuid,
         km_final,
         data_hora_final_km: new Date(),
@@ -42,9 +43,9 @@ export class inserirKMFinal implements Action {
 
 export class updateKMInicial implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
-  public payload: Monitoramento
-  constructor(public km_inicial:number, public uuid:string) {
+  constructor(public payload: Monitoramento, public km_inicial:number, public uuid:string) {
   	this.payload = {
+        ...payload,
     		uuid,
         km_inicial,
         isUploaded: false
@@ -55,10 +56,9 @@ export class updateKMInicial implements Action {
 
 export class updateKMFinal implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
-  public payload: Monitoramento
-  constructor(public km_final:number, public uuid:string) {
+  constructor(public payload: Monitoramento, public km_final:number, public uuid:string) {
   	this.payload = {
-    		uuid,
+        ...payload,
         km_final,
         isUploaded: false
     }
@@ -68,21 +68,20 @@ export class updateKMFinal implements Action {
 
 export class iniciarMonitoramento implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
-  public payload: Monitoramento
-  constructor(public uuid:string) {
+  constructor(public payload: Monitoramento) {
   	this.payload = {
-    		uuid,
-        data_hora_inicial_virgente_local: new Date(),
-        isUploaded: false
+      ...payload,
+      data_hora_inicial_virgente_local: new Date(),
+      isUploaded: false
     }
   }
 }
 
 export class finalizarMonitoramento implements Action {
   readonly type: string = MONITORAMENTO_EDITAR;
-  public payload: Monitoramento
-  constructor(public uuid:string) {
+  constructor(public payload: Monitoramento, public uuid:string) {
   	this.payload = {
+        ...payload,
     		uuid,
         data_hora_final_virgente_local: new Date(),
         isUploaded: false
@@ -90,8 +89,13 @@ export class finalizarMonitoramento implements Action {
   }
 }
 
-export class successMonitoramento implements Action {
+export class MonitoramentoUploadSuccess implements Action {
   readonly type: string = MONITORAMENTO_UPLOAD_SUCCESS;
+  constructor(public payload: Monitoramento) {}
+}
+
+export class MonitoramentoUploadFailed implements Action {
+  readonly type: string = MONITORAMENTO_UPLOAD_FAILED;
   constructor(public payload: Monitoramento) {}
 }
 
@@ -102,7 +106,7 @@ export type monitoramentoActions =
     | updateKMFinal
     | iniciarMonitoramento
     | finalizarMonitoramento
-    | successMonitoramento;
+    | MonitoramentoUploadSuccess;
 
 export const MonitoramentoReducer = (state: Monitoramento[] = [], action: monitoramentoActions) => {
 
@@ -127,12 +131,14 @@ export const MonitoramentoReducer = (state: Monitoramento[] = [], action: monito
 
     case MONITORAMENTO_UPLOAD_SUCCESS: {
       const findDeslocamento = state.find(
-        deslocamento => deslocamento._id === action.payload._id
+        deslocamento => deslocamento.uuid === action.payload.uuid
       );
-      const deslocamentoId = Object.assign({}, action.payload, { isUploaded: true });
-      return state.map(deslocamento => {
-        deslocamento._id === deslocamentoId._id ? deslocamentoId : deslocamento;
-      });
+
+      if(findDeslocamento){
+        const descolamentoUpdated = Object.assign({}, action.payload, { isUploaded: true });
+        return state.map(deslocamento =>  deslocamento.uuid === descolamentoUpdated.uuid ? descolamentoUpdated : deslocamento)
+      }
+      return state
     }
 
     default:

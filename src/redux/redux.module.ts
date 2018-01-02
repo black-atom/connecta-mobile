@@ -7,6 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule, ActionReducer } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { MonitoramentoEffects } from './effects/monitoramento';
 
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -16,7 +17,7 @@ const metaReducers: [any] = [localStorageSyncReducer];
 
 @NgModule({
   imports:[
-    EffectsModule.forRoot([AtendimentoEffects, LoginEffects, ImagemEffects]),
+    EffectsModule.forRoot([AtendimentoEffects, LoginEffects, ImagemEffects, MonitoramentoEffects]),
     StoreModule.forRoot(reducer,{metaReducers}),
     StoreDevtoolsModule.instrument({
       maxAge: 5

@@ -1,4 +1,4 @@
-import { ActionWithPayload } from './../../../redux/reducers/index';
+import { ActionWithPayload, AppState } from './../../../redux/reducers/index';
 import { Funcionario } from './../../../models/funcionario';
 import { LoginState } from './login.reducer';
 import { LoginActions } from './login.actions';
@@ -31,3 +31,5 @@ export const loginReducer: ActionReducer<any> =
         return state;
     }
 };
+
+export const getFuncionario = (appState : AppState) => appState.login.funcionario

@@ -2,6 +2,7 @@ import { Monitoramento } from './../../models/monitoramento';
 import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the MonitoramentoProvider provider.
@@ -17,11 +18,13 @@ export class MonitoramentoProvider {
   constructor(public http: AuthHttp) {
   }
 
-  postMonitoramento(monitoramento: Monitoramento){
-    this.http.post(this.url, monitoramento)
+  postMonitoramento(monitoramento: Monitoramento): Observable<Monitoramento>{
+    return this.http.post(this.url, monitoramento)
+      .map(payload => payload.json())
   }
 
-  putMonitoramento(monitoramento: Monitoramento){
-    this.http.put(this.url, monitoramento)
+  putMonitoramento(monitoramento: Monitoramento): Observable<Monitoramento>{
+    return this.http.put(`${this.url}/${monitoramento._id}`, monitoramento)
+      .map(payload => payload.json())
   }
 }

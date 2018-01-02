@@ -1,3 +1,5 @@
+import { getFuncionario } from './../../pages/login/redux/login.reducer';
+import { Funcionario } from './../../models/funcionario';
 import { ViewController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Component, OnInit, Input } from '@angular/core';
@@ -24,13 +26,13 @@ export class FormMonitoramentoComponent implements OnInit {
   @Input('tipo') tipo: string;
   @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
-
+  private funcionario: Funcionario
   get canShowKMInicial(){
     return this.monitoramento  === undefined
   }
 
   get canShowTipo(){
-    return this.monitoramento.tipo_quilometragem === this.tipo
+    return this.monitoramento.tipo === this.tipo
   }
 
   get canShowKmFinal(){
@@ -55,18 +57,19 @@ export class FormMonitoramentoComponent implements OnInit {
   }
 
   constructor(
-              public alertCtrl: AlertController,
-              public navParams: NavParams,
-              private store: Store<AppState>
-            ) {
+    public alertCtrl: AlertController,
+    public navParams: NavParams,
+    private store: Store<AppState>
+  ) {
+    this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario)
   }
 
   iniciarMonitoramento() {
-    this.store.dispatch(new iniciarMonitoramento(this.monitoramento.uuid));
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
   }
 
   finalizarMonitoramento() {
-    this.store.dispatch(new finalizarMonitoramento(this.monitoramento.uuid));
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
   }
 
   get message(){
@@ -125,9 +128,9 @@ export class FormMonitoramentoComponent implements OnInit {
           handler: data => {
             const KM = parseInt(data.km);
             if(!this.monitoramento) {
-              this.store.dispatch(new inserirKMInicial(KM, this.tipo))
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id))
             }else {
-              this.store.dispatch(new updateKMInicial(KM, this.monitoramento.uuid))
+              this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
             }
           }
         }
@@ -159,9 +162,9 @@ export class FormMonitoramentoComponent implements OnInit {
             const KM = parseInt(data.km);
 
             if(this.monitoramento && this.monitoramento.km_final === null) {
-              this.store.dispatch(new inserirKMFinal(KM, this.monitoramento.uuid))
+              this.store.dispatch(new inserirKMFinal(this.monitoramento,KM, this.monitoramento.uuid))
             }else {
-              this.store.dispatch(new updateKMFinal(KM, this.monitoramento.uuid))
+              this.store.dispatch(new updateKMFinal(this.monitoramento,KM, this.monitoramento.uuid))
             }
           }
         }
