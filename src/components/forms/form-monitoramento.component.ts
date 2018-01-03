@@ -1,6 +1,6 @@
 import { getFuncionario } from './../../pages/login/redux/login.reducer';
 import { Funcionario } from './../../models/funcionario';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ToastController, ViewController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core/src/metadata/view';
@@ -27,6 +27,16 @@ export class FormMonitoramentoComponent implements OnInit {
   @Input('monitoramento') monitoramento: Monitoramento;
   private selectedId = null;
   private funcionario: Funcionario
+
+  constructor(
+    public alertCtrl: AlertController,
+    public navParams: NavParams,
+    private store: Store<AppState>,
+    public toastCtrl: ToastController
+  ) {
+    this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario)
+  }
+
   get canShowKMInicial(){
     return this.monitoramento  === undefined
   }
@@ -56,22 +66,6 @@ export class FormMonitoramentoComponent implements OnInit {
       && this.monitoramento.data_hora_inicial_virgente_local
   }
 
-  constructor(
-    public alertCtrl: AlertController,
-    public navParams: NavParams,
-    private store: Store<AppState>
-  ) {
-    this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario)
-  }
-
-  iniciarMonitoramento() {
-    this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
-  }
-
-  finalizarMonitoramento() {
-    this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
-  }
-
   get message(){
     const messagens = {
       almoco:  "Insira a quilometragem inicial do deslocamento para o local do almoço.",
@@ -85,15 +79,25 @@ export class FormMonitoramentoComponent implements OnInit {
 
   imagePath() {
     const imagens = {
-      almoco:  "assets/img/background-almoco-1.png",
-      atendimento:  "assets/img/background-chamados.svg",
-      deslocamento_empresa: "assets/img/background-deslocamento-empresa.png",
-      abastecimento: "assets/img/background-abastecimento.png",
-      outros: "assets/img/background-almoco.png"
+      almoco: "assets/img/background-almoco.png",
+      atendimento: "assets/img/background-chamados.svg",
+      deslocamento_empresa: "assets/img/background-outros.png",
+      abastecimento: "assets/img/background-outros.png",
+      outros: "assets/img/background-outros.png"
     }
     return  imagens[this.tipo];
   }
 
+  iconPath() {
+    const icons = {
+      almoco: "assets/icon/iniciar-almoco.png",
+      atendimento: "assets/icon/iniciar-chamados.svg",
+      deslocamento_empresa: "assets/icon/iniciar-deslocamento-empresa.png",
+      abastecimento: "assets/icon/iniciar-abastecimento.png",
+      outros: "assets/icon/iniciar-outros.png"
+    }
+    return icons[this.tipo]
+  }
 
   get titleButton(){
     const titles = {
@@ -104,6 +108,25 @@ export class FormMonitoramentoComponent implements OnInit {
       outros: "Insira a quilometragem inicial do deslocamento para outras tarefas."
     }
     return titles[this.tipo]
+  }
+
+  get tipoMonitoramento() {
+    const tipos = {
+      almoco: "almoço",
+      atendimento: "atendimento",
+      deslocamento_empresa: "empresa",
+      abastecimento: "abastecimento",
+      outros: "outros"
+    }
+    return tipos[this.tipo];
+  }
+
+  iniciarMonitoramento() {
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
+  }
+
+  finalizarMonitoramento() {
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
   }
 
   showPromptKmInicial() {
@@ -171,6 +194,60 @@ export class FormMonitoramentoComponent implements OnInit {
       ]
     });
     prompt.present();
+  }
+
+  showConfirmInicio() {
+    let confirm = this.alertCtrl.create({
+      title: `Deseja iniciar o ${this.tipoMonitoramento}.`,
+
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.iniciarMonitoramento()
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  showConfirmFinal() {
+    let confirm = this.alertCtrl.create({
+      title: `Deseja finalzar o ${this.tipoMonitoramento}.`,
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.presentToast()
+            this.finalizarMonitoramento()
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Salvo com sucesso!',
+      duration: 3000,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
   }
 
   ngOnInit() {

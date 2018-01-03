@@ -13,7 +13,7 @@ import { Monitoramento } from './../../models/monitoramento';
 })
 
 export class OutrosPage {
-  public tipo = 'Outros'
+  public tipo = 'outros'
   public monitoramento$: Observable<Monitoramento>;
 
     constructor(public store: Store<AppState>) {

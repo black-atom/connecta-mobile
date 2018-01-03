@@ -13,7 +13,8 @@ import { Monitoramento } from './../../models/monitoramento';
 })
 
 export class HomePage {
-  public tipo = 'Home'
+  public tipo = 'deslocamento_empresa'
+  public title = 'a empresa'
   public monitoramento$: Observable<Monitoramento>;
 
     constructor(public store: Store<AppState>) {

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,17 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
-  <form-monitoramento
-    [tipo]='tipo'
-    [monitoramento]="monitoramento$ | async"
-  >
+  <form-monitoramento [tipo]='tipo' [monitoramento]="monitoramento$ | async">
   </form-monitoramento>
-  <div *ngIf="(monitoramento$ | async) as monitoramento">
-    <div *ngIf="monitoramento?.tipo !== tipo">
-        <h1>Já exite um destino do {{ monitoramento?.tipo }} que não foi finalizado!</h1>
-    </div>
-  </div>
-
 </ion-content>

@@ -13,7 +13,7 @@ import { Monitoramento } from './../../models/monitoramento';
 })
 
 export class AbastecimentoPage {
-  public tipo = 'Abastecimento'
+  public tipo = 'abastecimento'
   public monitoramento$: Observable<Monitoramento>;
 
     constructor(public store: Store<AppState>) {
