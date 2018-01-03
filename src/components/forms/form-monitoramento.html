@@ -1,0 +1,135 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+
+        <img src='{{ imagePath() }}' />
+
+        <ion-card-content class='card'>
+          <div class="wrapper">
+
+            <ul class="StepProgress">
+              <li class="StepProgress-item is-done">
+                <strong>Km Inicial</strong>
+                {{ monitoramento?.km_inicial }} km - {{ monitoramento?.data_hora_inicial_km | date: 'HH:mm'}} h
+              </li>
+              <li class="StepProgress-item is-done">
+                <strong>Km Final</strong>
+                {{ monitoramento?.km_final }} km - {{ monitoramento?.data_hora_final_km | date: 'HH:mm' }} h
+              </li>
+              <li class="StepProgress-item current">
+                <strong>Inicio Almoço</strong>
+              </li>
+              <li class="StepProgress-item">
+                <strong>Fim Almoço</strong>
+              </li>
+            </ul>
+
+            <div *ngIf="!monitoramento.km_inicial || monitoramento.km_inicial === null">
+              <button ion-button color="light"> Km inicial</button>
+            </div>
+            <div *ngIf="!monitoramento.km_final || monitoramento.km_final === null">
+              <button  ion-button color="light">Km final</button>
+            </div>
+            <div *ngIf="!monitoramento.data_hora_inicial_virgente_local || monitoramento.data_hora_inicial_virgente_local === null">
+              <button  ion-button color="light">Iniciar Bind</button>
+            </div>
+            <div *ngIf="!monitoramento.data_hora_final_virgente_local || monitoramento.data_hora_final_virgente_local === null ">
+              <button ion-button color="light">Finalizar Bind</button>
+            </div>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<!-- <ion-row>
+    <ion-col col-12>
+      <ion-card padding >
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/speed.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a (click)="showPrompt('inicial')">
+                  <h1>Deslocamento Incial</h1>
+                  <h2>{{ monitoramento?.km_inicial }} km - {{ monitoramento?.data_hora_inicial_km | date: 'HH:mm'}} h </h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='assets/icon/speed-check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a (click)="showPrompt('final')">
+                  <h1>Deslocamento Final</h1>
+                  <h2>{{ monitoramento?.km_final }} km - {{ monitoramento?.data_hora_final_km | date: 'HH:mm' }} h</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a >
+                  <h1>Inicio {{ tipo }}</h1>
+                  <h2>{{ monitoramento?.data_hora_inicial_virgente_local | date: 'HH:mm' }} h</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding >
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px"  src='assets/icon/check.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <a >
+                  <h1>Final {{ tipo }}</h1>
+                  <h2>{{ monitoramento?.data_hora_final_virgente_local | date: 'HH:mm' }} h</h2>
+                </a>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+  </ion-row> -->
