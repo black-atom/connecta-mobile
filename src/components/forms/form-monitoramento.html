@@ -1,0 +1,125 @@
+<ion-grid>
+
+  <img style="padding-top: 70px;" src='{{imagePath()}}' />
+
+  <ion-row *ngIf="monitoramento?.tipo === tipo">
+    <ion-col col-12>
+      <ion-card padding *ngIf="monitoramento?.km_incial !== null">
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='assets/icon/km-inicial.png'>
+            </ion-col>
+            <ion-col col-8>
+              <ion-card-content>
+
+                <h1>Início do deslocamento</h1>
+                <h2>{{ monitoramento?.km_inicial }} km - {{ monitoramento?.data_hora_inicial_km | date: 'HH:mm'}} h </h2>
+
+              </ion-card-content>
+            </ion-col>
+            <ion-col col-2>
+              <button (click)="showPromptKmInicial()" large ion-button clear color="dark">
+                <ion-icon large name="md-more"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding *ngIf="monitoramento?.km_final !== null">
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='assets/icon/km-final.png'>
+            </ion-col>
+            <ion-col col-8>
+              <ion-card-content>
+                <h1>Fim do deslocamento</h1>
+                <h2>{{ monitoramento?.km_final }} km - {{ monitoramento?.data_hora_final_km | date: 'HH:mm' }} h</h2>
+              </ion-card-content>
+            </ion-col>
+            <ion-col col-2>
+              <button (click)="showPromtFinal()" large ion-button clear color="dark">
+                <ion-icon large name="md-more"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-card padding *ngIf="monitoramento?.data_hora_inicial_virgente_local !== null">
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='{{iconPath()}}'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <h1>Inicio {{ tipo }}</h1>
+                <h2>{{ monitoramento?.data_hora_inicial_virgente_local | date: 'HH:mm' }} h</h2>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-12 *ngIf="monitoramento?.data_hora_final_virgente_local !== null">
+      <ion-card padding>
+
+        <ion-item>
+          <ion-row>
+            <ion-col col-2>
+              <img style=" height: 60px; width:60px" src='assets/icon/finalizar.png'>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card-content>
+                <h1>Final {{ tipo }}</h1>
+                <h2>{{ monitoramento?.data_hora_final_virgente_local | date: 'HH:mm' }} h</h2>
+              </ion-card-content>
+            </ion-col>
+          </ion-row>
+
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col text-center>
+
+      <div *ngIf="canShowKMInicial">
+        <button (click)="showPromptKmInicial()" ion-button full round class="monitoramento-button" color="light">Km inicial {{ tipoMonitoramento }} </button>
+      </div>
+      <div *ngIf="canShowKmFinal">
+        <button (click)="showPromptFinal()" ion-button full round class="monitoramento-button" color="light">Km final {{ tipoMonitoramento }} </button>
+      </div>
+      <div *ngIf="canShowIniciar">
+        <button (click)="showConfirmInicio()" ion-button full round class="monitoramento-button" color="light">Iniciar {{ tipoMonitoramento }} </button>
+      </div>
+      <div *ngIf="canShowFinalizar">
+        <button (click)="showConfirmFinal()" ion-button full round class="monitoramento-button" color="light">Finalizar {{ tipoMonitoramento }} </button>
+      </div>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col text-center>
+      <div *ngIf="monitoramento && monitoramento?.tipo !== tipo">
+        <h3>O destino {{ monitoramento?.tipo }} ainda não foi finalizado!</h3>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>

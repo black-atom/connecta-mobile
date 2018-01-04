@@ -1,13 +1,17 @@
-import { SocketIoProvider } from './../../providers/socket-io/socket-io';
+import { OutrosPage } from './../outros/outros';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
+import { AppState } from '../../redux/reducers';
+import { LoginActions } from '../login/redux/login.actions';
+import { Funcionario } from '../../models/funcionario';
 import { UploadImagem } from './../../redux/actions/imagem.actions';
 import { selectImagensToUpload, nImagensParaUploadSelector } from './../../redux/reducers/imagem.reducer';
-import { Funcionario } from '../../models/funcionario';
-import { NavController } from 'ionic-angular';
-import { LoginActions } from '../login/redux/login.actions';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../redux/reducers';
-import { Component, OnInit } from '@angular/core';
+import { ChamadosPage } from './../chamados/chamados';
+import { AlmocoPage } from '../almoco/almoco';
+import { AbastecimentoPage } from './../abastecimento/abastecimento';
+import { HomePage } from './../home/home';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -15,6 +19,11 @@ import { Component, OnInit } from '@angular/core';
 export class TabsPage implements OnInit{
   //lazy loading of the pages
   tab1Root = 'ChamadosPage';
+  tab2Root = 'AlmocoPage';
+  tab3Root = 'HomePage';
+  tab4Root = 'AbastecimentoPage';
+  tab5Root = 'OutrosPage';
+
   funcionario: Funcionario;
   uploadingPhotos: boolean = false;
   nImagensParaUpload$: Observable<number>;
@@ -22,7 +31,6 @@ export class TabsPage implements OnInit{
   constructor(
     private store:Store<AppState>,
     private navController:NavController,
-    private socketIoProvider: SocketIoProvider,
   ) {
 
   }

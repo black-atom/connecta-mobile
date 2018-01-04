@@ -11,8 +11,6 @@ import { Camera } from '@ionic-native/camera';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-
-
 import { MyApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -20,7 +18,7 @@ import { PesquisaPage } from '../pages/pesquisa/pesquisa';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { SocketIoProvider } from '../providers/socket-io/socket-io';
+// import { SocketIoProvider } from '../providers/socket-io/socket-io';
 import { ActionReducer } from '@ngrx/store';
 
 import { SyncDataProvider } from '../providers/sync-data/sync-data';
@@ -31,6 +29,7 @@ import { Storage } from '@ionic/storage';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Ionic2RatingModule } from 'ionic2-rating';
 import { ImagemProvider } from '../providers/imagem/imagem';
+import { MonitoramentoProvider } from '../providers/monitoramento/monitoramento';
 
 
 // console.log all actions
@@ -81,7 +80,7 @@ export function getAuthHttp(http) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SocketIoProvider,
+    // SocketIoProvider,
     Camera,
     SyncDataProvider,
     NetwordStatusProvider,
@@ -95,6 +94,7 @@ export function getAuthHttp(http) {
       deps: [Http]
     },
     ImagemProvider,
+    MonitoramentoProvider,
   ]
 })
 export class AppModule {}
