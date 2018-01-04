@@ -1,0 +1,28 @@
+ion-toolbar {
+  padding-top: 30px;
+  // height: 85px !important;
+  .navbar {
+    height: 200px !important;
+    background-color: primary !important;
+  }
+  ion-buttons {
+    // padding-left: 20px;
+    // padding-bottom: 15px !important;
+    button {}
+  }
+  ion-title {
+    font-size: 30px;
+    // padding-right: -5px;
+    // padding-top: 20px;
+  }
+  .perfil {
+    padding-left: 30px;
+    .img-avatar {
+      height: 60px !important;
+      width: 60px !important;
+      border-radius: 50px;
+      -webkit-box-shadow: 1px 2px 16px 1px #1844AB;
+      box-shadow: 1px 2px 16px 1px #1844AB;
+    }
+  } 
+}
