@@ -2,6 +2,7 @@ import { KmInicialComponent } from './components/km-inicial.component';
 import { ChamadosPage } from './chamados';
 import { IonicPageModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
+import { ComponentsModule } from '../../components/components'
 import {File} from "@ionic-native/file";
 
 
@@ -11,6 +12,7 @@ import {File} from "@ionic-native/file";
     KmInicialComponent
   ],
   imports: [
+    ComponentsModule,
     IonicPageModule.forChild(ChamadosPage),
   ],
   providers:[

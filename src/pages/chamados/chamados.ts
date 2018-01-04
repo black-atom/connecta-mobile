@@ -5,6 +5,8 @@ import { RETRIEVE_ATENDIMENTOS } from './../../redux/actions/atendimentos';
 import { AppState } from './../../redux/reducers/index';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Component } from '@angular/core';
+import { getMonitoramentoAtual } from './../../redux/reducers/monitoramento';
+import { Monitoramento } from './../../models/monitoramento';
 import {
     App,
     IonicPage,
@@ -26,7 +28,7 @@ import { Store } from "@ngrx/store";
 })
 export class ChamadosPage {
   selectedSegment = "hoje";
-
+  public monitoramento$: Observable<Monitoramento>;
   public changeAtendimentos$: Subject<string> = new Subject<string>();
   atendimentos$: Observable<Atendimento[]>;
 
@@ -36,6 +38,7 @@ export class ChamadosPage {
     private store: Store<AppState>,
     private modalCtrl: ModalController
    ) {
+    this.monitoramento$ = this.store.select(getMonitoramentoAtual)
   }
 
   ionViewDidLoad() {

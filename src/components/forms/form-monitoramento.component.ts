@@ -81,8 +81,8 @@ export class FormMonitoramentoComponent implements OnInit {
     const imagens = {
       almoco: "assets/img/background-almoco.png",
       atendimento: "assets/img/background-chamados.svg",
-      deslocamento_empresa: "assets/img/background-outros.png",
-      abastecimento: "assets/img/background-outros.png",
+      deslocamento_empresa: "assets/img/background-deslocamento-empresa.png",
+      abastecimento: "assets/img/background-abastecimento.png",
       outros: "assets/img/background-outros.png"
     }
     return  imagens[this.tipo];
@@ -133,10 +133,13 @@ export class FormMonitoramentoComponent implements OnInit {
     let prompt = this.alertCtrl.create({
       title: `Quilometragem Inicial`,
       message: this.message,
+      // enableBackdropDismiss: true,
       inputs: [
         {
           name: 'km',
-          placeholder: `Insira KM Inicial`
+          placeholder: 'Insira KM Inicial',
+          type: 'number',
+          checked: true
         },
       ],
       buttons: [
