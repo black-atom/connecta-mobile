@@ -9,6 +9,21 @@
 <ion-content padding>
   <form [formGroup]="interacaoTecnicoForm" (ngSubmit)="salvarDados(interacaoTecnicoForm.value)">
 
+      <ion-card>
+        <ion-card-content>
+
+          <ion-card-header>
+            Resumo do atendimento
+          </ion-card-header>
+
+          <ion-item text-wrap>
+            <ion-textarea formControlName="resumo_atendimento" class="resumo-atendimento" rows="7" cols="10"
+            placeholder="Digite o resumo do atendimento..."></ion-textarea>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card>
+
     <ion-card>
       <ion-card-header>
         Retornará ao local?
