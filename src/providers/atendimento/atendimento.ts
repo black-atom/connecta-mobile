@@ -26,18 +26,18 @@ export class AtendimentoProvider {
   }
 
   getAllAtendimentos(): Observable<Atendimento[]>{
+
     return this.store.select(appState => appState.login.funcionario)
     .take(1)
-    .switchMap(funcionario =>
-        this.http.get(this.url,{
+    .switchMap(funcionario => {
+        return this.http.get(this.url,{
           params: {
-            tecnico: {
-              _id: funcionario._id
-            }
+            'tecnico._id': funcionario._id,
           }
-        }).map( response => response.json().atendimentos as Atendimento[])
+        })
+        .map( response => response.json().atendimentos as Atendimento[])
         .catch(this.lidaComErro)
-    )
+     })
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{

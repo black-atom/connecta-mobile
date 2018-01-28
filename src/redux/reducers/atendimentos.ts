@@ -1,5 +1,5 @@
 import { AppState } from './index';
-import { Atendimento, KM } from './../../models/atendimento';
+import { Atendimento } from './../../models/atendimento';
 import {
     ADICIONAR_PERGUNTAS,
     CHEGOU_AO_DESTINO,
@@ -62,8 +62,9 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
-        inicio: atendimento.inicio || new Date(),
-        estado: 'inicio_atendimento'
+        interacao_tecnico: {
+          estado: 'inicio_atendimento'
+        }
       });
 
       return changeAtendimento(state, atendimentoModificado);
@@ -73,42 +74,35 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
     case EM_DESLOCAMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
-      const km: KM = action.payload.km_inicial;
-      const data = (atendimento.km_inicio && atendimento.km_inicio.data) ? atendimento.km_inicio.data : km.data;
-
-      const atendimentoComKM =  Object.assign({}, atendimento, {synced: false}, {
-        km_inicio: {
-          km: km.km || atendimento.km_inicio.km || 0,
-          data
-        },
-        estado: 'em_deslocamento'
+      const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
+        interacao_tecnico: {
+          estado: 'em_descolamento'
+        }
       });
 
-      return changeAtendimento(state, atendimentoComKM);
+      return changeAtendimento(state, atendimentoModificado);
     }
 
     case CHEGOU_AO_DESTINO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
-      const km: KM = action.payload.km_final;
-
-      const atendimentoComKM =  Object.assign({}, atendimento, {synced: false}, {
-        km_final: {
-          km: km.km || atendimento.km_final.km,
-          data: atendimento.km_final.data || km.data
-        },
-        estado: 'chegou_ao_destino'
+      const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
+        interacao_tecnico: {
+          estado: 'chegou_ao_destino'
+        }
       });
-      return changeAtendimento(state, atendimentoComKM);
+
+      return changeAtendimento(state, atendimentoModificado);
     }
 
     case ADICIONAR_PERGUNTAS: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
-        fim: atendimento.fim || new Date(),
         avaliacao: action.payload.avaliacao,
-        estado: 'fim_do_atendimento'
+        interacao_tecnico: {
+          estado: 'fim_do_atendimento'
+        }
       });
 
       return changeAtendimento(state, atendimentoModificado);
@@ -118,8 +112,9 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
 
       const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
-        fim: atendimento.fim || new Date(),
-        estado: 'fim_do_atendimento'
+        interacao_tecnico: {
+          estado: 'fim_do_atendimento'
+        }
       });
 
       return changeAtendimento(state, atendimentoModificado);
@@ -171,12 +166,12 @@ export const selectPromixosAtendimentos = (state: AppState) => {
     const dataAtendimento = new Date(atendimentos.data_atendimento);
     if(
       (
-        dataAtendimento.getDate() > date 
-        && dataAtendimento.getMonth() >= month 
+        dataAtendimento.getDate() > date
+        && dataAtendimento.getMonth() >= month
         && dataAtendimento.getFullYear() >= year
       ) ||
       (
-        dataAtendimento.getMonth() > month 
+        dataAtendimento.getMonth() > month
         && dataAtendimento.getFullYear() >= year
       )
     ){
@@ -188,5 +183,5 @@ export const selectPromixosAtendimentos = (state: AppState) => {
 }
 
 export const selectAtendimentosConcluidos = (state: AppState) => {
-  return state.atendimentos.filter(atendimento => atendimento.estado === 'fim_do_atendimento')
+  return state.atendimentos.filter(atendimento => atendimento.interacao_tecnico.estado === 'fim_do_atendimento')
 }
