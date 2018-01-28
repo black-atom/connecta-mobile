@@ -1,3 +1,4 @@
+import { AppConfig } from './../../app/app.config';
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { LoginState } from './../../pages/login/redux/login.reducer';
@@ -18,7 +19,7 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class AtendimentoProvider {
 
-  private url = "http://165.227.78.113:3000/api/atendimentos";
+  private url = `${AppConfig.endpointBaseURL}/api/atendimentos`;
 
   constructor(public http: AuthHttp, private store: Store<AppState>) {
 

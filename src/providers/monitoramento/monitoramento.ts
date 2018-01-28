@@ -1,3 +1,4 @@
+import { AppConfig } from './../../app/app.config';
 import { Monitoramento } from './../../models/monitoramento';
 import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
@@ -12,8 +13,7 @@ import { Observable } from 'rxjs/Observable';
 */
 @Injectable()
 export class MonitoramentoProvider {
-
-  private url = "http://165.227.78.113:3000/api/monitoramentos";
+  private url = `${AppConfig.endpointBaseURL}/api/monitoramentos`;
 
   constructor(public http: AuthHttp) {
   }
