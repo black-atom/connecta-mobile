@@ -1,3 +1,4 @@
+import { AppConfig } from './../../app/app.config';
 import { Atendimento } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { LoginState } from './../../pages/login/redux/login.reducer';
@@ -18,28 +19,30 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class AtendimentoProvider {
 
-  private url = "http://165.227.78.113:3000/api/atendimentos";
+  private url = `${AppConfig.endpointBaseURL}/api/atendimentos`;
 
   constructor(public http: AuthHttp, private store: Store<AppState>) {
 
   }
 
   getAllAtendimentos(): Observable<Atendimento[]>{
+
     return this.store.select(appState => appState.login.funcionario)
     .take(1)
-    .switchMap(funcionario =>
-        this.http.get(this.url,{
+    .switchMap(funcionario => {
+        return this.http.get(this.url,{
           params: {
-            'tecnico._id': funcionario._id
+            'tecnico._id': funcionario._id,
           }
-        }).map( response => response.json() as Atendimento[])
+        })
+        .map( response => response.json().atendimentos as Atendimento[])
         .catch(this.lidaComErro)
-    )
+     })
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
     console.dir(atendimentos)
-    return this.http.patch(this.url, atendimentos).map( response => response.json() as Atendimento[])
+    return this.http.patch(this.url, atendimentos).map( response => response.json().atendimentos as Atendimento[])
     .catch(this.lidaComErro);
   }
 

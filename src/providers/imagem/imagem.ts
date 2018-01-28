@@ -1,3 +1,4 @@
+import { AppConfig } from './../../app/app.config';
 import { Atendimento } from '../../models/atendimento';
 import { Imagem } from './../../models/imagem';
 import { Observable } from 'rxjs/Rx';
@@ -9,6 +10,8 @@ import { File, FileEntry, IFile } from '@ionic-native/file';
 
 @Injectable()
 export class ImagemProvider {
+
+  private url = `${AppConfig.endpointBaseURL}/api/atendimentos`;
 
   constructor(
     private http: AuthHttp,
@@ -42,15 +45,10 @@ export class ImagemProvider {
   }
 
   public enviarFoto(imagem: Imagem): Observable<Atendimento> {
-
     return Observable.fromPromise(this.getFile(imagem))
     .switchMap(file => Observable.fromPromise(this.getFormData(file, imagem)))
-    .switchMap(formData => this.http.post(`http://165.227.78.113:3000/api/atendimentos/${imagem.atendimentoID}/imagens`, formData))
+    .switchMap(formData => this.http.post(`${this.url}/${imagem.atendimentoID}/imagens`, formData))
     .catch((e) => this.handleError(e))
-    // return this.http.post(`http://165.227.78.113:3000/api/atendimentos/${imagem.atendimentoID}/imagens`, formData)
-    //   .catch((e) => this.handleError(e))
-      // .map(response => response.text())
-      // .finally(() => console.log("finished send photo"))
   }
 
   private handleError(error: Response | any) {
