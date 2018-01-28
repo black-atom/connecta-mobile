@@ -31,16 +31,18 @@ export class AtendimentoProvider {
     .switchMap(funcionario =>
         this.http.get(this.url,{
           params: {
-            'tecnico._id': funcionario._id
+            tecnico: {
+              _id: funcionario._id
+            }
           }
-        }).map( response => response.json() as Atendimento[])
+        }).map( response => response.json().atendimentos as Atendimento[])
         .catch(this.lidaComErro)
     )
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
     console.dir(atendimentos)
-    return this.http.patch(this.url, atendimentos).map( response => response.json() as Atendimento[])
+    return this.http.patch(this.url, atendimentos).map( response => response.json().atendimentos as Atendimento[])
     .catch(this.lidaComErro);
   }
 
