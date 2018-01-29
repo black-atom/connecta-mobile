@@ -46,6 +46,7 @@ export class ModalInteracaoPage {
 
   iniciarFormulario() {
     this.interacaoTecnicoForm = this.fb.group({
+      resumo_atendimento: [ '', Validators.required ],
       retorno: this.fb.group({
         retornar: [ false, Validators.required ],
         motivo: [{ value: '', disabled: true}, Validators.required]
@@ -137,6 +138,7 @@ export class ModalInteracaoPage {
   salvarDados(dados) {
     this.store.dispatch(new EditarAtendimento({
       _id: this.AtendimentoID,
+      resumo_atendimento: dados.resumo_atendimento,
       retorno: dados.retorno,
       treinamento: dados.treinamento,
       faturamento: dados.faturamento,

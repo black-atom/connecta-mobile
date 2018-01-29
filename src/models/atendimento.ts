@@ -28,6 +28,7 @@ export interface Atendimento {
   cliente: Cliente;
   synced?: boolean;
   retorno: Retorno;
+  resumo_atendimento: string;
   relatorio_tecnico: RelatorioTecnico;
   treinamento: Treinamento;
   retirou_equipamento: RemocaoRelogio;
