@@ -18,15 +18,39 @@
           </ion-col>
           <ion-col col-2>
             <ion-fab top right bottom *ngIf="!atendimento.fim">
-                <button ion-fab mini color="accent"><ion-icon name="arrow-dropdown"></ion-icon></button>
+
+                <button ion-fab mini color="accent">
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </button>
+
                 <ion-fab-list side="bottom">
-                  <button (click)="mostrarPromptKmInicial(atendimento.km_inicio.km)" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-                  <button [disabled]="!atendimento.km_inicio.km" (click)="mostrarPromptKmFinal(atendimento.km_final.km)" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
-                  <button ion-fab  [disabled]="!atendimento.km_inicio.km || !atendimento.km_final.km || atendimento.inicio" [ngClass]="{'indica_inicio': atendimento.inicio !== null}"  (click)="mostrarConfirmacaoInicioAtendimento()" ><ion-icon color="accent" name="play"></ion-icon></button>
-                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                  <button ion-fab (click)="mostrarModalInteracaoDados()"><ion-icon color="accent" name="md-list-box"></ion-icon></button>
-                  <button ion-fab [disabled]="!atendimento.inicio" (click)="mostrarConfirmacaoFimAtendimento()"><ion-icon color="accent" name="trophy"></ion-icon></button>
+
+                  <button ion-fab (click)="mostrarPromptKmInicial()">
+                    <i class="fa fa-flag-o" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab (click)="mostrarPromptKmFinal()">
+                    <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab  (click)="mostrarConfirmacaoInicioAtendimento()">
+                    <ion-icon color="accent" name="play"></ion-icon>
+                  </button>
+
+                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab (click)="mostrarModalInteracaoDados()">
+                    <ion-icon color="accent" name="md-list-box"></ion-icon>
+                  </button>
+
+                  <button ion-fab (click)="mostrarConfirmacaoFimAtendimento()">
+                    <ion-icon color="accent" name="trophy"></ion-icon>
+                  </button>
+
                 </ion-fab-list>
+
               </ion-fab>
           </ion-col>
         </ion-row>

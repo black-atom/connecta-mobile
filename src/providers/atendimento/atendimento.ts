@@ -21,23 +21,24 @@ export class AtendimentoProvider {
 
   private url = `${AppConfig.endpointBaseURL}/api/atendimentos`;
 
-  constructor(public http: AuthHttp, private store: Store<AppState>) {
+  constructor(public http: AuthHttp, private store: Store<AppState>) { }
 
-  }
-
-  getAllAtendimentos(): Observable<Atendimento[]>{
-
+  getAllAtendimentos(): Observable<any> {
     return this.store.select(appState => appState.login.funcionario)
     .take(1)
     .switchMap(funcionario => {
-        return this.http.get(this.url,{
-          params: {
-            'tecnico._id': funcionario._id,
-          }
-        })
-        .map( response => response.json().atendimentos as Atendimento[])
-        .catch(this.lidaComErro)
-     })
+      const date = new Date();
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).toString();
+
+      const query = {
+        estado: 'associado',
+        data_atendimento: today,
+        'tecnico.nome': funcionario.nome,
+      }
+      return this.http.get(this.url, { params: { ...query } })
+      .map(res => res.json() as Atendimento[])
+      .catch(this.lidaComErro)
+    })
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{

@@ -1,13 +1,24 @@
+import { getFuncionario } from './../login/redux/login.reducer';
+import { AppState } from './../../redux/reducers/index';
+import {
+  getMonitoramentoAtual,
+  inserirKMInicial,
+  updateKMInicial,
+  inserirKMFinal,
+  updateKMFinal,
+  iniciarMonitoramento,
+  finalizarMonitoramento,
+} from './../../redux/reducers/monitoramento';
 import { ModalInteracaoPage } from './../modal-interacao/modal-interacao';
 import { AddImagem } from '../../redux/actions/imagem.actions';
 import { Imagem } from '../../models/imagem';
-import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
+import { EmDeslocamento, ChegouAoDestino, EditarAtendimento } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
 import { INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento, Endereco } from './../../models/atendimento';
+import { Funcionario } from './../../models/funcionario';
 import { Observable } from 'rxjs/Rx';
-import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import {
@@ -24,7 +35,7 @@ import { File, FileEntry} from "@ionic-native/file";
 import { Response} from "@angular/http";
 import { AuthHttp } from 'angular2-jwt';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-
+import { Monitoramento } from '../../models/monitoramento';
 
 
 @IonicPage()
@@ -40,6 +51,9 @@ export class DetailsPage {
   public myPhotoURL: any;
   public error: string;
   private loading: Loading;
+  private funcionario: Funcionario;
+  public monitoramento: Monitoramento;
+  public tipo = 'atendimento';
 
   constructor(
     private navCtrl: NavController,
@@ -55,6 +69,8 @@ export class DetailsPage {
     public actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) {
+    this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
+    this.store.select(getMonitoramentoAtual).subscribe(funcionario => this.monitoramento = funcionario);
   }
 
   ionViewDidLoad() {
@@ -70,15 +86,6 @@ export class DetailsPage {
     modal.present();
   }
 
-  iniciarAtendimento(){
-    this.store.dispatch({
-      type: INICIAR_ATENDIMENTO,
-      payload: {
-        _id: this.selectedId
-      }
-    })
-  }
-
   mostrarConfirmacaoInicioAtendimento(km: number){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
@@ -92,7 +99,7 @@ export class DetailsPage {
         {
           text: 'Sim',
           handler: () => {
-            this.iniciarAtendimento();
+            this.iniciarMonitoramento()
           }
         }
       ]
@@ -100,7 +107,9 @@ export class DetailsPage {
     confirm.present();
   }
 
-  mostrarPromptKmInicial(km: number) {
+
+
+  mostrarPromptKmInicial() {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem inicial',
       inputs: [
@@ -108,7 +117,7 @@ export class DetailsPage {
           name: 'km',
           placeholder: 'KM',
           type: 'number',
-          value: "" + km
+          value: ""
         }
       ],
       buttons: [
@@ -121,25 +130,34 @@ export class DetailsPage {
         },
         {
           text: 'Salvar',
-          handler: (input) => {
-            if(input.km){
-              this.store.dispatch(new EmDeslocamento({
-                _id: this.selectedId,
-                km_inicial: {
-                  km: input.km,
-                  data: new Date()
-                }
-              }))
+
+          handler: data => {
+            const KM = parseInt(data.km);
+            if(!this.monitoramento) {
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, this.selectedId))
+              this.store.dispatch(new EmDeslocamento({_id:this.selectedId, interacao_tecnico: { estado: 'em_descolamento'} }))
+            }else {
+              this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
             }
           }
+
         }
       ]
     });
     alert.present();
   }
 
+  iniciarMonitoramento() {
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
+    this.store.dispatch(new EmDeslocamento(this.selectedId))
+  }
 
-  mostrarPromptKmFinal(km: number) {
+  finalizarMonitoramento() {
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
+    this.store.dispatch(new EmDeslocamento(this.selectedId))
+  }
+
+  mostrarPromptKmFinal() {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem final',
       inputs: [
@@ -147,7 +165,7 @@ export class DetailsPage {
           name: 'km',
           placeholder: 'KM',
           type: 'number',
-          value: "" + km
+          value: ""
         }
       ],
       buttons: [
@@ -160,15 +178,13 @@ export class DetailsPage {
         },
         {
           text: 'Salvar',
-          handler: (input) => {
-            if(input.km){
-              this.store.dispatch(new ChegouAoDestino({
-                _id: this.selectedId,
-                km_final: {
-                  km: input.km,
-                  data: new Date()
-                }
-              }))
+          handler: data => {
+            const KM = parseInt(data.km);
+            if(this.monitoramento && this.monitoramento.km_final === null) {
+              this.store.dispatch(new inserirKMFinal(this.monitoramento,KM, this.monitoramento.uuid));
+              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId, interacao_tecnico: { estado: 'chegou_ao_destino'} }))
+            }else {
+              this.store.dispatch(new updateKMFinal(this.monitoramento,KM, this.monitoramento.uuid))
             }
           }
         }
@@ -176,6 +192,7 @@ export class DetailsPage {
     });
     alert.present();
   }
+
 
   mostrarOpcoesParaTirarFoto() {
     let actionSheet = this.actionSheetCtrl.create({
@@ -298,10 +315,6 @@ export class DetailsPage {
     return Observable.throw(errMsg);
   }
 
-  finalizarAtendimento(){
-    this.navCtrl.push(PesquisaPage,{_id: this.selectedId});
-  }
-
   mostrarConfirmacaoFimAtendimento(){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
@@ -315,12 +328,23 @@ export class DetailsPage {
         {
           text: 'Sim',
           handler: () => {
-            this.finalizarAtendimento();
+            this.presentToast()
+            this.finalizarMonitoramento()
           }
         }
       ]
     });
     confirm.present();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Salvo com sucesso!',
+      duration: 3000,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
   }
 
   openGPS(endereco: Endereco){

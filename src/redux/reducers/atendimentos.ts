@@ -122,15 +122,16 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 
 		case RETRIEVE_ATENDIMENTOS_FAILED:
       return state;
-    case  SYNC_ATENDIMENTOS_SUCCESS:{
-      const atendimentos = state.map(atendimento =>{
-        const achou = action.payload.find((atendimentoSynced:Atendimento)=> atendimentoSynced._id === atendimento._id);
-        if(achou){
-          delete atendimento.synced;
-          return atendimento;
-        }else{
-          return atendimento;
-        }
+    case SYNC_ATENDIMENTOS_SUCCESS: {
+       const atendimentos = state.map(atendimento =>{
+        // const achou = action.payload.find((atendimentoSynced:Atendimento) => atendimentoSynced._id === atendimento._id);
+        // if(achou){
+        //   delete atendimento.synced;
+        //   return atendimento;
+        // }else{
+        //   return atendimento;
+        // }
+        return atendimento;
       })
       return atendimentos;
     }
@@ -141,19 +142,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 }
 
 export const selectAtendiementosDeHoje = (state: AppState) => {
-  const today = new Date();
-  const date = today.getDate();
-  const month = today.getMonth();
-  const year = today.getFullYear();
-
-  return state.atendimentos.filter(atendimentos => {
-    const dataAtendimento = new Date(atendimentos.data_atendimento);
-    if(dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month && dataAtendimento.getFullYear()===year){
-      return true;
-    }
-    return false;
-  })
-
+  return state.atendimentos;
 }
 
 export const selectPromixosAtendimentos = (state: AppState) => {

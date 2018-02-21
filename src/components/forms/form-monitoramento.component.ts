@@ -154,7 +154,7 @@ export class FormMonitoramentoComponent implements OnInit {
           handler: data => {
             const KM = parseInt(data.km);
             if(!this.monitoramento) {
-              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id))
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, ''))
             }else {
               this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
             }
@@ -207,7 +207,7 @@ export class FormMonitoramentoComponent implements OnInit {
         {
           text: 'Não',
           handler: () => {
-            
+
           }
         },
         {
@@ -228,7 +228,7 @@ export class FormMonitoramentoComponent implements OnInit {
         {
           text: 'Não',
           handler: () => {
-            
+
           }
         },
         {

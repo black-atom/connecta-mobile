@@ -29,7 +29,7 @@ export class AtendimentoEffects {
       .switchMap(payload =>
         this.atendimentoProvider.getAllAtendimentos()
         //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
-        .map(res => new RetriveAtendimentoSuccess(res))
+        .map(res => new RetriveAtendimentoSuccess(res.atendimentos))
         .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       );
 

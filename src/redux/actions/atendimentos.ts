@@ -19,7 +19,7 @@ export class RetriveAtendimentoSuccess implements Action{
     constructor(public payload) { }
 }
 
-export class SyncAtendimentosSuccess  implements Action{
+export class SyncAtendimentosSuccess implements Action{
     readonly type: string = SYNC_ATENDIMENTOS_SUCCESS;
     constructor(public payload) { }
 }
