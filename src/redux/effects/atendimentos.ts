@@ -28,17 +28,18 @@ export class AtendimentoEffects {
       .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload =>
         this.atendimentoProvider.getAllAtendimentosToday()
-          .map(res => new RetriveAtendimentoSuccess(res.atendimentos))
+          .map(res => res.atendimentos)
         //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
           .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       )
-      // .switchMap(atendimentos =>
-      //   this.atendimentoProvider.getAllAtendimentosTomorrow()
-      //     .map(res => {
-      //       const atendimentoTodayAndTomorrow = [...atendimentos, ...res.atendimentos];
-      //       return new RetriveAtendimentoSuccess(atendimentoTodayAndTomorrow);
-      //     })
-      // );
+      .switchMap(atendimentos =>
+        this.atendimentoProvider.getAllAtendimentosTomorrow()
+          .map(res => {
+            const atendimentoTodayAndTomorrow = [...atendimentos, ...res.atendimentos];
+            return new RetriveAtendimentoSuccess(atendimentoTodayAndTomorrow);
+          })
+          .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
+      );
 
   @Effect() syncAtendimentos$ = this.actions$
       .ofType(SYNC_ATENDIMENTOS)

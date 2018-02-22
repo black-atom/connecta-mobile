@@ -16,10 +16,6 @@ import {
     RETRIEVE_ATENDIMENTOS_SUCCESS,
 } from '../actions/atendimentos';
 
-
-const parseDate = date => (new Date(date.getFullYear(), date.getMonth(), date.getDate()).toString());
-const data = date => new date(date);
-
 function changeAtendimento(state:Atendimento[], atendimento: Atendimento): Atendimento[]{
   return state.map(at => {
         if(atendimento._id === at._id){
@@ -110,7 +106,18 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 }
 
 export const selectAtendiementosDeHoje = (state: AppState) => {
-  return state.atendimentos;
+  const today = new Date();
+  const date = today.getDate();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+
+  return state.atendimentos.filter(atendimento => {
+    const dataAtendimento = new Date(atendimento.data_atendimento);
+    if(dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month && dataAtendimento.getFullYear()===year && atendimento.interacao_tecnico.estado !== 'fim_do_atendimento') {
+      return true;
+    }
+    return false;
+  })
 }
 
 export const selectPromixosAtendimentos = (state: AppState) => {
