@@ -29,16 +29,12 @@ export class AtendimentoEffects {
       .switchMap(payload =>
         this.atendimentoProvider.getAllAtendimentosToday()
           .map(res => res.atendimentos)
-
         //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
-
-        // .map(res => new RetriveAtendimentoSuccess(res.atendimentos))
-        .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
+          .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       ).switchMap(atendimentos =>
         this.atendimentoProvider.getAllAtendimentosTomorrow()
           .map(res => {
             const atendimentoTodayAndTomorrow = [...atendimentos, ...res.atendimentos];
-            console.log(atendimentoTodayAndTomorrow);
             return new RetriveAtendimentoSuccess(atendimentoTodayAndTomorrow);
           })
       );

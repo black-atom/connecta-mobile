@@ -61,7 +61,6 @@ export class AtendimentoProvider {
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
-    console.dir(atendimentos)
     return this.http.patch(this.url, atendimentos).map( response => response.json().atendimentos as Atendimento[])
     .catch(this.lidaComErro);
   }
