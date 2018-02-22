@@ -34,15 +34,9 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 
     case EDITAR_ATENDIMENTO: {
       const atendimento = state.find(at => at._id === action.payload._id);
-      if(atendimento){
-        const novoAt: Atendimento = Object.assign({}, atendimento, action.payload, { synced: false});
-        return state.map(at => {
-          if(novoAt._id === at._id){
-            return novoAt;
-          }else{
-            return at;
-          }
-        })
+      if(atendimento) {
+        const novoAt: Atendimento = {...atendimento, ...action.payload, synced: false};
+        return state.map(at => novoAt._id === at._id ? novoAt : at);
       }
     }
 
@@ -60,63 +54,37 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 
     case INICIAR_ATENDIMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-
-      const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
-        interacao_tecnico: {
-          estado: 'inicio_atendimento'
-        }
-      });
-
+      const interacao_tecnico = { estado: 'inicio_atendimento' };
+      const atendimentoModificado = { ...atendimento, synced: false, ...interacao_tecnico };
       return changeAtendimento(state, atendimentoModificado);
-
     }
 
     case EM_DESLOCAMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-
-      const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
-        interacao_tecnico: {
-          estado: 'em_descolamento'
-        }
-      });
-
+      const interacao_tecnico = { estado: 'em_descolamento' };
+      const atendimentoModificado = { ...atendimento, synced: false, ...interacao_tecnico };
       return changeAtendimento(state, atendimentoModificado);
     }
 
     case CHEGOU_AO_DESTINO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-
-      const atendimentoModificado =  Object.assign({}, atendimento, {synced: false}, {
-        interacao_tecnico: {
-          estado: 'chegou_ao_destino'
-        }
-      });
-
+      const interacao_tecnico = { estado: 'chegou_ao_destino' };
+      const atendimentoModificado = { ...atendimento, synced: false, ...interacao_tecnico };
       return changeAtendimento(state, atendimentoModificado);
     }
 
     case ADICIONAR_PERGUNTAS: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-
-      const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
-        avaliacao: action.payload.avaliacao,
-        interacao_tecnico: {
-          estado: 'fim_do_atendimento'
-        }
-      });
-
+      const interacao_tecnico = { estado: 'fim_do_atendimento' };
+      const avaliacao = action.payload.avaliacao;
+      const atendimentoModificado = { ...atendimento, synced: false, ...interacao_tecnico, ...avaliacao };
       return changeAtendimento(state, atendimentoModificado);
     }
 
     case FIM_ATENDIMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-
-      const atendimentoModificado = Object.assign({}, atendimento, {synced: false}, {
-        interacao_tecnico: {
-          estado: 'fim_do_atendimento'
-        }
-      });
-
+      const interacao_tecnico = { estado: 'fim_do_atendimento' };
+      const atendimentoModificado = { ...atendimento, synced: false, ...interacao_tecnico };
       return changeAtendimento(state, atendimentoModificado);
     }
 

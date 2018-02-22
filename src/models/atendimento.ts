@@ -75,11 +75,11 @@ export interface Imagens {
 }
 
 export interface InteracaoTecnico {
-  estado: string;
-  relatorio_tecnico: Treinamento;
-  retornar: Retorno;
-  treinamento: Treinamento;
-  remocao_relogio: RemocaoRelogio;
+  estado?: string;
+  relatorio_tecnico?: Treinamento;
+  retornar?: Retorno;
+  treinamento?: Treinamento;
+  remocao_relogio?: RemocaoRelogio;
 }
 
 export interface RelatorioRecnico {
@@ -109,5 +109,5 @@ export interface RemocaoRelogio {
   bobina: boolean;
   fonte: boolean;
   pino: boolean;
-  impresso: boolean;
+  impressora: boolean;
 }

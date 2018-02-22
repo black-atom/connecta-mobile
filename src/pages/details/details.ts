@@ -12,7 +12,7 @@ import {
 import { ModalInteracaoPage } from './../modal-interacao/modal-interacao';
 import { AddImagem } from '../../redux/actions/imagem.actions';
 import { Imagem } from '../../models/imagem';
-import { EmDeslocamento, ChegouAoDestino, EditarAtendimento } from './../../redux/actions/atendimentos';
+import { EmDeslocamento, ChegouAoDestino, EditarAtendimento, IniciarAtendimento, FimAtendimento } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
 import { INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
@@ -86,7 +86,7 @@ export class DetailsPage {
     modal.present();
   }
 
-  mostrarConfirmacaoInicioAtendimento(km: number){
+  mostrarConfirmacaoInicioAtendimento(){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
       message: `Deseja iniciar o atendimento?`,
@@ -135,7 +135,7 @@ export class DetailsPage {
             const KM = parseInt(data.km);
             if(!this.monitoramento) {
               this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, this.selectedId))
-              this.store.dispatch(new EmDeslocamento({_id:this.selectedId, interacao_tecnico: { estado: 'em_descolamento'} }))
+              this.store.dispatch(new EmDeslocamento({_id:this.selectedId}))
             }else {
               this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
             }
@@ -149,12 +149,12 @@ export class DetailsPage {
 
   iniciarMonitoramento() {
     this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
-    this.store.dispatch(new EmDeslocamento(this.selectedId))
+    this.store.dispatch(new IniciarAtendimento({_id: this.selectedId}));
   }
 
   finalizarMonitoramento() {
     this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
-    this.store.dispatch(new EmDeslocamento(this.selectedId))
+    this.store.dispatch(new FimAtendimento({_id: this.selectedId}));
   }
 
   mostrarPromptKmFinal() {
@@ -182,7 +182,7 @@ export class DetailsPage {
             const KM = parseInt(data.km);
             if(this.monitoramento && this.monitoramento.km_final === null) {
               this.store.dispatch(new inserirKMFinal(this.monitoramento,KM, this.monitoramento.uuid));
-              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId, interacao_tecnico: { estado: 'chegou_ao_destino'} }))
+              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId }))
             }else {
               this.store.dispatch(new updateKMFinal(this.monitoramento,KM, this.monitoramento.uuid))
             }

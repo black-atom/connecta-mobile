@@ -137,10 +137,12 @@ export class ModalInteracaoPage {
   salvarDados(dados) {
     this.store.dispatch(new EditarAtendimento({
       _id: this.AtendimentoID,
-      retorno: dados.retorno,
-      treinamento: dados.treinamento,
-      faturamento: dados.faturamento,
-      retirou_equipamento: dados.retirou_equipamento
+      interacao_tecnico: {
+        retorno: dados.retorno,
+        treinamento: dados.treinamento,
+        faturamento: dados.faturamento,
+        retirou_equipamento: dados.retirou_equipamento
+      }
     }));
     this.fecharModal();
   }
