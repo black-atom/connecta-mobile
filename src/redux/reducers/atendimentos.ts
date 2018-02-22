@@ -65,7 +65,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 
     case EM_DESLOCAMENTO: {
       const atendimento = state.find( atendimento => atendimento._id === action.payload._id);
-      const interacao_tecnico = { ...atendimento.interacao_tecnico, estado: 'em_descolamento' };
+      const interacao_tecnico = { ...atendimento.interacao_tecnico, estado: 'em_deslocamento' };
       const atendimentoModificado = { ...atendimento, synced: false, interacao_tecnico };
       return changeAtendimento(state, atendimentoModificado);
     }
@@ -110,29 +110,7 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 }
 
 export const selectAtendiementosDeHoje = (state: AppState) => {
-  const today = new Date();
-  const date = today.getDate();
-  const month = today.getMonth();
-  const year = today.getFullYear();
-
-  return state.atendimentos.filter(atendimento => {
-    const dataAtendimento = new Date(atendimento.data_atendimento);
-    if (
-      atendimento.interacao_tecnico.estado !== 'fim_do_atendimento' &&
-      (
-        dataAtendimento.getDate() > date
-        && dataAtendimento.getMonth() == month
-        && dataAtendimento.getFullYear() == year
-      ) ||
-      (
-        dataAtendimento.getMonth() > month
-        && dataAtendimento.getFullYear() == year
-      )
-    ) {
-      return true;
-    }
-    return false;
-  });
+  return state.atendimentos;
 }
 
 export const selectPromixosAtendimentos = (state: AppState) => {
