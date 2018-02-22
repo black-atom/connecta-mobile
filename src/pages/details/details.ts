@@ -70,7 +70,7 @@ export class DetailsPage {
     private modalCtrl: ModalController
   ) {
     this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
-    this.store.select(getMonitoramentoAtual).subscribe(funcionario => this.monitoramento = funcionario);
+    this.store.select(getMonitoramentoAtual).subscribe(monitoramento => this.monitoramento = monitoramento);
   }
 
   ionViewDidLoad() {
@@ -107,9 +107,17 @@ export class DetailsPage {
     confirm.present();
   }
 
-
+checkField(value) {
+  if(value) {
+    if(value !== null) {
+      return true;
+    }
+  }
+  return false;
+}
 
   mostrarPromptKmInicial() {
+
     let alert = this.alertCtrl.create({
       title: 'Quilometragem inicial',
       inputs: [

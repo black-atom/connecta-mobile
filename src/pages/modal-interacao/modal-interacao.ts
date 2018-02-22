@@ -50,6 +50,7 @@ export class ModalInteracaoPage {
         retornar: [ false, Validators.required ],
         motivo: [{ value: '', disabled: true}, Validators.required]
       }),
+      relatorio_tecnico: ['', Validators.required],
       treinamento: this.fb.group({
         treinamento: [ false, Validators.required ],
         cadastros: [{ value: false, disabled: true }],
@@ -138,6 +139,9 @@ export class ModalInteracaoPage {
     this.store.dispatch(new EditarAtendimento({
       _id: this.AtendimentoID,
       interacao_tecnico: {
+        relatorio_tecnico: {
+          relatorio: dados.relatorio_tecnico
+        },
         retorno: dados.retorno,
         treinamento: dados.treinamento,
         faturamento: dados.faturamento,

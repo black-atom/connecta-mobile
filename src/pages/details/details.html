@@ -59,11 +59,11 @@
 
       <ion-list no-lines>
 
-          <ion-item *ngIf="atendimento.inicio !== null || undefined" >
+          <ion-item>
               <ion-icon color="primary" name="checkmark" item-start></ion-icon>
                <h2>Status do chamado</h2>
-               <p> Iniciado às {{atendimento.inicio | date: 'hh:mm'}}</p>
-               <p *ngIf="atendimento.fim !== null || undefined" > Finalizado às {{atendimento.fim | date: 'hh:mm'}}</p>
+               <p> Iniciado às </p>
+               <p> Finalizado às </p>
            </ion-item>
 
 

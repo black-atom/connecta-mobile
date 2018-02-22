@@ -23,12 +23,31 @@ export class AtendimentoProvider {
 
   constructor(public http: AuthHttp, private store: Store<AppState>) { }
 
-  getAllAtendimentos(): Observable<any> {
+  getAllAtendimentosToday(): Observable<any> {
     return this.store.select(appState => appState.login.funcionario)
     .take(1)
     .switchMap(funcionario => {
       const date = new Date();
       const today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).toString();
+
+      const query = {
+        estado: 'associado',
+        data_atendimento: today,
+        'tecnico.nome': funcionario.nome,
+      }
+      return this.http.get(this.url, { params: { ...query } })
+      .map(res => res.json() as Atendimento[])
+      .catch(this.lidaComErro)
+    })
+  }
+
+
+  getAllAtendimentosTomorrow(): Observable<any> {
+    return this.store.select(appState => appState.login.funcionario)
+    .take(1)
+    .switchMap(funcionario => {
+      const date = new Date();
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).toString();
 
       const query = {
         estado: 'associado',

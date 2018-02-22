@@ -11,31 +11,44 @@
 
     <ion-card>
       <ion-card-header>
-        Retornará ao local?
+        Reltório do Atendimento!
       </ion-card-header>
 
-      <ion-card-content formGroupName="retorno">
-        <ion-list radio-group formControlName='retornar' (ngModel)="validacaoCampo.retornarLocal">
-          <ion-item>
-            <ion-label>Sim</ion-label>
-            <ion-radio value="true" (ionSelect)="validacaoCampo.retornarLocal = true"
-            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Não</ion-label>
-            <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.retornarLocal = false"
-            (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
-          </ion-item>
-        </ion-list>
-
-        <ion-item *ngIf="validacaoCampo.retornarLocal === true">
-          <ion-label color="primary" stacked>Motivo</ion-label>
-          <ion-input formControlName="motivo" placeholder="Insira o motivo"></ion-input>
-        </ion-item>
-
+      <ion-card-content>
+          <ion-item text-wrap>
+              <ion-textarea formControlName="relatorio_tecnico" class="pecas-removidas" rows="7" cols="10"
+              placeholder="Digite aqui!"></ion-textarea>
+            </ion-item>
       </ion-card-content>
     </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+          Retornará ao local?
+        </ion-card-header>
+
+        <ion-card-content formGroupName="retorno">
+          <ion-list radio-group formControlName='retornar' (ngModel)="validacaoCampo.retornarLocal">
+            <ion-item>
+              <ion-label>Sim</ion-label>
+              <ion-radio value="true" (ionSelect)="validacaoCampo.retornarLocal = true"
+              (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Não</ion-label>
+              <ion-radio color="primary" value="false" (ionSelect)="validacaoCampo.retornarLocal = false"
+              (click)="retorno(validacaoCampo.retornarLocal)"></ion-radio>
+            </ion-item>
+          </ion-list>
+
+          <ion-item *ngIf="validacaoCampo.retornarLocal === true">
+            <ion-label color="primary" stacked>Motivo</ion-label>
+            <ion-input formControlName="motivo" placeholder="Insira o motivo"></ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card>
 
     <ion-card>
 
