@@ -37,6 +37,7 @@ export class AtendimentoEffects {
       .ofType(SYNC_ATENDIMENTOS)
       .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload => this.atendimentoProvider.updateMany(payload)
+        .flatMap(() => Observable.from(payload))
         .map(res => new SyncAtendimentosSuccess(res))
         .catch((error) => Observable.of({ type: SYNC_ATENDIMENTOS_FAILED, payload: error }))
       )

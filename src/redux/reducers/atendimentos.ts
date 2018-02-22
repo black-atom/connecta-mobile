@@ -123,14 +123,10 @@ export function atendimentosReducer(state:Atendimento[] = [], action: Actions) {
 		case RETRIEVE_ATENDIMENTOS_FAILED:
       return state;
     case SYNC_ATENDIMENTOS_SUCCESS: {
-       const atendimentos = state.map(atendimento =>{
-        // const achou = action.payload.find((atendimentoSynced:Atendimento) => atendimentoSynced._id === atendimento._id);
-        // if(achou){
-        //   delete atendimento.synced;
-        //   return atendimento;
-        // }else{
-        //   return atendimento;
-        // }
+       const atendimentos = state.map(atendimento => {
+        if(action.payload._id === atendimento._id) {
+          return { ...atendimento, synced: true };
+        }
         return atendimento;
       })
       return atendimentos;
