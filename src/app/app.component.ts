@@ -34,8 +34,6 @@ export class MyApp implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.select(appstate => appstate.imagens)
     .switchMap(imagens => Observable.of(imagens))
-    .subscribe(imagens => console.log(JSON.stringify(imagens)))
-
 
     this.store.select(appstate => appstate.atendimentos)
       .map(atendimentos => atendimentos.filter(at => at.synced === false))
