@@ -13,11 +13,22 @@
       <ion-card-title class="line">
         <ion-row>
           <ion-col col-10>
+              <h2 class="notice" *ngIf="
+              monitoramento &&
+              monitoramento?.tipo !== tipo &&
+              !tomorrow
+              && atendimento.interacao_tecnico.estado !== 'fim_do_atendimento'">
+                O destino <strong>{{ monitoramento?.tipo | uppercase }}</strong> ainda não foi finalizado!
+              </h2>
               <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
               <p>{{atendimento.cliente.cnpj_cpf}}</p>
           </ion-col>
           <ion-col col-2>
-            <ion-fab top right bottom *ngIf="!atendimento.fim">
+            <ion-fab top right bottom
+              *ngIf="
+              !tomorrow &&
+              monitoramento.tipo === tipo &&
+              atendimento.interacao_tecnico.estado !== 'fim_do_atendimento'">
 
                 <button ion-fab mini color="accent">
                   <ion-icon name="arrow-dropdown"></ion-icon>
@@ -25,11 +36,13 @@
 
                 <ion-fab-list side="bottom">
 
-                  <button ion-fab (click)="mostrarPromptKmInicial()">
+                  <button ion-fab
+                  (click)="mostrarPromptKmInicial(monitoramentoAtendimento?.km_inicial)">
                     <i class="fa fa-flag-o" aria-hidden="true"></i>
                   </button>
 
-                  <button ion-fab (click)="mostrarPromptKmFinal()">
+                  <button ion-fab
+                  (click)="mostrarPromptKmFinal(monitoramentoAtendimento?.km_final)">
                     <i class="fa fa-flag-checkered" aria-hidden="true"></i>
                   </button>
 
@@ -62,8 +75,14 @@
           <ion-item>
               <ion-icon color="primary" name="checkmark" item-start></ion-icon>
                <h2>Status do chamado</h2>
-               <p> Iniciado às </p>
-               <p> Finalizado às </p>
+               <p> Iniciado às
+                 {{ monitoramentoAtendimento?.data_hora_inicial_virgente_local | date: 'HH' }}h
+                 {{ monitoramentoAtendimento?.data_hora_inicial_virgente_local | date: 'mm' }}m
+              </p>
+               <p>Finalizado às
+                  {{ monitoramentoAtendimento?.data_hora_final_virgente_local | date: 'HH' }}h
+                  {{ monitoramentoAtendimento?.data_hora_final_virgente_local | date: 'mm' }}m
+               </p>
            </ion-item>
 
 

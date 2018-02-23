@@ -53,6 +53,8 @@ export class DetailsPage {
   private loading: Loading;
   private funcionario: Funcionario;
   public monitoramento: Monitoramento;
+  public monitoramentoAtendimento: Monitoramento;
+  public tomorrow: Boolean;
   public tipo = 'atendimento';
 
   constructor(
@@ -70,15 +72,41 @@ export class DetailsPage {
     private modalCtrl: ModalController
   ) {
     this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
-    this.store.select(getMonitoramentoAtual).subscribe(monitoramento => this.monitoramento = monitoramento);
+    this.store.select(getMonitoramentoAtual).subscribe(monitoramentoRes => {
+      const monitoramento = { tipo: 'atendimento' };
+      if(monitoramentoRes) {
+        return this.monitoramento = monitoramentoRes
+      }
+      return this.monitoramento = monitoramento
+    });
+    this.store.select(appState => appState.monitoramentos)
+      .map(monitoramentos => monitoramentos
+        .filter(monitoramento => monitoramento.id_atendimento === this.selectedId))
+        .filter(monitoramentos => monitoramentos.length > 0)
+        .map(monitoramentos => monitoramentos[0])
+        .subscribe(res => this.monitoramentoAtendimento = res);
   }
 
   ionViewDidLoad() {
     this.selectedId = this.navParams.get('id');
-    this.atendimento$ = this.store.select(appState =>
-      appState.atendimentos
-        .find(atendimento => atendimento._id == this.selectedId)
-    );
+    this.atendimento$ = this.store.select(appState =>{
+      const atendimentoSelecionado = appState.atendimentos
+        .find(atendimento => atendimento._id == this.selectedId);
+        this.isTomorrow(atendimentoSelecionado.data_atendimento);
+        return atendimentoSelecionado;
+    });
+  }
+
+  isTomorrow(atendimento) {
+    const today = new Date();
+    const date = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+    const dataAtendimento = new Date(atendimento);
+    if (dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month) {
+      return this.tomorrow = false;
+    }
+    return  this.tomorrow = true;
   }
 
   mostrarModalInteracaoDados() {
@@ -116,7 +144,7 @@ checkField(value) {
   return false;
 }
 
-  mostrarPromptKmInicial() {
+  mostrarPromptKmInicial(km) {
 
     let alert = this.alertCtrl.create({
       title: 'Quilometragem inicial',
@@ -125,7 +153,7 @@ checkField(value) {
           name: 'km',
           placeholder: 'KM',
           type: 'number',
-          value: ""
+          value: "" + km
         }
       ],
       buttons: [
@@ -145,7 +173,7 @@ checkField(value) {
               this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, this.selectedId))
               this.store.dispatch(new EmDeslocamento({_id:this.selectedId}))
             }else {
-              this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
+              this.store.dispatch(new updateKMInicial(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid))
             }
           }
 
@@ -156,16 +184,16 @@ checkField(value) {
   }
 
   iniciarMonitoramento() {
-    this.store.dispatch(new iniciarMonitoramento(this.monitoramento));
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramentoAtendimento));
     this.store.dispatch(new IniciarAtendimento({_id: this.selectedId}));
   }
 
   finalizarMonitoramento() {
-    this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramentoAtendimento, this.monitoramentoAtendimento.uuid));
     this.store.dispatch(new FimAtendimento({_id: this.selectedId}));
   }
 
-  mostrarPromptKmFinal() {
+  mostrarPromptKmFinal(km) {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem final',
       inputs: [
@@ -173,7 +201,7 @@ checkField(value) {
           name: 'km',
           placeholder: 'KM',
           type: 'number',
-          value: ""
+          value: ""+km
         }
       ],
       buttons: [
@@ -189,10 +217,10 @@ checkField(value) {
           handler: data => {
             const KM = parseInt(data.km);
             if(this.monitoramento && this.monitoramento.km_final === null) {
-              this.store.dispatch(new inserirKMFinal(this.monitoramento,KM, this.monitoramento.uuid));
+              this.store.dispatch(new inserirKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid));
               this.store.dispatch(new ChegouAoDestino({_id:this.selectedId }))
             }else {
-              this.store.dispatch(new updateKMFinal(this.monitoramento,KM, this.monitoramento.uuid))
+              this.store.dispatch(new updateKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid))
             }
           }
         }

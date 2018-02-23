@@ -19,7 +19,7 @@
               </ion-card-content>
             </ion-col>
             <ion-col col-2>
-              <button (click)="showPromptKmInicial()" large ion-button clear color="dark">
+              <button (click)="showPromptKmInicial(monitoramento?.km_inicial)" large ion-button clear color="dark">
                 <ion-icon large name="md-more"></ion-icon>
               </button>
             </ion-col>
@@ -42,7 +42,7 @@
               </ion-card-content>
             </ion-col>
             <ion-col col-2>
-              <button (click)="showPromtFinal()" large ion-button clear color="dark">
+              <button (click)="showPromptFinal(monitoramento?.km_final)" large ion-button clear color="dark">
                 <ion-icon large name="md-more"></ion-icon>
               </button>
             </ion-col>
@@ -99,10 +99,10 @@
     <ion-col text-center>
 
       <div *ngIf="canShowKMInicial">
-        <button (click)="showPromptKmInicial()" ion-button full round class="monitoramento-button" color="light">Km inicial {{ tipoMonitoramento }} </button>
+        <button (click)="showPromptKmInicial(monitoramento?.km_inicial)" ion-button full round class="monitoramento-button" color="light">Km inicial {{ tipoMonitoramento }} </button>
       </div>
       <div *ngIf="canShowKmFinal">
-        <button (click)="showPromptFinal()" ion-button full round class="monitoramento-button" color="light">Km final {{ tipoMonitoramento }} </button>
+        <button (click)="showPromptFinal(monitoramento?.km_final)" ion-button full round class="monitoramento-button" color="light">Km final {{ tipoMonitoramento }} </button>
       </div>
       <div *ngIf="canShowIniciar">
         <button (click)="showConfirmInicio()" ion-button full round class="monitoramento-button" color="light">Iniciar {{ tipoMonitoramento }} </button>
