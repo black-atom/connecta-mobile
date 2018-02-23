@@ -36,7 +36,7 @@ import { Response} from "@angular/http";
 import { AuthHttp } from 'angular2-jwt';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Monitoramento } from '../../models/monitoramento';
-
+import { SignaturePage } from './components/signature/signature';
 
 @IonicPage()
 @Component({
@@ -54,8 +54,10 @@ export class DetailsPage {
   private funcionario: Funcionario;
   public monitoramento: Monitoramento;
   public monitoramentoAtendimento: Monitoramento;
-  public tomorrow: Boolean;
+  public tomorrow: Boolean = false;
   public tipo = 'atendimento';
+  public signatureImage : any;
+  public today = new Date();
 
   constructor(
     private navCtrl: NavController,
@@ -85,6 +87,7 @@ export class DetailsPage {
         .filter(monitoramentos => monitoramentos.length > 0)
         .map(monitoramentos => monitoramentos[0])
         .subscribe(res => this.monitoramentoAtendimento = res);
+        this.signatureImage = navParams.get('signatureImage');
   }
 
   ionViewDidLoad() {
@@ -92,19 +95,27 @@ export class DetailsPage {
     this.atendimento$ = this.store.select(appState =>{
       const atendimentoSelecionado = appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId);
-        this.isTomorrow(atendimentoSelecionado.data_atendimento);
+        if(atendimentoSelecionado) {
+          this.isTomorrow(atendimentoSelecionado.data_atendimento);
+        }
         return atendimentoSelecionado;
     });
   }
 
+  openSignatureModel(){
+    let modal = this.modalCtrl.create(SignaturePage, { id: this.selectedId });
+    modal.present();
+  }
+
   isTomorrow(atendimento) {
-    const today = new Date();
-    const date = today.getDate();
-    const month = today.getMonth();
-    const year = today.getFullYear();
+    const date = this.today.getDate();
+    const month = this.today.getMonth();
+    const year = this.today.getFullYear();
     const dataAtendimento = new Date(atendimento);
-    if (dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month) {
-      return this.tomorrow = false;
+    if(dataAtendimento) {
+      if (dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month) {
+        return this.tomorrow = false;
+      }
     }
     return  this.tomorrow = true;
   }
@@ -272,6 +283,7 @@ checkField(value) {
       })
       .then(
         imagemPath => {
+          console.log(imagemPath);
           const imagem: Imagem = {
             atendimentoID: this.selectedId,
             isUploaded: false,
@@ -286,6 +298,7 @@ checkField(value) {
         }
       );
   }
+
   private uploadPhoto(imageFileUri: any): void {
     this.error = null;
     this.loading = this.loadingCtrl.create({
@@ -384,7 +397,6 @@ checkField(value) {
   }
 
   openGPS(endereco: Endereco){
-
      this.launchNavigator.navigate(`${endereco.numero} ${endereco.rua},${endereco.bairro},${endereco.cidade}`, {
     });
   }

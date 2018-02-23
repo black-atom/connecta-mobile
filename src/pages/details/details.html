@@ -4,7 +4,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <ion-card *ngIf="atendimento$ | async; let atendimento">
     <img src="assets/img/background-chamados.svg" />
@@ -17,18 +16,18 @@
               monitoramento &&
               monitoramento?.tipo !== tipo &&
               !tomorrow
-              && atendimento.interacao_tecnico.estado !== 'fim_do_atendimento'">
+              && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
                 O destino <strong>{{ monitoramento?.tipo | uppercase }}</strong> ainda não foi finalizado!
               </h2>
-              <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
-              <p>{{atendimento.cliente.cnpj_cpf}}</p>
+              <h2><strong>{{atendimento?.cliente.nome_razao_social | uppercase}}</strong></h2>
+              <p>{{atendimento?.cliente.cnpj_cpf}}</p>
           </ion-col>
           <ion-col col-2>
             <ion-fab top right bottom
               *ngIf="
               !tomorrow &&
-              monitoramento.tipo === tipo &&
-              atendimento.interacao_tecnico.estado !== 'fim_do_atendimento'">
+              monitoramento?.tipo === tipo &&
+              atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
 
                 <button ion-fab mini color="accent">
                   <ion-icon name="arrow-dropdown"></ion-icon>
@@ -89,57 +88,66 @@
         <ion-item>
           <ion-icon color="primary" name="person" item-start></ion-icon>
            <h2>Contato</h2>
-           <p>{{ atendimento.contato.nome }}</p>
-           <p>{{ atendimento.contato.telefone }}</p>
+           <p>{{ atendimento?.contato.nome }}</p>
+           <p>{{ atendimento?.contato.telefone }}</p>
        </ion-item>
 
        <ion-item text-wrap class="address" (click)="openGPS(atendimento.endereco)">
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
           <p>
-            {{ atendimento.endereco.rua + ',' + ' '
-              + atendimento.endereco.numero }} </p>
+            {{ atendimento?.endereco.rua + ',' + ' '
+              + atendimento?.endereco.numero }} </p>
 
-          <p>{{atendimento.endereco.bairro + ',' + ' '
-              + atendimento.endereco.cidade}}</p>
+          <p>{{atendimento?.endereco.bairro + ',' + ' '
+              + atendimento?.endereco.cidade}}</p>
 
-          <p>{{atendimento.endereco.uf + ',' + ' ' + atendimento.endereco.cep}}</p>
+          <p>{{atendimento?.endereco.uf + ',' + ' ' + atendimento?.endereco.cep}}</p>
 
-          <p><i>{{ atendimento.endereco.ponto_referencia }}</i></p>
+          <p><i>{{ atendimento?.endereco.ponto_referencia }}</i></p>
        </ion-item>
 
        <ion-item class="line" >
           <ion-icon color="primary" name="car" item-start></ion-icon>
           <h2>Estacionamento</h2>
-          <p>{{atendimento.estacionamento}}</p>
+          <p>{{atendimento?.estacionamento}}</p>
        </ion-item>
 
 
        <ion-item>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Tipo de serviço</h2>
-          <p>{{atendimento.tipo}}</p>
+          <p>{{atendimento?.tipo}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Modelo do equipamento</h2>
-          <p>{{atendimento.modelo_equipamento}}</p>
+          <p>{{atendimento?.modelo_equipamento}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Descrição do chamado</h2>
-          <p>{{atendimento.descricao}}</p>
+          <p>{{atendimento?.descricao}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Testes efetuados</h2>
-          <p>{{atendimento.testes_efetuados}}</p>
+          <p>{{atendimento?.testes_efetuados}}</p>
        </ion-item>
 
       </ion-list>
+
+      <button ion-button full (click)="openSignatureModel()"
+        *ngIf="
+        !tomorrow
+        && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
+        Assinatura do Cliente</button>
+       <div>
+         <img [src]="signatureImage" *ngIf="signatureImage" />
+      </div>
     </ion-card-content>
 
   </ion-card>

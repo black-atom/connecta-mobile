@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Assinatura do Cliente
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="responsavelForm">
+    <ion-item>
+      <ion-label stacked color="primary">Nome </ion-label>
+      <ion-input formControlName="nome" placeholder="Insira o nome!"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked color="primary">Sobrenome</ion-label>
+        <ion-input formControlName="sobrenome" placeholder="Insira o Sobrenome completo!"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color="primary">Rg</ion-label>
+      <ion-input formControlName="rg" placeholder="Insira o rg!"></ion-input>
+    </ion-item>
+    <br/>
+    <ion-item>
+      <ion-label stacked color="primary">Assinatura aqui!</ion-label>
+    </ion-item>
+    <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <button ion-button full color="danger" (click)="cancelar()">Cancelar</button>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button full color="light" (click)="limpar()">Limpar</button>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button full color="secondary" (click)="salvarDados(responsavelForm.value)" [disabled]="!responsavelForm.valid">Salvar</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

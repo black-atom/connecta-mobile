@@ -206,6 +206,12 @@ angular2-jwt@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/angular2-jwt/-/angular2-jwt-0.2.3.tgz#54efdda3ceedba85f6a37b165f22ac22b8adf021"
 
+angular2-signaturepad@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/angular2-signaturepad/-/angular2-signaturepad-2.7.0.tgz#d500a12c9f2b4261734447e2c986584b00e5a2b0"
+  dependencies:
+    signature_pad "2.3.2"
+
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
@@ -3586,6 +3592,10 @@ shelljs@^0.5.3:
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+
+signature_pad@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.3.2.tgz#ca7230021c89cedeead27b33d8d16ff254e5f04a"
 
 slash@^1.0.0:
   version "1.0.0"
