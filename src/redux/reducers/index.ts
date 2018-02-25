@@ -1,6 +1,7 @@
+import { AssinaturaReducer } from './assinatura';
 import { imagemReducer } from './imagem.reducer';
 import { Imagem } from './../../models/imagem';
-import { Atendimento } from '../../models/atendimento';
+import { Atendimento, Assinatura } from '../../models/atendimento';
 import { loginReducer, LoginState } from './../../pages/login/redux/login.reducer';
 import { Action } from '@ngrx/store';
 import { networkReducer } from './networkReducer';
@@ -14,7 +15,8 @@ export const reducer = {
     networkStatus: networkReducer,
     login: loginReducer,
     imagens: imagemReducer,
-    monitoramentos: MonitoramentoReducer
+    monitoramentos: MonitoramentoReducer,
+    assinaturas: AssinaturaReducer,
 }
 
 export interface ActionWithPayload<T> extends Action {
@@ -28,5 +30,5 @@ export interface AppState {
   imagens: Imagem[];
   login: LoginState;
   monitoramentos: Monitoramento[];
-
+  assinaturas: Assinatura[];
 }

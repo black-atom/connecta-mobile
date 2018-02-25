@@ -24,6 +24,7 @@ export interface Atendimento {
   updatedBy: string;
   imagens: any[];
   synced?: boolean;
+  assinatura: Assinatura;
 }
 
 
@@ -72,6 +73,16 @@ export interface Avaliacao {
 export interface Imagens {
   tipo: string;
   url: string;
+}
+
+export interface Assinatura {
+  assinaturaBase64?: string;
+  url?: string;
+  isUploading?: boolean;
+  isUploaded?: boolean;
+  nome: string;
+  document_id: string;
+  atendimentoID?: string;
 }
 
 export interface InteracaoTecnico {
