@@ -1,4 +1,4 @@
-import { ADD_IMAGEM, UPLOAD_IMAGEM_SUCCESS, UPLOAD_IMAGEM } from './../actions/imagem.actions';
+import { ADD_IMAGEM, UPLOAD_IMAGEM_SUCCESS, UPLOAD_IMAGEM, UPLOAD_IMAGEM_FAILED } from './../actions/imagem.actions';
 import { ActionWithPayload, AppState } from './';
 import { Imagem } from './../../models/imagem';
 import { createSelector } from '@ngrx/store';
@@ -14,7 +14,7 @@ export function imagemReducer(state: Imagem[] = [], action: ActionWithPayload<Im
           return Object.assign({}, imagem, {isUploading: true});
         }
         return imagem;
-      }) 
+      })
     case UPLOAD_IMAGEM_SUCCESS:{
       return state.map(imagem => {
         if(imagem.localPath === action.payload.localPath){
@@ -24,7 +24,7 @@ export function imagemReducer(state: Imagem[] = [], action: ActionWithPayload<Im
         }
       })
     }
-    case UPLOAD_IMAGEM_SUCCESS:{
+    case UPLOAD_IMAGEM_FAILED:{
       return state.map(imagem => {
         if(imagem.localPath === action.payload.localPath){
           return Object.assign({}, imagem, {isUploaded: false, isUploading: false});
