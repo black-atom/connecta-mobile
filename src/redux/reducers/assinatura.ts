@@ -1,5 +1,6 @@
 import { Assinatura } from './../../models/atendimento';
-import { Action } from '@ngrx/store';
+import { Action, createSelector } from '@ngrx/store';
+import { AppState } from '.';
 
 export const ADD_ASSINATURA = 'ADD_ASSINATURA';
 export const UPLOAD_ASSINATURA = 'UPLOAD_ASSINATURA';
@@ -90,4 +91,7 @@ export const AssinaturaReducer = (state: Assinatura[] = [], action: assinaturaAc
   }
 };
 
+export const selectImagens = (state: AppState) => state.assinaturas;
 
+export const getAssinaturasToUpload = createSelector(selectImagens, (assinaturas: Assinatura[]) =>
+assinaturas.filter((assinatura:Assinatura) => !assinatura.isUploading && !assinatura.isUploaded));

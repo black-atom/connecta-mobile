@@ -1,8 +1,12 @@
+import { AppState } from './../../../../redux/reducers/index';
+import { Assinatura } from './../../../../models/atendimento';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, NavParams } from 'ionic-angular';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { DetailsPage } from '../../details';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AddAssinatura } from '../../../../redux/reducers/assinatura';
 
 @Component({
   selector: 'page-signature',
@@ -18,24 +22,35 @@ export class SignaturePage {
     'canvasHeight': 200
 
   };
-  public signatureImage : string;
   public responsavelForm: FormGroup;
+  private atendimentoID: string;
 
-  constructor(public navCtrl: NavController, private view: ViewController, private fb: FormBuilder) {
+  constructor(
+    public navCtrl: NavController,
+    private view: ViewController,
+    private fb: FormBuilder,
+    public navParams: NavParams,
+    public store: Store<AppState>
+  ) {
+    this.atendimentoID = navParams.get("id");
     this.initiaForm();
   }
 
   initiaForm() {
     this.responsavelForm = this.fb.group({
       nome: [ '', Validators.required ],
-      sobrenome: [ '', Validators.required ],
-      rg: [ '', Validators.required ]
+      documento_id: [ '', Validators.required ]
     })
   }
   salvarDados(dados) {
-    this.signatureImage = this.signaturePad.toDataURL();
-    const dataFormAndSignature = { assinatura: this.signatureImage, ...dados };
-    console.log(dataFormAndSignature);
+    const assinaturaBase64 = this.signaturePad.toDataURL();
+    const assinatura: Assinatura = {
+      ...dados,
+      assinaturaBase64,
+      atendimentoID: this.atendimentoID,
+    }
+
+    this.store.dispatch(new AddAssinatura(assinatura))
     this.view.dismiss();
   };
 

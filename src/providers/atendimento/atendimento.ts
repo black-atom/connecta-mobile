@@ -1,5 +1,5 @@
 import { AppConfig } from './../../app/app.config';
-import { Atendimento } from './../../models/atendimento';
+import { Atendimento, Assinatura } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { LoginState } from './../../pages/login/redux/login.reducer';
 import { AppState } from '../../redux/reducers';
@@ -77,6 +77,11 @@ export class AtendimentoProvider {
 
       console.log(mensagemErro);
       return Observable.throw(mensagemErro);
+  }
+
+  public enviarAssinatura(assinatura: Assinatura): Observable<Assinatura> {
+    return this.http.post(`${this.url}/${assinatura.atendimentoID}/assinaturas`, assinatura)
+      .catch((e) => this.lidaComErro(e))
   }
 
 

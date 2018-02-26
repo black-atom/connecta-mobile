@@ -1,3 +1,5 @@
+import { Assinatura } from './../../models/atendimento';
+import { UPLOAD_ASSINATURA, UploadAssinaturaSuccess, UploadAssinaturaFailed } from './../reducers/assinatura';
 import { ActionWithPayload } from './../reducers/index';
 import { AtendimentoProvider } from '../../providers/atendimento/atendimento';
 import { Observable } from 'rxjs/Rx';
@@ -48,7 +50,17 @@ export class AtendimentoEffects {
         .flatMap(() => Observable.from(payload))
         .map(res => new SyncAtendimentosSuccess(res))
         .catch((error) => Observable.of({ type: SYNC_ATENDIMENTOS_FAILED, payload: error }))
-      )
+      );
+
+  @Effect() syncAssinaturas$ = this.actions$
+    .ofType(UPLOAD_ASSINATURA)
+    .map((action: ActionWithPayload<Assinatura>) => action.payload)
+    .switchMap(assinatura => this.atendimentoProvider.enviarAssinatura(assinatura)
+      .map(res => new UploadAssinaturaSuccess(assinatura))
+      .catch((error) => Observable.of(new UploadAssinaturaFailed(assinatura)))
+    )
+
+
       // .switchMap( payload => this.)
 
 }

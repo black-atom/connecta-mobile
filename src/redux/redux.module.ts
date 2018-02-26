@@ -11,7 +11,10 @@ import { MonitoramentoEffects } from './effects/monitoramento';
 
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({keys: ['login','atendimentos', 'imagens', 'monitoramentos'], rehydrate: true})(reducer);
+  return localStorageSync({
+    keys: ['login','atendimentos', 'imagens', 'monitoramentos', 'assinaturas'],
+    rehydrate: true}
+  )(reducer);
 }
 const metaReducers: [any] = [localStorageSyncReducer];
 
