@@ -31,8 +31,8 @@ import {
   AlertController,
   ActionSheetController,
   ModalController} from 'ionic-angular';
-import { File, FileEntry} from "@ionic-native/file";
-import { Response} from "@angular/http";
+import { File, FileEntry } from '@ionic-native/file';
+import { Response } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Monitoramento } from '../../models/monitoramento';
@@ -74,20 +74,16 @@ export class DetailsPage {
     private modalCtrl: ModalController
   ) {
     this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
-    this.store.select(getMonitoramentoAtual).subscribe(monitoramentoRes => {
-      const monitoramento = { tipo: 'atendimento' };
-      if(monitoramentoRes) {
-        return this.monitoramento = monitoramentoRes
+    this.store.select(getMonitoramentoAtual)
+    .filter(monitoramento => monitoramento !== undefined && monitoramento !== null)
+    .subscribe(monitoramentoRes => {
+      if(monitoramentoRes.tipo === "atendimento" && monitoramentoRes.id_atendimento === this.selectedId) {
+        this.monitoramento = monitoramentoRes
       }
-      return this.monitoramento = monitoramento
     });
-    this.store.select(appState => appState.monitoramentos)
-      .map(monitoramentos => monitoramentos
-        .filter(monitoramento => monitoramento.id_atendimento === this.selectedId))
-        .filter(monitoramentos => monitoramentos.length > 0)
-        .map(monitoramentos => monitoramentos[0])
-        .subscribe(res => this.monitoramentoAtendimento = res);
-        this.signatureImage = navParams.get('signatureImage');
+    this.store.select(getMonitoramentoAtual).subscribe(monitoramento => this.monitoramento = monitoramento);
+    this.monitoramentoAtendimentoAtual();
+    this.signatureImage = navParams.get('signatureImage');
   }
 
   ionViewDidLoad() {
@@ -100,6 +96,15 @@ export class DetailsPage {
         }
         return atendimentoSelecionado;
     });
+  }
+
+  monitoramentoAtendimentoAtual() {
+    this.store.select(appState => appState.monitoramentos)
+    .map(monitoramentos => monitoramentos
+      .filter(monitoramento => monitoramento.id_atendimento === this.selectedId))
+      .filter(monitoramentos => monitoramentos.length > 0)
+      .map(monitoramentos => monitoramentos[0])
+      .subscribe(res => this.monitoramentoAtendimento = res);
   }
 
   openSignatureModel(){
@@ -132,13 +137,12 @@ export class DetailsPage {
       buttons: [
         {
           text: 'Não',
-          handler: () => {
-          }
+          handler: () => { }
         },
         {
           text: 'Sim',
           handler: () => {
-            this.iniciarMonitoramento()
+            this.iniciarMonitoramento();
           }
         }
       ]
@@ -171,9 +175,7 @@ checkField(value) {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: ()=> {
-            console.log('Canceled!')
-          }
+          handler: ()=> { }
         },
         {
           text: 'Salvar',
@@ -219,9 +221,7 @@ checkField(value) {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: ()=> {
-            console.log('Canceled!')
-          }
+          handler: ()=> { }
         },
         {
           text: 'Salvar',
@@ -229,7 +229,7 @@ checkField(value) {
             const KM = parseInt(data.km);
             if(this.monitoramento && this.monitoramento.km_final === null) {
               this.store.dispatch(new inserirKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid));
-              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId }))
+              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId }));
             }else {
               this.store.dispatch(new updateKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid))
             }
@@ -283,7 +283,6 @@ checkField(value) {
       })
       .then(
         imagemPath => {
-          console.log(imagemPath);
           const imagem: Imagem = {
             atendimentoID: this.selectedId,
             isUploaded: false,
@@ -371,8 +370,7 @@ checkField(value) {
       buttons: [
         {
           text: 'Não',
-          handler: () => {
-          }
+          handler: () => { }
         },
         {
           text: 'Sim',

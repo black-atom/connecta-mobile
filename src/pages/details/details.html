@@ -13,10 +13,10 @@
         <ion-row>
           <ion-col col-10>
               <h2 class="notice" *ngIf="
-              monitoramento &&
-              monitoramento?.tipo !== tipo &&
-              !tomorrow
-              && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
+                monitoramento &&
+                monitoramento?.tipo !== tipo &&
+                !tomorrow
+                && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
                 O destino <strong>{{ monitoramento?.tipo | uppercase }}</strong> ainda não foi finalizado!
               </h2>
               <h2><strong>{{atendimento?.cliente.nome_razao_social | uppercase}}</strong></h2>
@@ -26,38 +26,47 @@
             <ion-fab top right bottom
               *ngIf="
               !tomorrow &&
+              !monitoramento &&
+              atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento' ||
+              !tomorrow &&
               monitoramento?.tipo === tipo &&
               atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
 
                 <button ion-fab mini color="accent">
-                  <ion-icon name="arrow-dropdown"></ion-icon>
+                   <ion-icon name="add"></ion-icon>
                 </button>
 
                 <ion-fab-list side="bottom">
 
-                  <button ion-fab
-                  (click)="mostrarPromptKmInicial(monitoramentoAtendimento?.km_inicial)">
+                  <button ion-fab (click)="mostrarPromptKmInicial(monitoramentoAtendimento?.km_inicial)">
                     <i class="fa fa-flag-o" aria-hidden="true"></i>
                   </button>
 
                   <button ion-fab
-                  (click)="mostrarPromptKmFinal(monitoramentoAtendimento?.km_final)">
+                  (click)="mostrarPromptKmFinal(monitoramentoAtendimento?.km_final)"
+                  [disabled]="!monitoramentoAtendimento?.km_inicial">
                     <i class="fa fa-flag-checkered" aria-hidden="true"></i>
                   </button>
 
-                  <button ion-fab  (click)="mostrarConfirmacaoInicioAtendimento()">
+                  <button ion-fab
+                  (click)="mostrarConfirmacaoInicioAtendimento()"
+                  [disabled]="!monitoramentoAtendimento?.km_final">
                     <ion-icon color="accent" name="play"></ion-icon>
                   </button>
 
-                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()">
+                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()"
+                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
                     <i class="fa fa-camera" aria-hidden="true"></i>
                   </button>
 
-                  <button ion-fab (click)="mostrarModalInteracaoDados()">
+                  <button ion-fab (click)="mostrarModalInteracaoDados()"
+                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
                     <ion-icon color="accent" name="md-list-box"></ion-icon>
                   </button>
 
-                  <button ion-fab (click)="mostrarConfirmacaoFimAtendimento()">
+                  <button ion-fab
+                  (click)="mostrarConfirmacaoFimAtendimento()"
+                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
                     <ion-icon color="accent" name="trophy"></ion-icon>
                   </button>
 
@@ -139,15 +148,13 @@
        </ion-item>
 
       </ion-list>
-
-      <button ion-button full (click)="openSignatureModel()"
-        *ngIf="
-        !tomorrow
-        && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
-        Assinatura do Cliente</button>
-       <div>
-         <img [src]="signatureImage" *ngIf="signatureImage" />
-      </div>
+      <button ion-button full
+      (click)="openSignatureModel()"
+      *ngIf="!tomorrow">Assinatura do Cliente</button>
+<!--
+      <div>
+        <img [src]="signatureImage" *ngIf="signatureImage" />
+      </div> -->
     </ion-card-content>
 
   </ion-card>

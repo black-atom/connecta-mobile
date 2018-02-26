@@ -151,8 +151,6 @@ export class ModalInteracaoPage {
     this.fecharModal();
   }
 
-
-
   fecharModal() {
     this.view.dismiss();
   }

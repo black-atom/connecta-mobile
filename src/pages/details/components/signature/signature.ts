@@ -43,7 +43,7 @@ export class SignaturePage {
     })
   }
   salvarDados(dados) {
-    const assinaturaBase64 = this.signaturePad.toDataURL();
+    const assinaturaBase64 = this.signaturePad.toDataURL().replace(/^data:image\/png;base64,/,"");
     const assinatura: Assinatura = {
       ...dados,
       assinaturaBase64,
