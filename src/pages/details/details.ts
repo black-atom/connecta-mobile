@@ -73,6 +73,7 @@ export class DetailsPage {
     public actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) {
+    this.selectedId = this.navParams.get('id');
     this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
     this.store.select(getMonitoramentoAtual)
     .filter(monitoramento => monitoramento !== undefined && monitoramento !== null)
@@ -87,7 +88,6 @@ export class DetailsPage {
   }
 
   ionViewDidLoad() {
-    this.selectedId = this.navParams.get('id');
     this.atendimento$ = this.store.select(appState =>{
       const atendimentoSelecionado = appState.atendimentos
         .find(atendimento => atendimento._id == this.selectedId);

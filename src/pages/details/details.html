@@ -64,11 +64,11 @@
                     <ion-icon color="accent" name="md-list-box"></ion-icon>
                   </button>
 
-                  <button ion-fab
+                  <!-- <button ion-fab
                   (click)="mostrarConfirmacaoFimAtendimento()"
-                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
+                  [disabled]="atendimento.interacao_tecnico.relatorio_tecnico.relatorio === ''">
                     <ion-icon color="accent" name="trophy"></ion-icon>
-                  </button>
+                  </button> -->
 
                 </ion-fab-list>
 
@@ -148,9 +148,60 @@
        </ion-item>
 
       </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <ion-card *ngIf="atendimento$ | async; let atendimento">
+     <ion-card-content *ngIf="atendimento.interacao_tecnico.relatorio_tecnico.relatorio">
+      <ion-card-title class="line">
+        <ion-row>
+          <ion-col col-12>
+              <h1><strong>Dados preenchidos pelo técnico</strong></h1>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card-title>
+
+      <ion-list no-lines>
+
+          <ion-item>
+            <ion-icon color="primary" name="checkmark" item-start></ion-icon>
+            <h2>Relatório do atendimento</h2>
+            <p>{{ atendimento.interacao_tecnico.relatorio_tecnico.relatorio }}</p>
+          </ion-item>
+
+
+        <ion-item *ngIf="atendimento.interacao_tecnico.retorno.retornar">
+          <ion-icon color="primary" name="information-circle" item-start></ion-icon>
+          <h2>Retorno</h2>
+          <p><strong>Retornar?</strong> {{ atendimento.interacao_tecnico.retorno.retornar ? 'Sim' : 'Não' }}</p>
+          <p><strong>Motivo:</strong> {{ atendimento.interacao_tecnico.retorno.motivo }}</p>
+       </ion-item>
+
+       <ion-item *ngIf="atendimento.interacao_tecnico.treinamento.treinamento">
+        <ion-icon color="primary" name="person" item-start></ion-icon>
+        <h2>Dados do Treinamento</h2>
+        <p><strong>Houve Treinamento?</strong> {{ atendimento.interacao_tecnico.treinamento.treinamento ? 'Sim' : 'Não' }}</p>
+        <p><strong>Cadastro?</strong> {{ atendimento.interacao_tecnico.treinamento.cadastros ? 'Sim' : 'Não' }}</p>
+        <p><strong>Relatórios?</strong> {{ atendimento.interacao_tecnico.treinamento.relatorios ? 'Sim' : 'Não' }}</p>
+        <p><strong>Importação de Dados?</strong> {{ atendimento.interacao_tecnico.treinamento.importacao_dados ? 'Sim' : 'Não' }}</p>
+        <p><strong>Interrupções no Treinamento?</strong> {{ atendimento.interacao_tecnico.treinamento.interrupcoes ? 'Sim' : 'Não' }}</p>
+        <p><strong>Parametros Gerais?</strong> {{ atendimento.interacao_tecnico.treinamento.parametros_gerais ? 'Sim' : 'Não' }}</p>
+        <p><strong>Abonos e Justificativas?</strong> {{ atendimento.interacao_tecnico.treinamento.abonos_justificativas ? 'Sim' : 'Não' }}</p>
+        <p><strong>Backup do Sistema?</strong> {{ atendimento.interacao_tecnico.treinamento.backup_sistema ? 'Sim' : 'Não' }}</p>
+        <p><strong>Software: </strong> {{ atendimento.interacao_tecnico.treinamento.software }}</p>
+        <p><strong>Caminho da Rede: </strong> {{ atendimento.interacao_tecnico.treinamento.caminho }}</p>
+       </ion-item>
+
+
+      </ion-list>
       <button ion-button full
       (click)="openSignatureModel()"
-      *ngIf="!tomorrow">Assinatura do Cliente</button>
+      *ngIf="!tomorrow && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">Assinatura do Cliente</button>
 <!--
       <div>
         <img [src]="signatureImage" *ngIf="signatureImage" />
@@ -158,6 +209,5 @@
     </ion-card-content>
 
   </ion-card>
-
 
 </ion-content>

@@ -88,7 +88,7 @@ export interface Assinatura {
 export interface InteracaoTecnico {
   estado?: string;
   relatorio_tecnico?: Treinamento;
-  retornar?: Retorno;
+  retorno?: Retorno;
   treinamento?: Treinamento;
   remocao_relogio?: RemocaoRelogio;
 }
@@ -98,10 +98,12 @@ export interface RelatorioRecnico {
 }
 
 export interface Retorno {
-  retornar: string;
+  retornar: boolean;
+  motivo: string;
 }
 
 export interface Treinamento {
+  treinamento: boolean;
   interrupcoes: boolean;
   cadastros: boolean;
   relatorios: boolean;
