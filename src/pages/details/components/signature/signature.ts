@@ -8,7 +8,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { AddAssinatura } from '../../../../redux/reducers/assinatura';
 import { FimAtendimento } from './../../../../redux/actions/atendimentos';
-
+import { finalizarMonitoramento } from '../../../../redux/reducers/monitoramento';
 
 @Component({
   selector: 'page-signature',
@@ -26,6 +26,7 @@ export class SignaturePage {
   };
   public responsavelForm: FormGroup;
   private atendimentoID: string;
+  public monitoramentoAtendimento
 
   constructor(
     public navCtrl: NavController,
@@ -36,6 +37,7 @@ export class SignaturePage {
     public store: Store<AppState>
   ) {
     this.atendimentoID = navParams.get("id");
+    this.monitoramentoAtendimentoAtual();
     this.initiaForm();
   }
 
@@ -54,7 +56,8 @@ export class SignaturePage {
     }
 
     this.store.dispatch(new AddAssinatura(assinatura))
-    this.store.dispatch(new FimAtendimento({_id: this.atendimentoID}));
+    this.store.dispatch(new FimAtendimento({_id: this.atendimentoID}));  
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramentoAtendimento, this.monitoramentoAtendimento.uuid));      
     this.presentToast()
     this.view.dismiss();
   };
@@ -74,6 +77,14 @@ export class SignaturePage {
       .set('canvasHeight', canvas.offsetHeight);
   }
 
+  monitoramentoAtendimentoAtual() {
+    this.store.select(appState => appState.monitoramentos)
+    .map(monitoramentos => monitoramentos
+      .filter(monitoramento => monitoramento.id_atendimento === this.atendimentoID))
+      .filter(monitoramentos => monitoramentos.length > 0)
+      .map(monitoramentos => monitoramentos[0])
+      .subscribe(res => this.monitoramentoAtendimento = res);
+  }
   presentToast() {
     let toast = this.toastCtrl.create({
       message: 'Salvo com sucesso!',
