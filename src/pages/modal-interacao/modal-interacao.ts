@@ -46,6 +46,7 @@ export class ModalInteracaoPage {
 
   iniciarFormulario() {
     this.interacaoTecnicoForm = this.fb.group({
+      resumo_atendimento: [ '', Validators.required ],
       retorno: this.fb.group({
         retornar: [ false, Validators.required ],
         motivo: [{ value: '', disabled: true}, Validators.required]
