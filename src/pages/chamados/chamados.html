@@ -18,6 +18,10 @@
 
 <ion-content class="page-chamados">
 
+  <div *ngIf='!(atendimentos$ | async)?.length'>
+    <h3 text-center>Não há chamados!</h3>
+  </div>
+
   <ion-card *ngFor='let atendimento of atendimentos$ | async; let i = index' (click)="openDetailsPage(atendimento._id)">
     <ion-card-header>
       <ion-row>
