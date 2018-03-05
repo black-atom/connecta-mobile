@@ -1,8 +1,8 @@
 <ion-toolbar color="primary" no-border-top>
   <ion-row>
-    <ion-col col-3 class="perfil">
+    <ion-col col-4 class="perfil">
       <img menuToggle class="img-avatar" [src]="funcionario?.foto_url || 'assets/img/avatar.svg'">
     </ion-col>
-    <ion-title>{{ funcionario?.nome }}</ion-title>
+    <ion-title>olá, {{ funcionario?.nome.split(' ')[0] | uppercase }}</ion-title>
   </ion-row>
 </ion-toolbar>

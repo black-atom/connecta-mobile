@@ -23,7 +23,7 @@ export class MyApp implements OnInit, OnDestroy {
     private store: Store<AppState>
   ) {
     platform.ready().then(() => {
-      statusBar.styleDefault();
+      statusBar.backgroundColorByHexString("#246af9"); // change color    
       splashScreen.hide();
     });
 
