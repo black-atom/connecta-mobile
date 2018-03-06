@@ -85,4 +85,12 @@ export class ChamadosPage {
     //this.app.getRootNavs()[0].setRoot("DetailsPage", { id })
     this.navCtrl.push("DetailsPage", { id });
   }
+
+  cepMask = (value: string): any => {
+    value = value.toString();
+  
+    return value.substring(0,5)
+                .concat('-')
+                .concat(value.substring(5,8))
+  }
 }

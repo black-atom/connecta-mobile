@@ -20,7 +20,7 @@
                 O destino <strong>{{ monitoramento?.tipo | uppercase }}</strong> ainda não foi finalizado!
               </h2>
               <h2><strong>{{atendimento?.cliente.nome_razao_social | uppercase}}</strong></h2>
-              <p>{{atendimento?.cliente.cnpj_cpf}}</p>
+              <p>{{atendimento?.cliente.cnpj_cpf | rgCnpjCpf}}</p>
           </ion-col>
           <ion-col col-2>
             <ion-fab top right bottom

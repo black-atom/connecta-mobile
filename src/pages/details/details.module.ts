@@ -6,11 +6,13 @@ import { IonicPageModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
 import { File } from "@ionic-native/file";
 
+import { CnpjCpfPipe } from '../../shared';
 
 @NgModule({
   declarations: [
     DetailsPage,
     SignaturePage,
+    CnpjCpfPipe,
   ],
   imports: [
     IonicPageModule.forChild(DetailsPage),
