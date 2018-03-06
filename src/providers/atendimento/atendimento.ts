@@ -1,4 +1,5 @@
-import { Atendimento } from './../../models/atendimento';
+import { AppConfig } from './../../app/app.config';
+import { Atendimento, Assinatura } from './../../models/atendimento';
 import { Observable } from 'rxjs/Rx';
 import { LoginState } from './../../pages/login/redux/login.reducer';
 import { AppState } from '../../redux/reducers';
@@ -18,28 +19,49 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class AtendimentoProvider {
 
-  private url = "http://165.227.78.113:3000/api/atendimentos";
+  private url = `${AppConfig.endpointBaseURL}/api/atendimentos`;
 
-  constructor(public http: AuthHttp, private store: Store<AppState>) {
+  constructor(public http: AuthHttp, private store: Store<AppState>) { }
 
-  }
-
-  getAllAtendimentos(): Observable<Atendimento[]>{
+  getAllAtendimentosToday(): Observable<any> {
     return this.store.select(appState => appState.login.funcionario)
     .take(1)
-    .switchMap(funcionario =>
-        this.http.get(this.url,{
-          params: {
-            'tecnico._id': funcionario._id
-          }
-        }).map( response => response.json() as Atendimento[])
-        .catch(this.lidaComErro)
-    )
+    .switchMap(funcionario => {
+      const date = new Date();
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).toString();
+
+      const query = {
+        estado: 'associado',
+        data_atendimento: today,
+        'tecnico.nome': funcionario.nome,
+      }
+      return this.http.get(this.url, { params: { ...query } })
+      .map(res => res.json() as Atendimento[])
+      .catch(this.lidaComErro)
+    })
+  }
+
+
+  getAllAtendimentosTomorrow(): Observable<any> {
+    return this.store.select(appState => appState.login.funcionario)
+    .take(1)
+    .switchMap(funcionario => {
+      const date = new Date();
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).toString();
+
+      const query = {
+        estado: 'associado',
+        data_atendimento: today,
+        'tecnico.nome': funcionario.nome,
+      }
+      return this.http.get(this.url, { params: { ...query } })
+      .map(res => res.json() as Atendimento[])
+      .catch(this.lidaComErro)
+    })
   }
 
   updateMany(atendimentos: Atendimento[]): Observable<Atendimento[]>{
-    console.dir(atendimentos)
-    return this.http.patch(this.url, atendimentos).map( response => response.json() as Atendimento[])
+    return this.http.patch(this.url, atendimentos).map( response => response.json().atendimentos as Atendimento[])
     .catch(this.lidaComErro);
   }
 
@@ -55,6 +77,11 @@ export class AtendimentoProvider {
 
       console.log(mensagemErro);
       return Observable.throw(mensagemErro);
+  }
+
+  public enviarAssinatura(assinatura: Assinatura): Observable<Assinatura> {
+    return this.http.post(`${this.url}/${assinatura.atendimentoID}/assinaturas`, assinatura)
+      .catch((e) => this.lidaComErro(e))
   }
 
 

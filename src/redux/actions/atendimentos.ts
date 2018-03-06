@@ -19,7 +19,7 @@ export class RetriveAtendimentoSuccess implements Action{
     constructor(public payload) { }
 }
 
-export class SyncAtendimentosSuccess  implements Action{
+export class SyncAtendimentosSuccess implements Action{
     readonly type: string = SYNC_ATENDIMENTOS_SUCCESS;
     constructor(public payload) { }
 }
@@ -34,6 +34,15 @@ export class EditarAtendimento implements Action{
     constructor(public payload) { }
 }
 
+export class IniciarAtendimento implements Action{
+  readonly type: string = INICIAR_ATENDIMENTO;
+  constructor(public payload) { }
+}
+
+export class FimAtendimento implements Action{
+  readonly type: string = FIM_ATENDIMENTO;
+  constructor(public payload) { }
+}
 
 export class EmDeslocamento implements Action{
     readonly type: string = EM_DESLOCAMENTO;

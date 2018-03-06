@@ -1,3 +1,4 @@
+import { getAssinaturasToUpload, UploadAssinatura } from './../../redux/reducers/assinatura';
 import { OutrosPage } from './../outros/outros';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
@@ -48,11 +49,19 @@ export class TabsPage implements OnInit{
     .do((n) => { if(n === 0){this.uploadingPhotos = false} });
 
     Observable.interval(300000)
-    .switchMap(() => this.store.select(selectImagensToUpload).take(1))
-    .subscribe(imagens => {
-      imagens.forEach(imagem =>{
-        this.store.dispatch(new UploadImagem(imagem));
+      .switchMap(() => this.store.select(selectImagensToUpload).take(1))
+      .subscribe(imagens => {
+        imagens.forEach(imagem =>{
+          this.store.dispatch(new UploadImagem(imagem));
+        })
       })
-    })
+
+    Observable.interval(300000)
+      .switchMap(() => this.store.select(getAssinaturasToUpload).take(1))
+      .subscribe(assinaturas => {
+        assinaturas.forEach(assinatura =>{
+          this.store.dispatch(new UploadAssinatura(assinatura));
+        })
+      })
   }
 }

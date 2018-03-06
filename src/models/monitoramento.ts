@@ -9,5 +9,6 @@ export interface Monitoramento {
   data_hora_final_virgente_local?: Date,
   tipo?: string,
   id_funcionario?: string,
+  id_atendimento?: string,
   isUploaded?: boolean,
 }

@@ -35,6 +35,7 @@
     "@ngrx/store": "^4.0.3",
     "@ngrx/store-devtools": "^4.0.0",
     "angular2-jwt": "^0.2.3",
+    "angular2-signaturepad": "^2.7.0",
     "cordova-android": "^6.2.3",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-camera": "^2.4.1",

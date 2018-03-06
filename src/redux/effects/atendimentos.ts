@@ -1,3 +1,5 @@
+import { Assinatura } from './../../models/atendimento';
+import { UPLOAD_ASSINATURA, UploadAssinaturaSuccess, UploadAssinaturaFailed } from './../reducers/assinatura';
 import { ActionWithPayload } from './../reducers/index';
 import { AtendimentoProvider } from '../../providers/atendimento/atendimento';
 import { Observable } from 'rxjs/Rx';
@@ -27,19 +29,38 @@ export class AtendimentoEffects {
       .ofType(RETRIEVE_ATENDIMENTOS)
       .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload =>
-        this.atendimentoProvider.getAllAtendimentos()
+        this.atendimentoProvider.getAllAtendimentosToday()
+          .map(res => res.atendimentos)
         //.retryWhen(error => error.delay(2000).take(1).catch(() => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED })))
-        .map(res => new RetriveAtendimentoSuccess(res))
-        .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
+          .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
+      )
+      .switchMap(atendimentos =>
+        this.atendimentoProvider.getAllAtendimentosTomorrow()
+          .map(res => {
+            const atendimentoTodayAndTomorrow = [...atendimentos, ...res.atendimentos];
+            return new RetriveAtendimentoSuccess(atendimentoTodayAndTomorrow);
+          })
+          .catch((error) => Observable.of({ type: RETRIEVE_ATENDIMENTOS_FAILED, payload: error }))
       );
 
   @Effect() syncAtendimentos$ = this.actions$
       .ofType(SYNC_ATENDIMENTOS)
       .map((action: ActionWithPayload<any>) => action.payload)
       .switchMap(payload => this.atendimentoProvider.updateMany(payload)
+        .flatMap(() => Observable.from(payload))
         .map(res => new SyncAtendimentosSuccess(res))
         .catch((error) => Observable.of({ type: SYNC_ATENDIMENTOS_FAILED, payload: error }))
-      )
+      );
+
+  @Effect() syncAssinaturas$ = this.actions$
+    .ofType(UPLOAD_ASSINATURA)
+    .map((action: ActionWithPayload<Assinatura>) => action.payload)
+    .switchMap(assinatura => this.atendimentoProvider.enviarAssinatura(assinatura)
+      .map(res => new UploadAssinaturaSuccess(assinatura))
+      .catch((error) => Observable.of(new UploadAssinaturaFailed(assinatura)))
+    )
+
+
       // .switchMap( payload => this.)
 
 }

@@ -23,7 +23,7 @@ export class MyApp implements OnInit, OnDestroy {
     private store: Store<AppState>
   ) {
     platform.ready().then(() => {
-      statusBar.styleDefault();
+      statusBar.backgroundColorByHexString("#246af9"); // change color    
       splashScreen.hide();
     });
 
@@ -34,8 +34,6 @@ export class MyApp implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.select(appstate => appstate.imagens)
     .switchMap(imagens => Observable.of(imagens))
-    .subscribe(imagens => console.log(JSON.stringify(imagens)))
-
 
     this.store.select(appstate => appstate.atendimentos)
       .map(atendimentos => atendimentos.filter(at => at.synced === false))

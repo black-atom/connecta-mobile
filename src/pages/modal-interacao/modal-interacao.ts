@@ -51,6 +51,7 @@ export class ModalInteracaoPage {
         retornar: [ false, Validators.required ],
         motivo: [{ value: '', disabled: true}, Validators.required]
       }),
+      relatorio_tecnico: ['', Validators.required],
       treinamento: this.fb.group({
         treinamento: [ false, Validators.required ],
         cadastros: [{ value: false, disabled: true }],
@@ -138,16 +139,18 @@ export class ModalInteracaoPage {
   salvarDados(dados) {
     this.store.dispatch(new EditarAtendimento({
       _id: this.AtendimentoID,
-      resumo_atendimento: dados.resumo_atendimento,
-      retorno: dados.retorno,
-      treinamento: dados.treinamento,
-      faturamento: dados.faturamento,
-      retirou_equipamento: dados.retirou_equipamento
+      interacao_tecnico: {
+        relatorio_tecnico: {
+          relatorio: dados.relatorio_tecnico
+        },
+        retorno: dados.retorno,
+        treinamento: dados.treinamento,
+        faturamento: dados.faturamento,
+        retirou_equipamento: dados.retirou_equipamento
+      }
     }));
     this.fecharModal();
   }
-
-
 
   fecharModal() {
     this.view.dismiss();

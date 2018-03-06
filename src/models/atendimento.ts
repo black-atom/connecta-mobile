@@ -1,97 +1,108 @@
 export interface Atendimento {
-  createdAt: string;
-  updatedAt: string;
+  _id: string;
+  cliente: Cliente;
   endereco: Endereco;
   contato: Contato;
-  createdBy: string;
-  updatedBy: string;
-  _id: string;
-  inativo: Inativo;
-  encaixe: boolean;
-  estado: string;
-  km_inicio: KM;
-  km_final: KM;
-  inicio: Date;
-  fim: Date;
-  observacao: string;
-  avaliacao: Avaliacao[];
-  valor: number;
-  tipo: string;
   tecnico: Tecnico;
+  avaliacao: Avaliacao[];
+  data_atendimento: Date;
   estacionamento: string;
-  numero_equipamento: string;
   modelo_equipamento: string;
-  testes_efetuados: string;
+  numero_equipamento: string;
+  tipo: string;
   descricao: string;
-  data_atendimento: string;
+  testes_efetuados: string;
+  observacao: string;
+  valor: string;
+  autorizado: string;
+  estado: string;
+  interacao_tecnico: InteracaoTecnico;
+  motivos: Motivo[];
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+  updatedBy: string;
   imagens: any[];
-  cliente: Cliente;
   synced?: boolean;
-  retorno: Retorno;
-  resumo_atendimento: string;
-  relatorio_tecnico: RelatorioTecnico;
-  treinamento: Treinamento;
-  retirou_equipamento: RemocaoRelogio;
+  assinatura: Assinatura;
 }
 
-interface Cliente {
+
+export interface Motivo {
+  estado: string;
+  motivo: string;
+}
+
+export interface Cliente {
+  _id: number;
   cnpj_cpf: string;
   nome_razao_social: string;
-  inscricao_estadual: string;
-  nome_fantasia: string;
+  nome_fantasia?: string;
+  inscricao_estadual?: string;
 }
 
-interface Tecnico {
+export interface Endereco {
+  cep: string;
+  rua: string;
+  numero: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  ponto_referencia: string;
+  complemento: string;
+}
+
+export interface Contato {
+  nome: string;
+  email: string;
+  telefone: string;
+  celular: string;
+  observacao: string;
+}
+
+export interface Tecnico {
+  _id: string;
   nome: string;
 }
 
 export interface Avaliacao {
   pergunta: string;
-  _id?: string;
   valor: number;
 }
 
-export interface KM {
-  data?: any;
-  km?: any;
+export interface Imagens {
+  tipo: string;
+  url: string;
 }
 
-interface Inativo {
-  motivo: string;
-  statos: boolean;
-}
-
-interface Contato {
-  telefone: string;
+export interface Assinatura {
+  assinaturaBase64?: string;
+  url?: string;
+  isUploading?: boolean;
+  isUploaded?: boolean;
   nome: string;
-  _id: string;
-  observacao: string;
-  celular: string;
-  email: string;
+  document_id: string;
+  atendimentoID?: string;
 }
 
-export interface Endereco {
-  rua: string;
-  numero: string;
-  bairro: string;
-  uf: string;
-  cidade: string;
-  cep: string;
-  _id: string;
-  ponto_referencia: string;
-  complemento: string;
+export interface InteracaoTecnico {
+  estado?: string;
+  relatorio_tecnico?: Treinamento;
+  retorno?: Retorno;
+  treinamento?: Treinamento;
+  remocao_relogio?: RemocaoRelogio;
 }
 
-interface Retorno {
+export interface RelatorioRecnico {
+  relatorio: string;
+}
+
+export interface Retorno {
   retornar: boolean;
   motivo: string;
 }
 
-interface RelatorioTecnico {
-  relatorio: string
-}
-
-interface Treinamento {
+export interface Treinamento {
   treinamento: boolean;
   interrupcoes: boolean;
   cadastros: boolean;
@@ -101,21 +112,15 @@ interface Treinamento {
   abonos_justificativas: boolean;
   backup_sistema: boolean;
   software: string;
-  caminho: string
+  caminho: string;
 }
 
-interface RemocaoRelogio {
+export interface RemocaoRelogio {
   retirado: boolean;
-  mesmo_equipamento: boolean,
-  informacoe_equipamento: string,
-}
-
-interface Faturamento {
-  mesmo_cnpj: boolean;
-  cnpj: string;
-  nome_razao_social: string;
-  email: string;
-  quem_aprovou: string;
-  valor: string;
-  prazo_pagamento: string;
+  chave: boolean;
+  bateria: boolean;
+  bobina: boolean;
+  fonte: boolean;
+  pino: boolean;
+  impressora: boolean;
 }

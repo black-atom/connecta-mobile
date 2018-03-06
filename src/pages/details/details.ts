@@ -1,13 +1,24 @@
+import { getFuncionario } from './../login/redux/login.reducer';
+import { AppState } from './../../redux/reducers/index';
+import {
+  getMonitoramentoAtual,
+  inserirKMInicial,
+  updateKMInicial,
+  inserirKMFinal,
+  updateKMFinal,
+  iniciarMonitoramento,
+  finalizarMonitoramento,
+} from './../../redux/reducers/monitoramento';
 import { ModalInteracaoPage } from './../modal-interacao/modal-interacao';
 import { AddImagem } from '../../redux/actions/imagem.actions';
 import { Imagem } from '../../models/imagem';
-import { EmDeslocamento, ChegouAoDestino } from './../../redux/actions/atendimentos';
+import { EmDeslocamento, ChegouAoDestino, EditarAtendimento, IniciarAtendimento, FimAtendimento } from './../../redux/actions/atendimentos';
 import { Camera } from '@ionic-native/camera';
 import { PesquisaPage } from './../pesquisa/pesquisa';
 import { INICIAR_ATENDIMENTO } from '../../redux/actions/atendimentos';
 import { Atendimento, Endereco } from './../../models/atendimento';
+import { Funcionario } from './../../models/funcionario';
 import { Observable } from 'rxjs/Rx';
-import { AppState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import {
@@ -20,12 +31,12 @@ import {
   AlertController,
   ActionSheetController,
   ModalController} from 'ionic-angular';
-import { File, FileEntry} from "@ionic-native/file";
-import { Response} from "@angular/http";
+import { File, FileEntry } from '@ionic-native/file';
+import { Response } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-
-
+import { Monitoramento } from '../../models/monitoramento';
+import { SignaturePage } from './components/signature/signature';
 
 @IonicPage()
 @Component({
@@ -40,6 +51,13 @@ export class DetailsPage {
   public myPhotoURL: any;
   public error: string;
   private loading: Loading;
+  private funcionario: Funcionario;
+  public monitoramento: Monitoramento;
+  public monitoramentoAtendimento: Monitoramento;
+  public tomorrow: Boolean = false;
+  public tipo = 'atendimento';
+  public signatureImage : any;
+  public today = new Date();
 
   constructor(
     private navCtrl: NavController,
@@ -55,14 +73,56 @@ export class DetailsPage {
     public actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) {
+    this.selectedId = this.navParams.get('id');
+    this.store.select(getFuncionario).subscribe(funcionario => this.funcionario = funcionario);
+    this.store.select(getMonitoramentoAtual)
+    .filter(monitoramento => monitoramento !== undefined && monitoramento !== null)
+    .subscribe(monitoramentoRes => {
+      if(monitoramentoRes.tipo === "atendimento" && monitoramentoRes.id_atendimento === this.selectedId) {
+        this.monitoramento = monitoramentoRes
+      }
+    });
+    this.store.select(getMonitoramentoAtual).subscribe(monitoramento => this.monitoramento = monitoramento);
+    this.monitoramentoAtendimentoAtual();
+    this.signatureImage = navParams.get('signatureImage');
   }
 
   ionViewDidLoad() {
-    this.selectedId = this.navParams.get('id');
-    this.atendimento$ = this.store.select(appState =>
-      appState.atendimentos
-        .find(atendimento => atendimento._id == this.selectedId)
-    );
+    this.atendimento$ = this.store.select(appState =>{
+      const atendimentoSelecionado = appState.atendimentos
+        .find(atendimento => atendimento._id == this.selectedId);
+        if(atendimentoSelecionado) {
+          this.isTomorrow(atendimentoSelecionado.data_atendimento);
+        }
+        return atendimentoSelecionado;
+    });
+  }
+
+  monitoramentoAtendimentoAtual() {
+    this.store.select(appState => appState.monitoramentos)
+    .map(monitoramentos => monitoramentos
+      .filter(monitoramento => monitoramento.id_atendimento === this.selectedId))
+      .filter(monitoramentos => monitoramentos.length > 0)
+      .map(monitoramentos => monitoramentos[0])
+      .subscribe(res => this.monitoramentoAtendimento = res);
+  }
+
+  openSignatureModel(){
+    let modal = this.modalCtrl.create(SignaturePage, { id: this.selectedId });
+    modal.present();
+  }
+
+  isTomorrow(atendimento) {
+    const date = this.today.getDate();
+    const month = this.today.getMonth();
+    const year = this.today.getFullYear();
+    const dataAtendimento = new Date(atendimento);
+    if(dataAtendimento) {
+      if (dataAtendimento.getDate() === date && dataAtendimento.getMonth() === month) {
+        return this.tomorrow = false;
+      }
+    }
+    return  this.tomorrow = true;
   }
 
   mostrarModalInteracaoDados() {
@@ -70,29 +130,19 @@ export class DetailsPage {
     modal.present();
   }
 
-  iniciarAtendimento(){
-    this.store.dispatch({
-      type: INICIAR_ATENDIMENTO,
-      payload: {
-        _id: this.selectedId
-      }
-    })
-  }
-
-  mostrarConfirmacaoInicioAtendimento(km: number){
+  mostrarConfirmacaoInicioAtendimento(){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
       message: `Deseja iniciar o atendimento?`,
       buttons: [
         {
           text: 'Não',
-          handler: () => {
-          }
+          handler: () => { }
         },
         {
           text: 'Sim',
           handler: () => {
-            this.iniciarAtendimento();
+            this.iniciarMonitoramento();
           }
         }
       ]
@@ -100,7 +150,17 @@ export class DetailsPage {
     confirm.present();
   }
 
-  mostrarPromptKmInicial(km: number) {
+checkField(value) {
+  if(value) {
+    if(value !== null) {
+      return true;
+    }
+  }
+  return false;
+}
+
+  mostrarPromptKmInicial(km) {
+
     let alert = this.alertCtrl.create({
       title: 'Quilometragem inicial',
       inputs: [
@@ -115,31 +175,38 @@ export class DetailsPage {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: ()=> {
-            console.log('Canceled!')
-          }
+          handler: ()=> { }
         },
         {
           text: 'Salvar',
-          handler: (input) => {
-            if(input.km){
-              this.store.dispatch(new EmDeslocamento({
-                _id: this.selectedId,
-                km_inicial: {
-                  km: input.km,
-                  data: new Date()
-                }
-              }))
+
+          handler: data => {
+            const KM = parseInt(data.km);
+            if(!this.monitoramento) {
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, this.selectedId))
+              this.store.dispatch(new EmDeslocamento({_id:this.selectedId}))
+            }else {
+              this.store.dispatch(new updateKMInicial(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid))
             }
           }
+
         }
       ]
     });
     alert.present();
   }
 
+  iniciarMonitoramento() {
+    this.store.dispatch(new iniciarMonitoramento(this.monitoramentoAtendimento));
+    this.store.dispatch(new IniciarAtendimento({_id: this.selectedId}));
+  }
 
-  mostrarPromptKmFinal(km: number) {
+  finalizarMonitoramento() {
+    this.store.dispatch(new finalizarMonitoramento(this.monitoramentoAtendimento, this.monitoramentoAtendimento.uuid));
+    this.store.dispatch(new FimAtendimento({_id: this.selectedId}));
+  }
+
+  mostrarPromptKmFinal(km) {
     let alert = this.alertCtrl.create({
       title: 'Quilometragem final',
       inputs: [
@@ -147,28 +214,24 @@ export class DetailsPage {
           name: 'km',
           placeholder: 'KM',
           type: 'number',
-          value: "" + km
+          value: ""+km
         }
       ],
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: ()=> {
-            console.log('Canceled!')
-          }
+          handler: ()=> { }
         },
         {
           text: 'Salvar',
-          handler: (input) => {
-            if(input.km){
-              this.store.dispatch(new ChegouAoDestino({
-                _id: this.selectedId,
-                km_final: {
-                  km: input.km,
-                  data: new Date()
-                }
-              }))
+          handler: data => {
+            const KM = parseInt(data.km);
+            if(this.monitoramento && this.monitoramento.km_final === null) {
+              this.store.dispatch(new inserirKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid));
+              this.store.dispatch(new ChegouAoDestino({_id:this.selectedId }));
+            }else {
+              this.store.dispatch(new updateKMFinal(this.monitoramentoAtendimento, KM, this.monitoramentoAtendimento.uuid))
             }
           }
         }
@@ -176,6 +239,7 @@ export class DetailsPage {
     });
     alert.present();
   }
+
 
   mostrarOpcoesParaTirarFoto() {
     let actionSheet = this.actionSheetCtrl.create({
@@ -233,6 +297,7 @@ export class DetailsPage {
         }
       );
   }
+
   private uploadPhoto(imageFileUri: any): void {
     this.error = null;
     this.loading = this.loadingCtrl.create({
@@ -298,10 +363,6 @@ export class DetailsPage {
     return Observable.throw(errMsg);
   }
 
-  finalizarAtendimento(){
-    this.navCtrl.push(PesquisaPage,{_id: this.selectedId});
-  }
-
   mostrarConfirmacaoFimAtendimento(){
     let confirm = this.alertCtrl.create({
       title: 'Confirmação',
@@ -309,13 +370,13 @@ export class DetailsPage {
       buttons: [
         {
           text: 'Não',
-          handler: () => {
-          }
+          handler: () => { }
         },
         {
           text: 'Sim',
           handler: () => {
-            this.finalizarAtendimento();
+            this.presentToast()
+            this.finalizarMonitoramento()
           }
         }
       ]
@@ -323,8 +384,17 @@ export class DetailsPage {
     confirm.present();
   }
 
-  openGPS(endereco: Endereco){
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Salvo com sucesso!',
+      duration: 3000,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
+  }
 
+  openGPS(endereco: Endereco){
      this.launchNavigator.navigate(`${endereco.numero} ${endereco.rua},${endereco.bairro},${endereco.cidade}`, {
     });
   }

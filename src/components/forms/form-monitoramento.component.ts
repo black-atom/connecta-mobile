@@ -129,7 +129,7 @@ export class FormMonitoramentoComponent implements OnInit {
     this.store.dispatch(new finalizarMonitoramento(this.monitoramento, this.monitoramento.uuid));
   }
 
-  showPromptKmInicial() {
+  showPromptKmInicial(km) {
     let prompt = this.alertCtrl.create({
       title: `Quilometragem Inicial`,
       message: this.message,
@@ -139,6 +139,7 @@ export class FormMonitoramentoComponent implements OnInit {
           name: 'km',
           placeholder: 'Insira KM Inicial',
           type: 'number',
+          value: "" + km,
           checked: true
         },
       ],
@@ -154,7 +155,7 @@ export class FormMonitoramentoComponent implements OnInit {
           handler: data => {
             const KM = parseInt(data.km);
             if(!this.monitoramento) {
-              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id))
+              this.store.dispatch(new inserirKMInicial(KM, this.tipo, this.funcionario._id, null))
             }else {
               this.store.dispatch(new updateKMInicial(this.monitoramento, KM, this.monitoramento.uuid))
             }
@@ -165,13 +166,15 @@ export class FormMonitoramentoComponent implements OnInit {
     prompt.present();
   }
 
-  showPromptFinal() {
+  showPromptFinal(km) {
     let prompt = this.alertCtrl.create({
       title: `Quilometragem Final`,
       message: this.message,
       inputs: [
         {
           name: 'km',
+          type: 'number',
+          value: "" + km,
           placeholder: `Insira KM Final`
         },
       ],
@@ -207,7 +210,7 @@ export class FormMonitoramentoComponent implements OnInit {
         {
           text: 'Não',
           handler: () => {
-            
+
           }
         },
         {
@@ -228,7 +231,7 @@ export class FormMonitoramentoComponent implements OnInit {
         {
           text: 'Não',
           handler: () => {
-            
+
           }
         },
         {

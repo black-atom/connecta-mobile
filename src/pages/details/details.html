@@ -4,7 +4,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <ion-card *ngIf="atendimento$ | async; let atendimento">
     <img src="assets/img/background-chamados.svg" />
@@ -13,20 +12,66 @@
       <ion-card-title class="line">
         <ion-row>
           <ion-col col-10>
-              <h2><strong>{{atendimento.cliente.nome_razao_social | uppercase}}</strong></h2>
-              <p>{{atendimento.cliente.cnpj_cpf}}</p>
+              <h2 class="notice" *ngIf="
+                monitoramento &&
+                monitoramento?.tipo !== tipo &&
+                !tomorrow
+                && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
+                O destino <strong>{{ monitoramento?.tipo | uppercase }}</strong> ainda não foi finalizado!
+              </h2>
+              <h2><strong>{{atendimento?.cliente.nome_razao_social | uppercase}}</strong></h2>
+              <p>{{atendimento?.cliente.cnpj_cpf}}</p>
           </ion-col>
           <ion-col col-2>
-            <ion-fab top right bottom *ngIf="!atendimento.fim">
-                <button ion-fab mini color="accent"><ion-icon name="arrow-dropdown"></ion-icon></button>
+            <ion-fab top right bottom
+              *ngIf="
+              !tomorrow &&
+              !monitoramento &&
+              atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento' ||
+              !tomorrow &&
+              monitoramento?.tipo === tipo &&
+              atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">
+
+                <button ion-fab mini color="accent">
+                   <ion-icon name="add"></ion-icon>
+                </button>
+
                 <ion-fab-list side="bottom">
-                  <button (click)="mostrarPromptKmInicial(atendimento.km_inicio.km)" ion-fab><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-                  <button [disabled]="!atendimento.km_inicio.km" (click)="mostrarPromptKmFinal(atendimento.km_final.km)" ion-fab><i class="fa fa-flag-checkered" aria-hidden="true"></i></button>
-                  <button ion-fab  [disabled]="!atendimento.km_inicio.km || !atendimento.km_final.km || atendimento.inicio" [ngClass]="{'indica_inicio': atendimento.inicio !== null}"  (click)="mostrarConfirmacaoInicioAtendimento()" ><ion-icon color="accent" name="play"></ion-icon></button>
-                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()"><i class="fa fa-camera" aria-hidden="true"></i></button>
-                  <button ion-fab (click)="mostrarModalInteracaoDados()"><ion-icon color="accent" name="md-list-box"></ion-icon></button>
-                  <button ion-fab [disabled]="!atendimento.inicio" (click)="mostrarConfirmacaoFimAtendimento()"><ion-icon color="accent" name="trophy"></ion-icon></button>
+
+                  <button ion-fab (click)="mostrarPromptKmInicial(monitoramentoAtendimento?.km_inicial)">
+                    <i class="fa fa-flag-o" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab
+                  (click)="mostrarPromptKmFinal(monitoramentoAtendimento?.km_final)"
+                  [disabled]="!monitoramentoAtendimento?.km_inicial">
+                    <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab
+                  (click)="mostrarConfirmacaoInicioAtendimento()"
+                  [disabled]="!monitoramentoAtendimento?.km_final">
+                    <ion-icon color="accent" name="play"></ion-icon>
+                  </button>
+
+                  <button ion-fab (click)="mostrarOpcoesParaTirarFoto()"
+                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                  </button>
+
+                  <button ion-fab (click)="mostrarModalInteracaoDados()"
+                  [disabled]="!monitoramentoAtendimento?.data_hora_inicial_virgente_local">
+                    <ion-icon color="accent" name="md-list-box"></ion-icon>
+                  </button>
+
+                  <!-- <button ion-fab
+                  (click)="mostrarConfirmacaoFimAtendimento()"
+                  [disabled]="atendimento.interacao_tecnico.relatorio_tecnico.relatorio === ''">
+                    <ion-icon color="accent" name="trophy"></ion-icon>
+                  </button> -->
+
                 </ion-fab-list>
+
               </ion-fab>
           </ion-col>
         </ion-row>
@@ -35,71 +80,134 @@
 
       <ion-list no-lines>
 
-          <ion-item *ngIf="atendimento.inicio !== null || undefined" >
+          <ion-item>
               <ion-icon color="primary" name="checkmark" item-start></ion-icon>
                <h2>Status do chamado</h2>
-               <p> Iniciado às {{atendimento.inicio | date: 'hh:mm'}}</p>
-               <p *ngIf="atendimento.fim !== null || undefined" > Finalizado às {{atendimento.fim | date: 'hh:mm'}}</p>
+               <p> Iniciado às
+                 {{ monitoramentoAtendimento?.data_hora_inicial_virgente_local | date: 'HH' }}h
+                 {{ monitoramentoAtendimento?.data_hora_inicial_virgente_local | date: 'mm' }}m
+              </p>
+               <p>Finalizado às
+                  {{ monitoramentoAtendimento?.data_hora_final_virgente_local | date: 'HH' }}h
+                  {{ monitoramentoAtendimento?.data_hora_final_virgente_local | date: 'mm' }}m
+               </p>
            </ion-item>
 
 
         <ion-item>
           <ion-icon color="primary" name="person" item-start></ion-icon>
            <h2>Contato</h2>
-           <p>{{ atendimento.contato.nome }}</p>
-           <p>{{ atendimento.contato.telefone }}</p>
+           <p>{{ atendimento?.contato.nome }}</p>
+           <p>{{ atendimento?.contato.telefone }}</p>
        </ion-item>
 
        <ion-item text-wrap class="address" (click)="openGPS(atendimento.endereco)">
           <ion-icon color="primary" name="pin" item-start></ion-icon>
           <h2>Localização</h2>
           <p>
-            {{ atendimento.endereco.rua + ',' + ' '
-              + atendimento.endereco.numero }} </p>
+            {{ atendimento?.endereco.rua + ',' + ' '
+              + atendimento?.endereco.numero }} </p>
 
-          <p>{{atendimento.endereco.bairro + ',' + ' '
-              + atendimento.endereco.cidade}}</p>
+          <p>{{atendimento?.endereco.bairro + ',' + ' '
+              + atendimento?.endereco.cidade}}</p>
 
-          <p>{{atendimento.endereco.uf + ',' + ' ' + atendimento.endereco.cep}}</p>
+          <p>{{atendimento?.endereco.uf + ',' + ' ' + atendimento?.endereco.cep}}</p>
 
-          <p><i>{{ atendimento.endereco.ponto_referencia }}</i></p>
+          <p><i>{{ atendimento?.endereco.ponto_referencia }}</i></p>
        </ion-item>
 
        <ion-item class="line" >
           <ion-icon color="primary" name="car" item-start></ion-icon>
           <h2>Estacionamento</h2>
-          <p>{{atendimento.estacionamento}}</p>
+          <p>{{atendimento?.estacionamento}}</p>
        </ion-item>
 
 
        <ion-item>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Tipo de serviço</h2>
-          <p>{{atendimento.tipo}}</p>
+          <p>{{atendimento?.tipo}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Modelo do equipamento</h2>
-          <p>{{atendimento.modelo_equipamento}}</p>
+          <p>{{atendimento?.modelo_equipamento}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Descrição do chamado</h2>
-          <p>{{atendimento.descricao}}</p>
+          <p>{{atendimento?.descricao}}</p>
        </ion-item>
 
        <ion-item text-wrap>
           <ion-icon color="primary" name="information-circle" item-start></ion-icon>
           <h2>Testes efetuados</h2>
-          <p>{{atendimento.testes_efetuados}}</p>
+          <p>{{atendimento?.testes_efetuados}}</p>
        </ion-item>
 
       </ion-list>
+
     </ion-card-content>
 
   </ion-card>
 
+
+  <ion-card *ngIf="atendimento$ | async; let atendimento">
+     <ion-card-content *ngIf="atendimento.interacao_tecnico.relatorio_tecnico.relatorio">
+      <ion-card-title class="line">
+        <ion-row>
+          <ion-col col-12>
+              <h1><strong>Dados preenchidos pelo técnico</strong></h1>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card-title>
+
+      <ion-list no-lines>
+
+          <ion-item>
+            <ion-icon color="primary" name="checkmark" item-start></ion-icon>
+            <h2>Relatório do atendimento</h2>
+            <p>{{ atendimento.interacao_tecnico.relatorio_tecnico.relatorio }}</p>
+          </ion-item>
+
+
+        <ion-item *ngIf="atendimento.interacao_tecnico.retorno.retornar">
+          <ion-icon color="primary" name="information-circle" item-start></ion-icon>
+          <h2>Retorno</h2>
+          <p><strong>Retornar?</strong> {{ atendimento.interacao_tecnico.retorno.retornar ? 'Sim' : 'Não' }}</p>
+          <p><strong>Motivo:</strong> {{ atendimento.interacao_tecnico.retorno.motivo }}</p>
+       </ion-item>
+
+       <ion-item *ngIf="atendimento.interacao_tecnico.treinamento.treinamento">
+        <ion-icon color="primary" name="person" item-start></ion-icon>
+        <h2>Dados do Treinamento</h2>
+        <p><strong>Houve Treinamento?</strong> {{ atendimento.interacao_tecnico.treinamento.treinamento ? 'Sim' : 'Não' }}</p>
+        <p><strong>Cadastro?</strong> {{ atendimento.interacao_tecnico.treinamento.cadastros ? 'Sim' : 'Não' }}</p>
+        <p><strong>Relatórios?</strong> {{ atendimento.interacao_tecnico.treinamento.relatorios ? 'Sim' : 'Não' }}</p>
+        <p><strong>Importação de Dados?</strong> {{ atendimento.interacao_tecnico.treinamento.importacao_dados ? 'Sim' : 'Não' }}</p>
+        <p><strong>Interrupções no Treinamento?</strong> {{ atendimento.interacao_tecnico.treinamento.interrupcoes ? 'Sim' : 'Não' }}</p>
+        <p><strong>Parametros Gerais?</strong> {{ atendimento.interacao_tecnico.treinamento.parametros_gerais ? 'Sim' : 'Não' }}</p>
+        <p><strong>Abonos e Justificativas?</strong> {{ atendimento.interacao_tecnico.treinamento.abonos_justificativas ? 'Sim' : 'Não' }}</p>
+        <p><strong>Backup do Sistema?</strong> {{ atendimento.interacao_tecnico.treinamento.backup_sistema ? 'Sim' : 'Não' }}</p>
+        <p><strong>Software: </strong> {{ atendimento.interacao_tecnico.treinamento.software }}</p>
+        <p><strong>Caminho da Rede: </strong> {{ atendimento.interacao_tecnico.treinamento.caminho }}</p>
+       </ion-item>
+
+
+      </ion-list>
+      <button ion-button full
+      (click)="openSignatureModel()"
+      *ngIf="!tomorrow && atendimento?.interacao_tecnico.estado !== 'fim_do_atendimento'">Assinatura do Cliente</button>
+<!--
+      <div>
+        <img [src]="signatureImage" *ngIf="signatureImage" />
+      </div> -->
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>

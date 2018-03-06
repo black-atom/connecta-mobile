@@ -22,10 +22,11 @@ export class HeaderComponent implements OnInit {
     funcionario: Funcionario;
     uploadingPhotos: boolean = false;
     nImagensParaUpload$: Observable<number>;
-  
+
     ngOnInit() {
         this.store.select(state => state.login.funcionario)
         .subscribe(funcionario => this.funcionario = funcionario);
     }
+
 }
 

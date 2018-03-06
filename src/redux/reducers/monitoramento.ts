@@ -12,7 +12,7 @@ export const MONITORAMENTO_UPLOAD_FAILED = 'MONITORAMENTO_UPLOAD_FAILED';
 export class inserirKMInicial implements Action {
   readonly type: string = MONITORAMENTO_CRIAR_DESLOCAMENTO;
   public payload: Monitoramento
-  constructor(public km_inicial:number, public tipo:string, public id_funcionario: string) {
+  constructor(public km_inicial:number, public tipo:string, public id_funcionario: string, public id_atendimento: string) {
   	this.payload = {
         km_inicial,
         km_final: null,
@@ -23,6 +23,7 @@ export class inserirKMInicial implements Action {
         tipo: tipo,
         uuid: uuidv4(),
         id_funcionario,
+        id_atendimento,
         isUploaded: false
     }
   }
